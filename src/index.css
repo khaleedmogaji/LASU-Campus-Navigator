@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lasu-primary: rgb(49, 30, 2);
+  --color-lasu-secondary: rgb(172, 106, 6);
+  --color-lasu-accent: rgb(120, 59, 18);
+
+  /* Map old green/gold variables for compatibility */
+  --color-lasu-green: var(--color-lasu-primary);
+  --color-lasu-gold: var(--color-lasu-secondary);
+}
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: rgb(49, 30, 2);
+  background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: rgb(49, 30, 2);
+}
+
+/* Premium solid helpers (reverted from glassmorphism for accessibility) */
+.glass-panel {
+  background: #ffffff;
+  border: 1px solid #d4d4d8; /* zinc-300 */
+}
+
+.glass-card {
+  background: #ffffff;
+  border: 1px solid #e4e4e7; /* zinc-200 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  background: #f4f4f5; /* zinc-100 */
+  border: 1px solid #006633; /* lasu-green */
+  box-shadow: 0 10px 15px -3px rgba(0, 102, 51, 0.08), 0 4px 6px -4px rgba(0, 102, 51, 0.08);
+  transform: translateY(-2px);
+}
+
+.glass-input {
+  background: #ffffff;
+  border: 1px solid #d4d4d8; /* zinc-300 */
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-input:focus {
+  background: #ffffff;
+  border-color: #006633;
+  box-shadow: 0 0 0 3px rgba(0, 102, 51, 0.15);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 99px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+@layer components {
+  .user-location-marker {
+    @apply flex items-center justify-center;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .poi-pulse {
+    animation: pulse 2s infinite;
+  }
+  .mask-linear-fade {
+    mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+/* User Location Ripple Effect */
+.user-location-ripple {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  z-index: 2;
+}
+
+.user-location-ripple::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 2px solid #3b82f6;
+  animation: ripple 2s infinite;
+  opacity: 0;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Accuracy Circle Animation */
+.accuracy-circle-pulse {
+  animation: accuracy-pulse 3s infinite ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes accuracy-pulse {
+  0% {
+    stroke-opacity: 0.3;
+    fill-opacity: 0.05;
+  }
+  50% {
+    stroke-opacity: 0.6;
+    fill-opacity: 0.15;
+  }
+  100% {
+    stroke-opacity: 0.3;
+    fill-opacity: 0.05;
+  }
+}
+
+/* Leaflet Tooltip Customization */
+.leaflet-tooltip {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+  display: none !important;
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
+
+/* Premium Animated Mesh Gradient Background */
+.bg-mesh-gradient {
+  background-color: #fafafa; /* Light zinc base */
+  background-image: 
+    radial-gradient(at 10% 20%, rgba(0, 102, 51, 0.04) 0px, transparent 50%),   /* Light LASU Green */
+    radial-gradient(at 90% 10%, rgba(229, 169, 60, 0.05) 0px, transparent 50%),  /* Light LASU Gold */
+    radial-gradient(at 50% 85%, rgba(0, 102, 51, 0.03) 0px, transparent 50%),
+    radial-gradient(at 80% 90%, rgba(229, 169, 60, 0.04) 0px, transparent 50%),
+    radial-gradient(at 20% 80%, rgba(0, 102, 51, 0.04) 0px, transparent 50%);
+  background-size: 200% 200%;
+  animation: mesh-move 25s ease infinite;
+}
+
+@keyframes mesh-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Route Polyline Drop Shadow */
+.route-polyline-shadow {
+  filter: drop-shadow(0px 3px 5px rgba(234, 88, 12, 0.4)) drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.2));
+}
+
+
+/* Leaflet Popup & Accessibility Customization */
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: #ffffff !important;
+  color: #18181b !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.dark .leaflet-popup-content-wrapper, .dark .leaflet-popup-tip {
+  background: #18181b !important;
+  color: #f4f4f5 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}

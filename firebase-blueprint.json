@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "POI": {
+      "title": "POI",
+      "description": "A Point of Interest on campus",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "name", "category", "latitude", "longitude"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "favorites": { "type": "array", "items": { "type": "string" } },
+        "homeFaculty": { "type": "string" },
+        "savedRoutes": { "type": "array", "items": { "type": "object" } }
+      },
+      "required": ["uid", "email"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "Campus events or announcements",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "location": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["id", "title", "location", "date"]
+    }
+  },
+  "firestore": {
+    "/pois/{poiId}": {
+      "schema": "POI",
+      "description": "Collection of points of interest"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Collection of user profiles"
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Collection of events and announcements"
+    }
+  }
+}
