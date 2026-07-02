@@ -158,9 +158,9 @@ const INITIAL_POIS: POI[] = [
     ],
     "nearbyLandmarks": [
       "LASU Radio Station (95.7 FM)",
-      "AWAN Theatre Hall (Under Construction)",
-      "LASU Student Affairs Building",
       "Babajide Olusola Sanwo-Olu Library Complex",
+      "LASU Student Affairs Building",
+      "LASU Registry / Registrar's Office",
       "Vice-Chancellor's Office"
     ]
   },
@@ -528,9 +528,9 @@ const INITIAL_POIS: POI[] = [
     "category": "Building",
     "latitude": 6.4723,
     "longitude": 3.2002,
-    "imageUrl": "/lasusoc.jpg",
+    "imageUrl": "/lasusoc.png",
     "imageUrls": [
-      "/lasusoc.jpg"
+      "/lasusoc.png"
     ],
     "tags": [
       "science",
@@ -563,7 +563,7 @@ const INITIAL_POIS: POI[] = [
     ],
     "nearbyLandmarks": [
       "Faculty of Arts",
-      "AWAN Theatre Hall (Under Construction)",
+      "Babajide Olusola Sanwo-Olu Library Complex",
       "LASU Student Affairs Building",
       "Vice-Chancellor's Office"
     ]
@@ -857,9 +857,9 @@ const INITIAL_POIS: POI[] = [
     ],
     "nearbyLandmarks": [
       "Babatunde Raji Fashola Senate House",
-      "AWAN Theatre Hall (Under Construction)",
-      "LASU Student Affairs Building",
       "Babajide Olusola Sanwo-Olu Library Complex",
+      "LASU Student Affairs Building",
+      "LASU Registry / Registrar's Office",
       "Vice-Chancellor's Office",
       "Senate Building Junction"
     ]
@@ -916,39 +916,46 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "26",
-    "name": "AWAN Theatre Hall (Under Construction)",
-    "description": "300-seat theatre hall being built by the Awori Welfare Association of Nigeria (AWAN). Located opposite the Senate House, flanked by a new library building and the Student Affairs building.",
-    "category": "Lecture Theatre",
+    "name": "Babajide Olusola Sanwo-Olu Library Complex",
+    "description": "The Babajide Olusola Sanwo-Olu Library Complex is the main university library at Lagos State University, Ojo Campus. It is a modern academic library that provides reading areas, study spaces, digital library services, seminar rooms, and administrative offices. It is one of the major academic landmarks on the LASU Ojo campus.",
+    "category": "Library",
     "latitude": 6.4716,
     "longitude": 3.2002,
-    "imageUrl": "https://picsum.photos/seed/lasu-social/800/600",
+    "imageUrl": "/sanwo-olu-library.png",
+    "imageUrls": [
+      "/sanwo-olu-library.png"
+    ],
     "tags": [
-      "social",
-      "sociology",
-      "economics",
-      "politics",
-      "psychology",
-      "geography"
+      "library",
+      "lasu library",
+      "new library",
+      "babajide",
+      "olusola",
+      "sanwo-olu",
+      "complex",
+      "reading room",
+      "study area"
     ],
     "searchAliases": [
-      "social",
-      "sociology",
-      "economics",
-      "politics",
-      "psychology",
-      "geography",
-      "awan",
-      "theatre",
-      "hall",
-      "under",
-      "construction"
+      "library",
+      "lasu library",
+      "new library",
+      "babajide olusola sanwo-olu library complex",
+      "library complex",
+      "central library",
+      "reading room",
+      "study area",
+      "sanwo-olu",
+      "sanwoolu",
+      "sanwo olu",
+      "olusola"
     ],
     "nearbyLandmarks": [
       "Babatunde Raji Fashola Senate House",
       "School of Communication (LASUSOC)",
       "LASU Radio Station (95.7 FM)",
       "LASU Student Affairs Building",
-      "Babajide Olusola Sanwo-Olu Library Complex",
+      "LASU Registry / Registrar's Office",
       "Vice-Chancellor's Office"
     ]
   },
@@ -1865,7 +1872,7 @@ const INITIAL_POIS: POI[] = [
   {
     "id": "58",
     "name": "LASU Student Affairs Building",
-    "description": "Handles student welfare, accommodation administration, and student-related services. Located near the Senate House and AWAN Theatre construction site.",
+    "description": "Handles student welfare, accommodation administration, and student-related services. Located near the Senate House and the Babajide Olusola Sanwo-Olu Library Complex.",
     "category": "Administrative",
     "latitude": 6.4716,
     "longitude": 3.2003,
@@ -1896,8 +1903,8 @@ const INITIAL_POIS: POI[] = [
       "Babatunde Raji Fashola Senate House",
       "School of Communication (LASUSOC)",
       "LASU Radio Station (95.7 FM)",
-      "AWAN Theatre Hall (Under Construction)",
       "Babajide Olusola Sanwo-Olu Library Complex",
+      "LASU Registry / Registrar's Office",
       "Vice-Chancellor's Office"
     ]
   },
@@ -1937,34 +1944,40 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "60",
-    "name": "Babajide Olusola Sanwo-Olu Library Complex",
-    "description": "The Babajide Olusola Sanwo-Olu Library Complex is the central university library at LASU, providing students and staff with access to books, journals, digital resources, study spaces, and research facilities",
-    "category": "Library",
-    "latitude": 6.4715,
-    "longitude": 3.2001,
-    "imageUrl": "/sanwo-olu-library.png",
-    "tags": [
-      "parking",
-      "car",
-      "lot",
-      "library",
-      "vehicles"
-    ],
-    "searchAliases": [
-      "parking",
-      "car",
-      "lot",
-      "library",
-      "vehicles",
-      "babajide",
-      "olusola",
-      "sanwo",
-      "complex"
-    ],
-    "nearbyLandmarks": [
+  "name": "LASU Registry / Registrar's Office",
+  "description": "The Office of the University Registrar is responsible for student admissions, academic records, examinations, matriculation, graduation processes, and other academic administrative services at Lagos State University.",
+  "category": "Administrative",
+  "latitude": 6.4715,
+  "longitude": 3.2001,
+  "imageUrl": "public/senate-building.png",
+  "tags": [
+    "registry",
+    "registrar",
+    "administration",
+    "admissions",
+    "student records",
+    "academic affairs",
+    "examinations",
+    "matriculation",
+    "graduation",
+    "office"
+  ],
+  "searchAliases": [
+    "registry",
+    "registrar",
+    "registrar office",
+    "registry office",
+    "admissions office",
+    "student records",
+    "academic affairs",
+    "admin office",
+    "administration",
+    "lasu registry"
+  ],
+  "nearbyLandmarks": [
       "Babatunde Raji Fashola Senate House",
       "LASU Radio Station (95.7 FM)",
-      "AWAN Theatre Hall (Under Construction)",
+      "Babajide Olusola Sanwo-Olu Library Complex",
       "LASU Student Affairs Building",
       "Vice-Chancellor's Office"
     ]
@@ -1976,7 +1989,7 @@ const INITIAL_POIS: POI[] = [
     "category": "Administrative",
     "latitude": 6.4716,
     "longitude": 3.2,
-    "imageUrl": "https://picsum.photos/seed/lasu-busstop/800/600",
+    "imageUrl": "public/senate-building.png",
     "tags": [
       "vc",
       "vice",
@@ -1997,9 +2010,9 @@ const INITIAL_POIS: POI[] = [
       "Babatunde Raji Fashola Senate House",
       "School of Communication (LASUSOC)",
       "LASU Radio Station (95.7 FM)",
-      "AWAN Theatre Hall (Under Construction)",
+      "Babajide Olusola Sanwo-Olu Library Complex",
       "LASU Student Affairs Building",
-      "Babajide Olusola Sanwo-Olu Library Complex"
+      "LASU Registry / Registrar's Office"
     ]
   },
   {
@@ -2225,6 +2238,7 @@ const findMatchingInitialPoi = (id: string, name: string): POI | undefined => {
   
   // 3. Fuzzy matches for known name variations to handle database/cache inconsistencies
   if (cleanName.includes('senate')) return INITIAL_POIS.find(p => String(p.id).trim() === '2');
+  if (cleanName.includes('sanwo-olu') || cleanName.includes('sanwo olu') || cleanName.includes('sanwoolu') || cleanName.includes('sanwo_olu')) return INITIAL_POIS.find(p => String(p.id).trim() === '26');
   if (cleanName.includes('library') || cleanName.includes('akesode')) return INITIAL_POIS.find(p => String(p.id).trim() === '4');
   if (cleanName.includes('health') || cleanName.includes('clinic')) return INITIAL_POIS.find(p => String(p.id).trim() === '27');
   if (cleanName.includes('mosque')) return INITIAL_POIS.find(p => String(p.id).trim() === '28');
@@ -2299,8 +2313,8 @@ const overridePoiData = (poisList: POI[]): POI[] => {
         imageUrl = '/auditorium-1.jpg';
         imageUrls = ['/auditorium-1.jpg', '/auditorium-2.jpg'];
       } else if (correctedIdStr === '13' || poiNameStr.toLowerCase().includes('lasusoc') || poiNameStr.toLowerCase().includes('school of communication')) {
-        imageUrl = '/lasusoc.jpg';
-        imageUrls = ['/lasusoc.jpg'];
+        imageUrl = '/lasusoc.png';
+        imageUrls = ['/lasusoc.png'];
       } else if (correctedIdStr === '14' || poiNameStr.includes('transport')) {
         imageUrl = '/school-of-transport.jpg';
         imageUrls = ['/school-of-transport.jpg'];

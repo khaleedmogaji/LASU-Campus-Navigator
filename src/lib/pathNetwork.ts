@@ -1396,7 +1396,7 @@ export function findShortestPath(
     "23": "LASU Radio Station",
     "24": "LASU Press Centre",
     "25": "LASU Main Auditorium",
-    "26": "AWAN Theatre Hall",
+    "26": "Babajide Olusola Sanwo-Olu Library Complex",
     "27": "LASU Health Centre",
     "28": "LASU Central Mosque",
     "29": "LASU Chapel of Light",

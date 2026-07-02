@@ -350,8 +350,8 @@ export function CampusAssistant({
       const lawLib = pois.find(p => p.name.toLowerCase().includes('elias') || p.name.toLowerCase().includes('law library'));
       if (lawLib) return lawLib;
     }
-    if (norm.includes('sanwo-olu') || norm.includes('sanwo olu') || norm.includes('sanwoolu')) {
-      const sanwoOluLib = pois.find(p => p.name.toLowerCase().includes('sanwo-olu') || p.name.toLowerCase().includes('sanwo olu'));
+    if (norm.includes('sanwo-olu') || norm.includes('sanwo olu') || norm.includes('sanwoolu') || norm.includes('library complex') || norm.includes('new library') || norm.includes('central library') || norm.includes('reading room') || norm.includes('study area')) {
+      const sanwoOluLib = pois.find(p => p.name.toLowerCase().includes('sanwo-olu') || p.name.toLowerCase().includes('sanwo olu') || p.id === '26');
       if (sanwoOluLib) return sanwoOluLib;
     }
     if (norm.includes('library')) {
