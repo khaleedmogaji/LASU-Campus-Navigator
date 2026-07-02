@@ -1949,7 +1949,7 @@ const INITIAL_POIS: POI[] = [
   "category": "Administrative",
   "latitude": 6.4715,
   "longitude": 3.2001,
-  "imageUrl": "public/senate-building.png",
+  "imageUrl": "/senate-building.png",
   "tags": [
     "registry",
     "registrar",
@@ -1989,7 +1989,7 @@ const INITIAL_POIS: POI[] = [
     "category": "Administrative",
     "latitude": 6.4716,
     "longitude": 3.2,
-    "imageUrl": "public/senate-building.png",
+    "imageUrl": "/senate-building.png",
     "tags": [
       "vc",
       "vice",
