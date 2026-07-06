@@ -580,20 +580,30 @@ export const CampusMap: React.FC<MapProps> = ({
           <>
             <Marker
               position={userLocation}
+              zIndexOffset={1000}
               icon={L.divIcon({
                 className: 'user-location-marker-container',
                 html: `
-                  <div class="relative flex items-center justify-center">
-                    <div class="absolute w-8 h-8 bg-blue-500/20 rounded-full animate-pulse z-0"></div>
-                    <div class="relative w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-lg flex items-center justify-center z-10" style="${userHeading !== undefined && userHeading !== null ? `transform: rotate(${userHeading}deg); transition: transform 0.3s ease-out;` : ''}">
-                      <svg viewBox="0 0 24 24" class="w-5 h-5 text-blue-500 fill-current">
-                        <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
-                      </svg>
-                    </div>
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    ${userHeading !== undefined && userHeading !== null ? `
+                      <div class="absolute inset-0 flex items-center justify-center z-10" style="transform: rotate(${userHeading}deg); transition: transform 0.3s ease-out; transform-origin: center;">
+                        <svg viewBox="0 0 64 64" class="w-16 h-16 overflow-visible pointer-events-none">
+                          <defs>
+                            <radialGradient id="beam-grad" gradientUnits="userSpaceOnUse" cx="32" cy="32" r="30">
+                              <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4" />
+                              <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                            </radialGradient>
+                          </defs>
+                          <path d="M32 32 L17 6 A30 30 0 0 1 47 6 Z" fill="url(#beam-grad)" />
+                        </svg>
+                      </div>
+                    ` : ''}
+                    <div class="absolute w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-lg z-20"></div>
+                    <div class="absolute w-9 h-9 bg-blue-500/20 rounded-full animate-pulse z-0"></div>
                   </div>
                 `,
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
+                iconSize: [64, 64],
+                iconAnchor: [32, 32],
               })}
             >
               <Popup>You are here</Popup>
@@ -603,9 +613,9 @@ export const CampusMap: React.FC<MapProps> = ({
                 center={userLocation} 
                 radius={Math.min(locationAccuracy, 50)} 
                 pathOptions={{ 
-                  color: getAccuracyColor(locationAccuracy), 
-                  fillColor: getAccuracyColor(locationAccuracy), 
-                  fillOpacity: 0.2, 
+                  color: '#3b82f6', 
+                  fillColor: '#3b82f6', 
+                  fillOpacity: 0.15, 
                   weight: 1,
                   dashArray: '5, 5'
                 }} 
