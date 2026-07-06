@@ -26,6 +26,7 @@ export interface MapProps {
   userLocation: [number, number] | null;
   locationAccuracy?: number | null;
   isLocating?: boolean;
+  userHeading?: number | null;
 
   routingTo: any | null;
   routingFrom: any | null;
@@ -431,6 +432,7 @@ export const CampusMap: React.FC<MapProps> = ({
   userLocation,
   locationAccuracy,
   isLocating,
+  userHeading,
   routingTo,
   routingFrom,
   onRouteFound,
@@ -579,10 +581,19 @@ export const CampusMap: React.FC<MapProps> = ({
             <Marker
               position={userLocation}
               icon={L.divIcon({
-                className: 'user-location-marker',
-                html: '<div class="w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-lg animate-pulse"></div>',
-                iconSize: [20, 20],
-                iconAnchor: [10, 10],
+                className: 'user-location-marker-container',
+                html: `
+                  <div class="relative flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-blue-500/20 rounded-full animate-pulse z-0"></div>
+                    <div class="relative w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-lg flex items-center justify-center z-10" style="${userHeading !== undefined && userHeading !== null ? `transform: rotate(${userHeading}deg); transition: transform 0.3s ease-out;` : ''}">
+                      <svg viewBox="0 0 24 24" class="w-5 h-5 text-blue-500 fill-current">
+                        <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
+                      </svg>
+                    </div>
+                  </div>
+                `,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
               })}
             >
               <Popup>You are here</Popup>

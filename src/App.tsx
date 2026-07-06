@@ -12,7 +12,7 @@ import { KalmanFilter } from './lib/kalmanFilter';
 import { CampusMap, MapStyle } from './components/Map';
 import { SearchBar } from './components/SearchBar';
 import { POIInfo } from './components/POIInfo';
-import { findShortestPath, getDistance } from './lib/pathNetwork';
+import { findShortestPath, getDistance, getBearing } from './lib/pathNetwork';
 
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { MobileBottomSheet, SheetSnap } from './components/MobileBottomSheet';
@@ -2444,6 +2444,7 @@ function AppContent() {
   const [isStartDropdownOpen, setIsStartDropdownOpen] = useState(false);
   const [isEndDropdownOpen, setIsEndDropdownOpen] = useState(false);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+  const [userHeading, setUserHeading] = useState<number | null>(null);
 
   useEffect(() => {
     setStartSearchQuery(routingFrom ? routingFrom.name : "My Location");
@@ -2789,6 +2790,7 @@ function AppContent() {
       }
       setIsWalkSimulationActive(false);
       setWalkSimulationIndex(0);
+      setUserHeading(null);
       if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
       }
@@ -2828,6 +2830,11 @@ function AppContent() {
       if (currentIndex < routeInfo.coordinates.length) {
         setWalkSimulationIndex(currentIndex);
         const coord = routeInfo.coordinates[currentIndex];
+        const prevCoord = routeInfo.coordinates[currentIndex - 1];
+        if (prevCoord) {
+          const heading = getBearing(prevCoord.lat, prevCoord.lng, coord.lat, coord.lng);
+          setUserHeading(heading);
+        }
         setUserLocation([coord.lat, coord.lng]);
         setFocusedCoordinate([coord.lat, coord.lng]); // Pan map to user location
       } else {
@@ -2838,6 +2845,7 @@ function AppContent() {
         }
         setIsWalkSimulationActive(false);
         setWalkSimulationIndex(0);
+        setUserHeading(null);
         
         // Congratulatory Toast/Alert
         alert(`You have arrived at ${routingTo?.name || 'your destination'}! 🎉`);
@@ -2861,6 +2869,7 @@ function AppContent() {
     }
     setIsWalkSimulationActive(false);
     setWalkSimulationIndex(0);
+    setUserHeading(null);
     if (window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
@@ -3083,6 +3092,7 @@ function AppContent() {
           
           setUserLocation(loc);
           setLocationAccuracy(position.coords.accuracy);
+          setUserHeading(position.coords.heading);
           
           if (followMe) {
             setFocusedCoordinate(loc); // Pan the map to keep the user centered
@@ -3899,6 +3909,7 @@ function AppContent() {
             userLocation={userLocation}
             locationAccuracy={locationAccuracy}
             isLocating={isLocating}
+            userHeading={userHeading}
             routingTo={routingTo}
             routingFrom={routingFrom}
             onRouteFound={setRouteInfo}
