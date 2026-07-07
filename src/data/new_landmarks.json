@@ -1,0 +1,821 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.20349788784851, 6.46593953070712]
+      },
+      "properties": {
+        "id": "student-arcade",
+        "name": "LASUSU Student Arcade",
+        "category": "facility",
+        "description": "Student union social and recreational centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1994209304224164, 6.4656623553050325]
+      },
+      "properties": {
+        "id": "central-mosque",
+        "name": "LASU Central Mosque",
+        "category": "landmark",
+        "description": "Main mosque serving the Muslim campus community"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.199388743916421, 6.467634561590337]
+      },
+      "properties": {
+        "id": "chapel-of-light",
+        "name": "LASU Chapel of Light",
+        "category": "landmark",
+        "description": "Main church serving the Christian campus community"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.19728589219138, 6.46601415482787]
+      },
+      "properties": {
+        "id": "staff-school",
+        "name": "LASU Staff School",
+        "category": "facility",
+        "description": "Primary school for children of LASU staff"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2043812491346735, 6.468810305420531]
+      },
+      "properties": {
+        "id": "faculty-of-law",
+        "name": "Faculty of Law",
+        "category": "faculty",
+        "description": "Faculty housing law departments and the moot court"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.202199698773363, 6.465747640060314]
+      },
+      "properties": {
+        "id": "health-centre",
+        "name": "LASU Health Centre",
+        "category": "facility",
+        "description": "Campus medical centre and clinic"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1996374457202577, 6.464563388498464]
+      },
+      "properties": {
+        "id": "science-library",
+        "name": "Science Library",
+        "category": "facility",
+        "description": "Library serving the Faculty of Science"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.203433514836525, 6.4646709189691]
+      },
+      "properties": {
+        "id": "access-bank",
+        "name": "Access Bank",
+        "category": "facility",
+        "description": "Access Bank branch on campus"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2040128719444443, 6.463882032753872]
+      },
+      "properties": {
+        "id": "zenith-bank",
+        "name": "Zenith Bank",
+        "category": "facility",
+        "description": "Zenith Bank branch on campus"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2010087980515363, 6.466600486821916]
+      },
+      "properties": {
+        "id": "lasu-centre",
+        "name": "Lagos State University",
+        "category": "landmark",
+        "description": "Main campus centre reference point"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.201677891556921, 6.467941043974533]
+      },
+      "properties": {
+        "id": "sports-centre",
+        "name": "Sports Centre",
+        "category": "facility",
+        "description": "Main campus sports and athletics complex"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.201202651276919, 6.467728343450508]
+      },
+      "properties": {
+        "id": "moot-court",
+        "name": "Moot Court",
+        "category": "facility",
+        "description": "Moot court facility within the Faculty of Law"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2018192345712313, 6.46787998163229]
+      },
+      "properties": {
+        "id": "law-library",
+        "name": "Taslim Olawale Elias Law Library",
+        "category": "facility",
+        "description": "Dedicated law library named after Chief Justice Elias"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.201502171387113, 6.467217104718152]
+      },
+      "properties": {
+        "id": "dept-international-islamic-law",
+        "name": "Department of International and Islamic Law",
+        "category": "department",
+        "description": "Department offering international and Islamic law programmes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200082345317681, 6.471199252490675]
+      },
+      "properties": {
+        "id": "lasu-radio",
+        "name": "Lagos State University Radio",
+        "category": "facility",
+        "description": "LASU's on-campus radio station"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2000209921511447, 6.471234728121685]
+      },
+      "properties": {
+        "id": "senate-building",
+        "name": "Senate Building",
+        "category": "landmark",
+        "description": "Administrative headquarters of the university senate"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.198833634017693, 6.474404337101407]
+      },
+      "properties": {
+        "id": "school-of-transport",
+        "name": "School of Transport and Logistics",
+        "category": "faculty",
+        "description": "Faculty offering transport, logistics and supply chain programmes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200822178604921, 6.473341458279467]
+      },
+      "properties": {
+        "id": "buba-marwa-auditorium",
+        "name": "Buba Marwa Auditorium",
+        "category": "landmark",
+        "description": "Main university auditorium for large-scale events and ceremonies"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2019330207536485, 6.468994533150156]
+      },
+      "properties": {
+        "id": "ict-centre",
+        "name": "LASU ICT Centre",
+        "category": "facility",
+        "description": "Central ICT facility for computing and digital services"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1975277158575857, 6.4755769158405085]
+      },
+      "properties": {
+        "id": "faculty-of-social-sciences",
+        "name": "Faculty of Social Sciences",
+        "category": "faculty",
+        "description": "Faculty housing economics, sociology, political science and related departments"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2004073393023633, 6.473175502500556]
+      },
+      "properties": {
+        "id": "dept-philosophy",
+        "name": "Department of Philosophy",
+        "category": "department",
+        "description": "Department of Philosophy within the Faculty of Arts"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2015570512444502, 6.475146934481338]
+      },
+      "properties": {
+        "id": "cbt-centre",
+        "name": "LASU CBT Centre",
+        "category": "facility",
+        "description": "Computer-based testing centre for exams and assessments"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1992912188474905, 6.474570863424578]
+      },
+      "properties": {
+        "id": "fms-shuttle-park",
+        "name": "FMS Shuttle Park",
+        "category": "facility",
+        "description": "Shuttle pickup and drop-off point near School of Transport"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.197089425334433, 6.48044246920321]
+      },
+      "properties": {
+        "id": "lasu-international-school",
+        "name": "LASU International School",
+        "category": "facility",
+        "description": "Secondary school located within the university campus"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200887433041905, 6.476540790428714]
+      },
+      "properties": {
+        "id": "faculty-of-management-sciences",
+        "name": "Faculty of Management Sciences",
+        "category": "faculty",
+        "description": "Faculty housing accounting, finance, business admin and related departments"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1994430311932183, 6.4769104085997276]
+      },
+      "properties": {
+        "id": "gbolahan-elias-hall",
+        "name": "Gbolahan Elias Hall",
+        "category": "facility",
+        "description": "Multipurpose hall used for lectures and events"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.199629891153961, 6.472409536604193]
+      },
+      "properties": {
+        "id": "school-of-communication",
+        "name": "School of Communication",
+        "category": "faculty",
+        "description": "Faculty housing mass communication and media departments"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1997040732631596, 6.47327146011797]
+      },
+      "properties": {
+        "id": "dept-history-intl-relations",
+        "name": "Department of History and International Relations",
+        "category": "department",
+        "description": "Department offering history and international relations programmes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.199933437952813, 6.47306938523979]
+      },
+      "properties": {
+        "id": "faculty-of-education",
+        "name": "Faculty of Education (3-in-1 Hall)",
+        "category": "faculty",
+        "description": "Main Faculty of Education building"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200116094596366, 6.466313029359872]
+      },
+      "properties": {
+        "id": "faculty-of-science",
+        "name": "Faculty of Science",
+        "category": "faculty",
+        "description": "Faculty housing pure and applied science departments"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2005384188095283, 6.465547880153592]
+      },
+      "properties": {
+        "id": "innovation-hub",
+        "name": "Innovation Hub",
+        "category": "landmark",
+        "description": "Event and innovation space for student and external programmes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2005754349316247, 6.464890552980209]
+      },
+      "properties": {
+        "id": "fatiu-akesode-library",
+        "name": "Fatiu Akesode Library",
+        "category": "facility",
+        "description": "Main university library formerly known as the school library"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200397519738991, 6.465019395427171]
+      },
+      "properties": {
+        "id": "bookshop",
+        "name": "LASU Bookshop",
+        "category": "facility",
+        "description": "University bookshop for textbooks and academic materials"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200726927736389, 6.464678991995442]
+      },
+      "properties": {
+        "id": "dept-theatre-arts",
+        "name": "Department of Theatre Arts and Music",
+        "category": "department",
+        "description": "Department offering theatre, performing arts and music programmes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2020920021656263, 6.464102547918738]
+      },
+      "properties": {
+        "id": "faculty-of-arts-munch-it",
+        "name": "Faculty of Arts Munch It Stand",
+        "category": "facility",
+        "description": "Popular food stand located in the Faculty of Arts area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.202393233191559, 6.465124989116374]
+      },
+      "properties": {
+        "id": "pavilion",
+        "name": "Pavilion / Quadrangle",
+        "category": "landmark",
+        "description": "Open relaxation and gathering space in the Faculty of Education area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.201916098017867, 6.46614796791818]
+      },
+      "properties": {
+        "id": "university-press",
+        "name": "University Press",
+        "category": "facility",
+        "description": "LASU's official publishing and printing facility"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2035992985853547, 6.464462981048976]
+      },
+      "properties": {
+        "id": "eco-market-amala-extra",
+        "name": "Amala Extra (Eco Market)",
+        "category": "restaurant",
+        "description": "Popular food spot in the Eco Market area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2036483620601244, 6.464173721914673]
+      },
+      "properties": {
+        "id": "iya-dayo-restaurant",
+        "name": "Iya Dayo Restaurant (Eco Market)",
+        "category": "restaurant",
+        "description": "Well-known restaurant in the Eco Market food zone"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2029082966705356, 6.464600166744562]
+      },
+      "properties": {
+        "id": "centre-for-planning-studies",
+        "name": "Centre for Planning Studies",
+        "category": "faculty",
+        "description": "Faculty offering urban and regional planning programmes"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.201351900855808, 6.4638801145689015]
+      },
+      "properties": {
+        "id": "abe-igi",
+        "name": "Abe Igi",
+        "category": "landmark",
+        "description": "Iconic relaxation spot under the trees in the Faculty of Arts"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2032192255159466, 6.467987173640815]
+      },
+      "properties": {
+        "id": "football-pitch",
+        "name": "Football Pitch",
+        "category": "facility",
+        "description": "Main football field within the Sports Centre complex"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.20133278658194, 6.468513470995953]
+      },
+      "properties": {
+        "id": "postgraduate-school",
+        "name": "Post Graduate School",
+        "category": "faculty",
+        "description": "Building dedicated to postgraduate programmes and administration"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.201509812364915, 6.46811370076866]
+      },
+      "properties": {
+        "id": "flavours-canteen",
+        "name": "Flavours Canteen",
+        "category": "restaurant",
+        "description": "Restaurant adjacent to the Postgraduate School building"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2004878907995575, 6.468590759870086]
+      },
+      "properties": {
+        "id": "mba-hall",
+        "name": "MBA Hall",
+        "category": "landmark",
+        "description": "Multi-use hall popular for lectures, seminars and campus events"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.1999836355389606, 6.468071058592406]
+      },
+      "properties": {
+        "id": "sl-edu-lecture-hall",
+        "name": "S.L. Edu Lecture Hall",
+        "category": "facility",
+        "description": "Large lecture hall in the Faculty of Science used for classes and events"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.19935768837566, 6.4682736088931945]
+      },
+      "properties": {
+        "id": "science-market",
+        "name": "Science Market",
+        "category": "facility",
+        "description": "Campus market in the Faculty of Science for stationery and materials"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200119995745576, 6.469765672813498]
+      },
+      "properties": {
+        "id": "car-wash",
+        "name": "LASU Car Wash",
+        "category": "facility",
+        "description": "Car wash service within the campus"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.2013090988940482, 6.4698342310347]
+      },
+      "properties": {
+        "id": "kenas-kitchen",
+        "name": "Kena's Kitchen",
+        "category": "restaurant",
+        "description": "Restaurant located in the AJ Supermarket area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200909505018672, 6.469642683201162]
+      },
+      "properties": {
+        "id": "aj-bus-stop",
+        "name": "AJ Bus Stop",
+        "category": "landmark",
+        "description": "Popular campus bus stop opposite Love Garden"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.200750133732416, 6.468614322716986]
+      },
+      "properties": {
+        "id": "mba-bus-stop",
+        "name": "MBA Bus Stop",
+        "category": "landmark",
+        "description": "Bus stop in front of MBA Hall"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.201276583178638, 6.470483379775232]
+      },
+      "properties": {
+        "id": "student-affairs-complex",
+        "name": "Student Affairs Complex",
+        "category": "facility",
+        "description": "Administrative building handling student welfare and services"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1999947, 6.4735945] },
+      "properties": {
+        "id": "faculty-of-computing",
+        "name": "Faculty of Computing",
+        "category": "faculty",
+        "description": "The new Faculty of Computing and Information Technologies"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1999062, 6.4742798] },
+      "properties": {
+        "id": "rd-school-of-transportation",
+        "name": "Road to School of Transportation",
+        "category": "landmark",
+        "description": "The Junction opposite CBT centre that leads to school of transportation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1997335, 6.4741882] },
+      "properties": {
+        "id": "atm-wema",
+        "name": "ATM (WEMA Bank)",
+        "category": "facility",
+        "description": "WEMA Bank ATM on campus"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1994831, 6.4742105] },
+      "properties": {
+        "id": "femi-gbajabiamila-conference-center",
+        "name": "femi-gbajabiamila-conference-center",
+        "category": "landmark",
+        "description": "Femi Gbajabiamila Conference Center for events"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1992631, 6.4741755] },
+      "properties": {
+        "id": "laundromat",
+        "name": "Laundromat",
+        "category": "facility",
+        "description": "On-campus laundry facility"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1981393, 6.4738677] },
+      "properties": {
+        "id": "school-of-transportation",
+        "name": "School of Transportation",
+        "category": "school",
+        "description": "School of transportation buildings and facilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.197687, 6.4735732] },
+      "properties": {
+        "id": "ent",
+        "name": "ENT Building",
+        "category": "facility",
+        "description": "The building for Enterpreneurship activities"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1984595, 6.4745766] },
+      "properties": {
+        "id": "fss-market",
+        "name": "FSS Market",
+        "category": "restaurant",
+        "description": "Food market serving the Faculty of Social Sciences area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1993148, 6.4752879] },
+      "properties": {
+        "id": "faculty-of-social-science",
+        "name": "Faculty of Social Sciences",
+        "category": "faculty",
+        "description": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.1991545, 6.4763792] },
+      "properties": {
+        "id": "stem-education-laboratory",
+        "name": "STEM Education Laboratory",
+        "category": "facility",
+        "description": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.199699, 6.4756506] },
+      "properties": {
+        "id": "faculty-of-management-science",
+        "name": "Faculty of Management Sciences",
+        "category": "faculty",
+        "description": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.2003843, 6.4748851] },
+      "properties": {
+        "id": "fms-market",
+        "name": "FMS Market",
+        "category": "restaurant",
+        "description": "Food market serving the Faculty of Management Sciences area"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [0, 0] },
+      "properties": {
+        "id": "cbt-center",
+        "name": "CBT Center",
+        "category": "facility",
+        "description": "Computer-Based Test center for examinations"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [3.2011196, 6.4747362] },
+      "properties": {
+        "id": "atm-providus",
+        "name": "ATM (Providus Bank)",
+        "category": "facility",
+        "description": "Providus Bank ATM on campus"
+      }
+    }
+  ]
+}

@@ -114,7 +114,29 @@ const VideoPlayer: React.FC<{ url: string; alt: string }> = ({ url, alt }) => {
   );
 };
 
-export const POIInfo: React.FC<POIInfoProps> = ({ poi, onClose, onGetDirections, onRouteFromHere, isSidebar = false, onShare }) => {
+// Helper to calculate distance in meters
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = 6371000;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+export const POIInfo: React.FC<POIInfoProps> = ({
+  poi,
+  userLocation,
+  onClose,
+  onGetDirections,
+  onRouteFromHere,
+  isRouteHighlighted,
+  onHighlightRoute,
+  isSidebar = false,
+  onShare
+}) => {
   if (!poi) return null;
 
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
@@ -132,6 +154,19 @@ export const POIInfo: React.FC<POIInfoProps> = ({ poi, onClose, onGetDirections,
   images.forEach(img => mediaItems.push({ type: 'image', url: img }));
 
   const departments = FACULTY_DEPARTMENTS[poi.name];
+
+  let distanceText = "";
+  let walkingTimeText = "";
+  if (userLocation) {
+    const distMeters = getDistance(userLocation[0], userLocation[1], poi.latitude, poi.longitude);
+    if (distMeters < 1000) {
+      distanceText = `${Math.round(distMeters)} m`;
+    } else {
+      distanceText = `${(distMeters / 1000).toFixed(1)} km`;
+    }
+    const walkMinutes = Math.round(distMeters / 80); // ~80m per minute walking speed
+    walkingTimeText = walkMinutes <= 1 ? "1 min" : `${walkMinutes} mins`;
+  }
 
   const nextMedia = () => {
     setDirection(1);
@@ -264,9 +299,16 @@ export const POIInfo: React.FC<POIInfoProps> = ({ poi, onClose, onGetDirections,
       >
         <motion.div variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }} className="flex items-start justify-between mb-3">
           <div>
-            <span className="inline-block px-2.5 py-0.5 bg-lasu-primary/5 border border-lasu-primary/10 text-lasu-primary text-[9px] font-black uppercase tracking-widest rounded-lg mb-2">
-              {poi.category}
-            </span>
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <span className="inline-block px-2.5 py-0.5 bg-lasu-primary/5 border border-lasu-primary/10 text-lasu-primary text-[9px] font-black uppercase tracking-widest rounded-lg">
+                {poi.category}
+              </span>
+              {distanceText && (
+                <span className="inline-block px-2 py-0.5 bg-zinc-150 border border-zinc-200/50 text-zinc-700 text-[9px] font-bold rounded-lg shadow-sm">
+                  📍 {distanceText} ({walkingTimeText} walk)
+                </span>
+              )}
+            </div>
             <h2 className="text-xl font-black text-zinc-950 leading-tight tracking-tight">{poi.name}</h2>
           </div>
           <div className="flex gap-2 shrink-0">
@@ -290,6 +332,22 @@ export const POIInfo: React.FC<POIInfoProps> = ({ poi, onClose, onGetDirections,
           <motion.p variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }} className="text-zinc-900 text-xs mb-4 leading-relaxed font-semibold">
             {poi.description}
           </motion.p>
+        )}
+
+        {poi.nearbyLandmarks && poi.nearbyLandmarks.length > 0 && (
+          <motion.div variants={{ hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } }} className="mb-4 bg-zinc-50 border border-zinc-200 rounded-2xl p-4 space-y-2">
+            <h3 className="text-xs font-black text-zinc-800 uppercase tracking-wider flex items-center gap-1.5 border-b border-zinc-200/35 pb-1.5">
+              <MapPin className="w-3.5 h-3.5 text-lasu-primary" />
+              Nearby Landmarks
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {poi.nearbyLandmarks.map((landmark, idx) => (
+                <span key={idx} className="bg-white border border-zinc-200 text-zinc-755 text-[10px] font-extrabold px-2.5 py-1 rounded-xl shadow-sm leading-none">
+                  {landmark}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         )}
 
         <motion.div 

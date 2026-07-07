@@ -90,10 +90,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   const filteredPois = pois.filter((poi) => {
     const matchesCategory = filterCategory === 'All' || poi.category === filterCategory;
     if (query) {
+      const q = query.toLowerCase().trim();
       return matchesCategory && (
-        poi.name.toLowerCase().includes(query.toLowerCase()) ||
-        poi.category.toLowerCase().includes(query.toLowerCase()) ||
-        poi.tags?.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
+        poi.name.toLowerCase().includes(q) ||
+        poi.category.toLowerCase().includes(q) ||
+        (poi.description && poi.description.toLowerCase().includes(q)) ||
+        poi.tags?.some((tag) => tag.toLowerCase().includes(q)) ||
+        poi.searchAliases?.some((alias) => alias.toLowerCase().includes(q))
       );
     } else {
       return filterCategory !== 'All' && matchesCategory;

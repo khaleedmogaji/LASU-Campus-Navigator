@@ -61,13 +61,13 @@ export function getDistance(lat1: number, lon1: number, lat2: number, lon2: numb
 export const GRAPH_NODES: GraphNode[] = [
   {
     "id": "1",
-    "lat": 6.466600486821916,
-    "lng": 3.2010087980515363
+    "lat": 6.4664,
+    "lng": 3.2003
   },
   {
     "id": "2",
-    "lat": 6.471234728121685,
-    "lng": 3.2000209921511447
+    "lat": 6.4715,
+    "lng": 3.2
   },
   {
     "id": "3",
@@ -76,28 +76,28 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "4",
-    "lat": 6.464890552980209,
-    "lng": 3.2005754349316247
+    "lat": 6.465,
+    "lng": 3.2004
   },
   {
     "id": "5",
-    "lat": 6.46787998163229,
-    "lng": 3.2018192345712313
+    "lat": 6.4641,
+    "lng": 3.2002
   },
   {
     "id": "6",
-    "lat": 6.465019395427171,
-    "lng": 3.200397519738991
+    "lat": 6.465,
+    "lng": 3.2004
   },
   {
     "id": "7",
-    "lat": 6.468810305420531,
-    "lng": 3.2043812491346735
+    "lat": 6.4674,
+    "lng": 3.202
   },
   {
     "id": "8",
-    "lat": 6.466313029359872,
-    "lng": 3.200116094596366
+    "lat": 6.4663,
+    "lng": 3.2
   },
   {
     "id": "9",
@@ -106,43 +106,43 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "10",
-    "lat": 6.476540790428714,
-    "lng": 3.200887433041905
+    "lat": 6.476,
+    "lng": 3.1999
   },
   {
     "id": "11",
-    "lat": 6.4755769158405085,
-    "lng": 3.1975277158575857
+    "lat": 6.4581,
+    "lng": 3.1916
   },
   {
     "id": "12",
-    "lat": 6.47306938523979,
-    "lng": 3.199933437952813
+    "lat": 6.468,
+    "lng": 3.1995
   },
   {
     "id": "13",
-    "lat": 6.472409536604193,
-    "lng": 3.199629891153961
+    "lat": 6.4723,
+    "lng": 3.2002
   },
   {
     "id": "14",
-    "lat": 6.474404337101407,
-    "lng": 3.198833634017693
+    "lat": 6.4742,
+    "lng": 3.1981
   },
   {
     "id": "15",
-    "lat": 6.468513470995953,
-    "lng": 3.20133278658194
+    "lat": 6.4685,
+    "lng": 3.2013
   },
   {
     "id": "16",
-    "lat": 6.468590759870086,
-    "lng": 3.2004878907995575
+    "lat": 6.4682,
+    "lng": 3.1995
   },
   {
     "id": "17",
-    "lat": 6.4698342310347,
-    "lng": 3.2013090988940482
+    "lat": 6.4698,
+    "lng": 3.2012
   },
   {
     "id": "18",
@@ -166,23 +166,23 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "22",
-    "lat": 6.468994533150156,
-    "lng": 3.2019330207536485
+    "lat": 6.4687,
+    "lng": 3.2011
   },
   {
     "id": "23",
-    "lat": 6.471199252490675,
-    "lng": 3.200082345317681
+    "lat": 6.4711,
+    "lng": 3.1999
   },
   {
     "id": "24",
-    "lat": 6.46614796791818,
-    "lng": 3.201916098017867
+    "lat": 6.4661,
+    "lng": 3.2018
   },
   {
     "id": "25",
-    "lat": 6.473341458279467,
-    "lng": 3.200822178604921
+    "lat": 6.4731,
+    "lng": 3.2019
   },
   {
     "id": "26",
@@ -191,23 +191,23 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "27",
-    "lat": 6.465747640060314,
-    "lng": 3.202199698773363
+    "lat": 6.4654,
+    "lng": 3.2017
   },
   {
     "id": "28",
-    "lat": 6.4656623553050325,
-    "lng": 3.1994209304224164
+    "lat": 6.4654,
+    "lng": 3.2
   },
   {
     "id": "29",
-    "lat": 6.467634561590337,
-    "lng": 3.199388743916421
+    "lat": 6.4675,
+    "lng": 3.1987
   },
   {
     "id": "30",
-    "lat": 6.467941043974533,
-    "lng": 3.201677891556921
+    "lat": 6.4679,
+    "lng": 3.2016
   },
   {
     "id": "31",
@@ -221,8 +221,8 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "33",
-    "lat": 6.464462981048976,
-    "lng": 3.2035992985853547
+    "lat": 6.4644,
+    "lng": 3.2037
   },
   {
     "id": "34",
@@ -246,13 +246,13 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "38",
-    "lat": 6.4646709189691,
-    "lng": 3.203433514836525
+    "lat": 6.4645,
+    "lng": 3.2041
   },
   {
     "id": "39",
-    "lat": 6.4741882,
-    "lng": 3.1997335
+    "lat": 6.4648,
+    "lng": 3.2041
   },
   {
     "id": "40",
@@ -286,8 +286,8 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "46",
-    "lat": 6.468614322716986,
-    "lng": 3.200750133732416
+    "lat": 6.4686,
+    "lng": 3.2008
   },
   {
     "id": "47",
@@ -296,8 +296,8 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "48",
-    "lat": 6.46593953070712,
-    "lng": 3.20349788784851
+    "lat": 6.4658,
+    "lng": 3.2031
   },
   {
     "id": "49",
@@ -306,8 +306,8 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "50",
-    "lat": 6.46601415482787,
-    "lng": 3.19728589219138
+    "lat": 6.4658,
+    "lng": 3.1982
   },
   {
     "id": "51",
@@ -316,8 +316,8 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "52",
-    "lat": 6.469765672813498,
-    "lng": 3.200119995745576
+    "lat": 6.4697,
+    "lng": 3.1999
   },
   {
     "id": "53",
@@ -346,8 +346,8 @@ export const GRAPH_NODES: GraphNode[] = [
   },
   {
     "id": "58",
-    "lat": 6.470483379775232,
-    "lng": 3.201276583178638
+    "lat": 6.4716,
+    "lng": 3.2003
   },
   {
     "id": "59",
@@ -528,161 +528,6 @@ export const GRAPH_NODES: GraphNode[] = [
     "id": "95",
     "lat": 6.47,
     "lng": 3.2008
-  },
-  {
-    "id": "120",
-    "lat": 6.464563388498464,
-    "lng": 3.1996374457202577
-  },
-  {
-    "id": "121",
-    "lat": 6.463882032753872,
-    "lng": 3.2040128719444443
-  },
-  {
-    "id": "122",
-    "lat": 6.467728343450508,
-    "lng": 3.201202651276919
-  },
-  {
-    "id": "123",
-    "lat": 6.467217104718152,
-    "lng": 3.201502171387113
-  },
-  {
-    "id": "124",
-    "lat": 6.473175502500556,
-    "lng": 3.2004073393023633
-  },
-  {
-    "id": "125",
-    "lat": 6.475146934481338,
-    "lng": 3.2015570512444502
-  },
-  {
-    "id": "126",
-    "lat": 6.474570863424578,
-    "lng": 3.1992912188474905
-  },
-  {
-    "id": "127",
-    "lat": 6.48044246920321,
-    "lng": 3.197089425334433
-  },
-  {
-    "id": "128",
-    "lat": 6.4769104085997276,
-    "lng": 3.1994430311932183
-  },
-  {
-    "id": "129",
-    "lat": 6.47327146011797,
-    "lng": 3.1997040732631596
-  },
-  {
-    "id": "130",
-    "lat": 6.465547880153592,
-    "lng": 3.2005384188095283
-  },
-  {
-    "id": "131",
-    "lat": 6.464678991995442,
-    "lng": 3.200726927736389
-  },
-  {
-    "id": "132",
-    "lat": 6.464102547918738,
-    "lng": 3.2020920021656263
-  },
-  {
-    "id": "133",
-    "lat": 6.465124989116374,
-    "lng": 3.202393233191559
-  },
-  {
-    "id": "134",
-    "lat": 6.464173721914673,
-    "lng": 3.2036483620601244
-  },
-  {
-    "id": "135",
-    "lat": 6.464600166744562,
-    "lng": 3.2029082966705356
-  },
-  {
-    "id": "136",
-    "lat": 6.4638801145689015,
-    "lng": 3.201351900855808
-  },
-  {
-    "id": "137",
-    "lat": 6.467987173640815,
-    "lng": 3.2032192255159466
-  },
-  {
-    "id": "138",
-    "lat": 6.46811370076866,
-    "lng": 3.201509812364915
-  },
-  {
-    "id": "139",
-    "lat": 6.468071058592406,
-    "lng": 3.1999836355389606
-  },
-  {
-    "id": "140",
-    "lat": 6.4682736088931945,
-    "lng": 3.19935768837566
-  },
-  {
-    "id": "141",
-    "lat": 6.469642683201162,
-    "lng": 3.200909505018672
-  },
-  {
-    "id": "142",
-    "lat": 6.4735945,
-    "lng": 3.1999947
-  },
-  {
-    "id": "143",
-    "lat": 6.4742798,
-    "lng": 3.1999062
-  },
-  {
-    "id": "144",
-    "lat": 6.4742105,
-    "lng": 3.1994831
-  },
-  {
-    "id": "145",
-    "lat": 6.4741755,
-    "lng": 3.1992631
-  },
-  {
-    "id": "146",
-    "lat": 6.4735732,
-    "lng": 3.197687
-  },
-  {
-    "id": "147",
-    "lat": 6.4745766,
-    "lng": 3.1984595
-  },
-  {
-    "id": "148",
-    "lat": 6.4763792,
-    "lng": 3.1991545
-  },
-  {
-    "id": "149",
-    "lat": 6.4748851,
-    "lng": 3.2003843
-  },
-  {
-    "id": "150",
-    "lat": 6.4747362,
-    "lng": 3.2011196
   }
 ];
 
@@ -1336,130 +1181,6 @@ export const GRAPH_EDGES: GraphEdge[] = [
   {
     "from": "95",
     "to": "75"
-  },
-  {
-    "from": "120",
-    "to": "73"
-  },
-  {
-    "from": "121",
-    "to": "34"
-  },
-  {
-    "from": "122",
-    "to": "71"
-  },
-  {
-    "from": "123",
-    "to": "45"
-  },
-  {
-    "from": "124",
-    "to": "25"
-  },
-  {
-    "from": "125",
-    "to": "18"
-  },
-  {
-    "from": "126",
-    "to": "14"
-  },
-  {
-    "from": "127",
-    "to": "51"
-  },
-  {
-    "from": "128",
-    "to": "20"
-  },
-  {
-    "from": "129",
-    "to": "12"
-  },
-  {
-    "from": "130",
-    "to": "64"
-  },
-  {
-    "from": "131",
-    "to": "4"
-  },
-  {
-    "from": "132",
-    "to": "90"
-  },
-  {
-    "from": "133",
-    "to": "27"
-  },
-  {
-    "from": "134",
-    "to": "34"
-  },
-  {
-    "from": "135",
-    "to": "90"
-  },
-  {
-    "from": "136",
-    "to": "42"
-  },
-  {
-    "from": "137",
-    "to": "93"
-  },
-  {
-    "from": "138",
-    "to": "30"
-  },
-  {
-    "from": "139",
-    "to": "76"
-  },
-  {
-    "from": "140",
-    "to": "29"
-  },
-  {
-    "from": "141",
-    "to": "37"
-  },
-  {
-    "from": "142",
-    "to": "69"
-  },
-  {
-    "from": "143",
-    "to": "39"
-  },
-  {
-    "from": "144",
-    "to": "39"
-  },
-  {
-    "from": "145",
-    "to": "39"
-  },
-  {
-    "from": "146",
-    "to": "19"
-  },
-  {
-    "from": "147",
-    "to": "14"
-  },
-  {
-    "from": "148",
-    "to": "20"
-  },
-  {
-    "from": "149",
-    "to": "18"
-  },
-  {
-    "from": "150",
-    "to": "18"
   }
 ];
 
@@ -1474,29 +1195,6 @@ export function findShortestPath(
   const endLng = Number(endLatLng[1]);
 
   const directDist = getDistance(startLat, startLng, endLat, endLng);
-
-  // Helper to find the closest landmark within 35 meters (excluding a specific node)
-  function findClosestLandmark(lat: number, lng: number, excludeNodeId?: string): { name: string; dist: number } | null {
-    let closest: { name: string; dist: number } | null = null;
-    let minDist = 35; // 35 meters threshold
-
-    for (const node of GRAPH_NODES) {
-      const idNum = Number(node.id);
-      const isLandmark = (idNum >= 1 && idNum <= 62) || (idNum >= 120 && idNum <= 150);
-      if (!isLandmark) continue;
-      if (excludeNodeId && node.id === excludeNodeId) continue;
-
-      const dist = getDistance(lat, lng, Number(node.lat), Number(node.lng));
-      if (dist < minDist) {
-        const name = NODE_DISPLAY_NAMES[node.id];
-        if (name) {
-          minDist = dist;
-          closest = { name, dist };
-        }
-      }
-    }
-    return closest;
-  }
 
   // 1. Find top 3 closest nodes to start and end points
   const startCandidates = GRAPH_NODES
@@ -1673,147 +1371,116 @@ export function findShortestPath(
   }
 
   const NODE_DISPLAY_NAMES: Record<string, string> = {
-  "1": "Lagos State University",
-  "2": "Senate Building",
-  "3": "Senate Chambers",
-  "4": "Fatiu Akesode Library",
-  "5": "Taslim Olawale Elias Law Library",
-  "6": "LASU Bookshop",
-  "7": "Faculty of Law",
-  "8": "Faculty of Science",
-  "9": "Faculty of Arts",
-  "10": "Faculty of Management Sciences",
-  "11": "Faculty of Social Sciences",
-  "12": "Faculty of Education (3-in-1 Hall)",
-  "13": "School of Communication",
-  "14": "School of Transport and Logistics",
-  "15": "Post Graduate School",
-  "16": "MBA Hall",
-  "17": "Kena's Kitchen",
-  "18": "LASU Open and Distance Learning and Research Institute (ODLRI)",
-  "19": "Centre for Entrepreneurship Studies",
-  "20": "Africa Centre of Excellence for Innovative and Transformative STEM Education (ACEITSE)",
-  "21": "Exams and Records Office (Postgraduate)",
-  "22": "LASU ICT Centre",
-  "23": "Lagos State University Radio",
-  "24": "University Press",
-  "25": "Buba Marwa Auditorium",
-  "26": "Babajide Olusola Sanwo-Olu Library Complex",
-  "27": "LASU Health Centre",
-  "28": "LASU Central Mosque",
-  "29": "LASU Chapel of Light",
-  "30": "Sports Centre",
-  "31": "Hussam Okoya-Thomas Sports Complex (Indoor Hall)",
-  "32": "LASU Sports Complex (Secondary Facility)",
-  "33": "Amala Extra (Eco Market)",
-  "34": "Amala Extra Restaurant",
-  "35": "Costain Food Canteen (Faculty of Arts / Eco Market)",
-  "36": "Olaiya Staff Food Canteen",
-  "37": "Kena's Kitchen (AJ Complex)",
-  "38": "Access Bank",
-  "39": "ATM (WEMA Bank)",
-  "40": "Wema Bank Branch (LASU)",
-  "41": "United Bank for Africa (UBA) LASU Branch",
-  "42": "Sterling Bank LASU",
-  "43": "LASU Microfinance Bank",
-  "44": "LASU Press Bus Stop",
-  "45": "Law Bus Stop",
-  "46": "MBA Bus Stop",
-  "47": "LASU Main Bus Station (Alasia Terminal)",
-  "48": "LASUSU Student Arcade",
-  "49": "LASU Post Office",
-  "50": "LASU Staff School",
-  "51": "Lagos State University International School (LASUIS)",
-  "52": "LASU Car Wash",
-  "53": "LASU Senior Staff Club",
-  "54": "L.A.S.U Staff Quarters",
-  "55": "LASU Main Gate (Badagry Expressway Entrance)",
-  "56": "LASU Back Gate (Isheri Road Entrance)",
-  "57": "LASU TETFund Student Hostel",
-  "58": "Student Affairs Complex",
-  "59": "LASU Bursary / Finance Department",
-  "60": "LASU Registry / Registrar's Office",
-  "61": "Vice-Chancellor's Office",
-  "62": "LASU Works and Services Department",
-  "63": "Main Gate Junction",
-  "64": "Mosque Walkway Intersection",
-  "65": "Faculty of Science Junction",
-  "66": "Senate Building Junction",
-  "67": "Senate House Pathway",
-  "68": "Faculty of Arts Road Junction",
-  "69": "Postgraduate Road Corner",
-  "70": "Back Gate Road Intersection",
-  "71": "Sports Centre Pathway",
-  "72": "Sports Complex Pathway",
-  "73": "Library Walkway Junction",
-  "74": "Faculty of Law Walkway",
-  "75": "AJ Complex Intersection",
-  "76": "MBA Complex Pathway",
-  "77": "Social Sciences Access Pathway",
-  "78": "Main Bus Station Pathway",
-  "79": "LASU Bursary Pathway",
-  "80": "Bursary Junction",
-  "81": "Senate Building Junction",
-  "83": "Library Pedestrian Crossing",
-  "84": "Law Block Pedestrian Crossing",
-  "85": "Staff School Junction",
-  "86": "Senior Staff Club Junction",
-  "87": "Student Affairs Junction",
-  "88": "ICT / Press Junction",
-  "89": "Chapel Pathway Intersection",
-  "90": "Eco Market Junction",
-  "91": "Student Union Junction",
-  "92": "Auditorium / Theatre Junction",
-  "93": "Sports Centre East Intersection",
-  "94": "Main Road Turning Point North",
-  "95": "Exams and Records Crossing",
-  "96": "Social Sciences Road Corner",
-  "97": "Social Sciences Road Midpoint",
-  "98": "Social Sciences Road Junction",
-  "99": "LASUIS Road Segment 1",
-  "100": "LASUIS Road Segment 2",
-  "101": "MBA Area Junction",
-  "102": "Postgraduate Walkway Corner",
-  "103": "Bank Avenue Junction",
-  "104": "Microfinance Road Corner",
-  "105": "Canteen Walkway Intersection",
-  "120": "Science Library",
-  "121": "Zenith Bank",
-  "122": "Moot Court",
-  "123": "Department of International and Islamic Law",
-  "124": "Department of Philosophy",
-  "125": "LASU CBT Centre",
-  "126": "FMS Shuttle Park",
-  "127": "LASU International School",
-  "128": "Gbolahan Elias Hall",
-  "129": "Department of History and International Relations",
-  "130": "Innovation Hub",
-  "131": "Department of Theatre Arts and Music",
-  "132": "Faculty of Arts Munch It Stand",
-  "133": "Pavilion / Quadrangle",
-  "134": "Iya Dayo Restaurant (Eco Market)",
-  "135": "Centre for Planning Studies",
-  "136": "Abe Igi",
-  "137": "Football Pitch",
-  "138": "Flavours Canteen",
-  "139": "S.L. Edu Lecture Hall",
-  "140": "Science Market",
-  "141": "AJ Bus Stop",
-  "142": "Faculty of Computing",
-  "143": "Road to School of Transportation",
-  "144": "femi-gbajabiamila-conference-center",
-  "145": "Laundromat",
-  "146": "ENT Building",
-  "147": "FSS Market",
-  "148": "STEM Education Laboratory",
-  "149": "FMS Market",
-  "150": "ATM (Providus Bank)"
-};
+    "1": "Lagos State University (Main Campus)",
+    "2": "Senate House",
+    "3": "Senate Chambers",
+    "4": "Fatiu Ademola Akesode Library",
+    "5": "Taslim Olawale Elias Law Library",
+    "6": "LASU Bookshop",
+    "7": "Faculty of Law",
+    "8": "Faculty of Science",
+    "9": "Faculty of Arts",
+    "10": "Faculty of Management Sciences",
+    "11": "Faculty of Social Sciences",
+    "12": "Faculty of Education",
+    "13": "School of Communication (LASUSOC)",
+    "14": "School of Transport and Logistics",
+    "15": "Postgraduate School",
+    "16": "MBA Complex",
+    "17": "AJ Complex",
+    "18": "LASU ODLRI Office",
+    "19": "Centre for Entrepreneurship Studies",
+    "20": "Africa Centre of Excellence (ACEITSE)",
+    "21": "Exams and Records Office",
+    "22": "LASU ICT Centre",
+    "23": "LASU Radio Station",
+    "24": "LASU Press Centre",
+    "25": "LASU Main Auditorium",
+    "26": "Babajide Olusola Sanwo-Olu Library Complex",
+    "27": "LASU Health Centre",
+    "28": "LASU Central Mosque",
+    "29": "LASU Chapel of Light",
+    "30": "LASU Sport Centre",
+    "31": "Hussam Okoya-Thomas Sports Complex",
+    "32": "LASU Sports Complex (Secondary Facility)",
+    "33": "Eco Market",
+    "34": "Amala Extra Restaurant",
+    "35": "Costain Food Canteen",
+    "36": "Olaiya Staff Food Canteen",
+    "37": "Kena's Kitchen",
+    "38": "Access Bank",
+    "39": "Wema Bank ATM",
+    "40": "Wema Bank Branch",
+    "41": "United Bank for Africa (UBA)",
+    "42": "Sterling Bank",
+    "43": "LASU Microfinance Bank",
+    "44": "LASU Press Bus Stop",
+    "45": "Law Bus Stop",
+    "46": "MBA Bus Stop",
+    "47": "LASU Main Bus Station",
+    "48": "Student Union Buildings",
+    "49": "LASU Post Office",
+    "50": "LASU Staff School",
+    "51": "LASU International School (LASUIS)",
+    "52": "LASU Car Wash",
+    "53": "LASU Senior Staff Club",
+    "54": "Staff Quarters",
+    "55": "LASU Main Gate",
+    "56": "LASU Back Gate",
+    "57": "TETFund Student Hostel",
+    "58": "LASU Student Affairs Building",
+    "59": "LASU Bursary",
+    "60": "LASU Registry",
+    "61": "Vice-Chancellor's Office",
+    "62": "LASU Works and Services",
+    "63": "Main Gate Junction",
+    "64": "Mosque Walkway Intersection",
+    "65": "Faculty of Science Junction",
+    "66": "Senate Building Junction",
+    "67": "Senate House Pathway",
+    "68": "Faculty of Arts Road Junction",
+    "69": "Postgraduate Road Corner",
+    "70": "Back Gate Road Intersection",
+    "71": "Sports Centre Pathway",
+    "72": "Sports Complex Pathway",
+    "73": "Library Walkway Junction",
+    "74": "Faculty of Law Walkway",
+    "75": "AJ Complex Intersection",
+    "76": "MBA Complex Pathway",
+    "77": "Social Sciences Access Pathway",
+    "78": "Main Bus Station Pathway",
+    "79": "LASU Bursary Pathway",
+    "80": "Bursary Junction",
+    "81": "Senate Building Junction",
+    "83": "Library Pedestrian Crossing",
+    "84": "Law Block Pedestrian Crossing",
+    "85": "Staff School Junction",
+    "86": "Senior Staff Club Junction",
+    "87": "Student Affairs Junction",
+    "88": "ICT / Press Junction",
+    "89": "Chapel Pathway Intersection",
+    "90": "Eco Market Junction",
+    "91": "Student Union Junction",
+    "92": "Auditorium / Theatre Junction",
+    "93": "Sports Centre East Intersection",
+    "94": "Main Road Turning Point North",
+    "95": "Exams and Records Crossing",
+    "96": "Social Sciences Road Corner",
+    "97": "Social Sciences Road Midpoint",
+    "98": "Social Sciences Road Junction",
+    "99": "LASUIS Road Segment 1",
+    "100": "LASUIS Road Segment 2",
+    "101": "MBA Area Junction",
+    "102": "Postgraduate Walkway Corner",
+    "103": "Bank Avenue Junction",
+    "104": "Microfinance Road Corner",
+    "105": "Canteen Walkway Intersection"
+  };
 
   let stepIndex = 1;
   const firstNode = pathNodes[0];
   const firstNodeIdNum = Number(firstNode.id);
-  const isFirstNodeLandmark = (firstNodeIdNum >= 1 && firstNodeIdNum <= 62) || (firstNodeIdNum >= 120 && firstNodeIdNum <= 150);
+  const isFirstNodeLandmark = firstNodeIdNum >= 1 && firstNodeIdNum <= 62;
   const firstNodeName = NODE_DISPLAY_NAMES[firstNode.id] || firstNode.id.toUpperCase();
 
   instructions.push({
@@ -1831,7 +1498,7 @@ export function findShortestPath(
     const segmentDist = getDistance(fromNode.lat, fromNode.lng, toNode.lat, toNode.lng);
 
     const toNodeIdNum = Number(toNode.id);
-    const isToNodeLandmark = (toNodeIdNum >= 1 && toNodeIdNum <= 62) || (toNodeIdNum >= 120 && toNodeIdNum <= 150);
+    const isToNodeLandmark = toNodeIdNum >= 1 && toNodeIdNum <= 62;
     const toNodeName = NODE_DISPLAY_NAMES[toNode.id] || toNode.id.toUpperCase();
     const isDestination = (i === pathNodes.length - 2);
 
@@ -1842,35 +1509,19 @@ export function findShortestPath(
       turn = getTurnDirection(b1, b2);
     }
 
-    const nearby = findClosestLandmark(toNode.lat, toNode.lng, toNode.id);
-
     let instructionText = '';
     if (isDestination) {
-      if (isToNodeLandmark) {
-        instructionText = nearby
-          ? `Continue straight to reach your destination, the ${toNodeName} (located beside ${nearby.name}).`
-          : `Continue straight to reach your destination, the ${toNodeName}.`;
-      } else {
-        instructionText = nearby
-          ? `Continue straight to reach your destination (beside ${nearby.name}).`
-          : `Continue straight to reach your destination.`;
-      }
+      instructionText = isToNodeLandmark
+        ? `Continue straight to reach your destination, the ${toNodeName}.`
+        : `Continue straight to reach your destination.`;
     } else if (turn !== 'straight') {
-      if (isToNodeLandmark) {
-        instructionText = `Turn ${turn} at the ${toNodeName}.`;
-      } else if (nearby) {
-        instructionText = `Turn ${turn} after the ${nearby.name}.`;
-      } else {
-        instructionText = `At the next intersection, turn ${turn}.`;
-      }
+      instructionText = isToNodeLandmark
+        ? `Turn ${turn} at the ${toNodeName}.`
+        : `At the next intersection, turn ${turn}.`;
     } else {
-      if (isToNodeLandmark) {
-        instructionText = `Continue straight past the ${toNodeName}.`;
-      } else if (nearby) {
-        instructionText = `Continue straight past the ${nearby.name}.`;
-      } else {
-        instructionText = `Continue straight.`;
-      }
+      instructionText = isToNodeLandmark
+        ? `Continue straight past the ${toNodeName}.`
+        : `At the next walkway junction, continue straight.`;
     }
 
     instructions.push({
@@ -1881,23 +1532,8 @@ export function findShortestPath(
     });
   }
 
-  // Find arrival landmark names and details
-  const endNode = GRAPH_NODES.find(n => getDistance(endLat, endLng, n.lat, n.lng) < 1.0);
-  const endNodeId = endNode ? endNode.id : undefined;
-  const destName = endNodeId ? NODE_DISPLAY_NAMES[endNodeId] : '';
-  const nearbyDest = findClosestLandmark(endLat, endLng, endNodeId);
-
-  let arrivalText = 'Arrive at your destination.';
-  if (destName) {
-    arrivalText = nearbyDest
-      ? `Arrive at your destination, the ${destName} (beside ${nearbyDest.name}).`
-      : `Arrive at your destination, the ${destName}.`;
-  } else if (nearbyDest) {
-    arrivalText = `Arrive at your destination (beside ${nearbyDest.name}).`;
-  }
-
   instructions.push({
-    text: arrivalText,
+    text: `Arrive at your destination.`,
     distance: Math.round(bestEndMinDist),
     index: stepIndex++,
     coords: { lat: endLat, lng: endLng }

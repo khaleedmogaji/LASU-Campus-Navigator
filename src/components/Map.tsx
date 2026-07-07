@@ -3,8 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap, useMapEvents, 
 import L from 'leaflet';
 import { POI } from '../types';
 import 'leaflet/dist/leaflet.css';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-import 'react-leaflet-markercluster/styles';
 import { GRAPH_NODES, GRAPH_EDGES } from '../lib/pathNetwork';
 
 // Fix for default marker icons in Leaflet with React
@@ -61,22 +59,22 @@ function ChangeView({ center }: { center: [number, number] }) {
 
 
 
-export type MapStyle = 'street' | 'osm' | 'dark';
+export type MapStyle = 'voyager' | 'osm' | 'dark';
 
 const MAP_LAYERS = {
-  street: 'https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+  voyager: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
   osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
 };
 
 const MAP_ATTRIBUTIONS = {
-  street: '&copy; <a href="https://maps.google.com">Google Maps</a>',
+  voyager: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
   osm: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   dark: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 };
 
 const MAP_SUBDOMAINS: Record<MapStyle, string[]> = {
-  street: ['0', '1', '2', '3'],
+  voyager: ['a', 'b', 'c', 'd'],
   osm: ['a', 'b', 'c'],
   dark: ['a', 'b', 'c', 'd'],
 };
@@ -175,39 +173,6 @@ const getMarkerIcon = (category: string, isSelected: boolean) => {
   });
 };
 
-const createClusterCustomIcon = (cluster: any) => {
-  const count = cluster.getChildCount();
-  let size = 'w-10 h-10';
-  let bg = 'bg-lasu-primary';
-  let ring = 'ring-lasu-primary/20';
-
-  if (count > 10) {
-    size = 'w-12 h-12';
-    bg = 'bg-lasu-primary-dark';
-    ring = 'ring-lasu-primary/30';
-  } else if (count > 5) {
-    size = 'w-11 h-11';
-    bg = 'bg-lasu-primary';
-    ring = 'ring-lasu-primary/25';
-  } else {
-    size = 'w-10 h-10';
-    bg = 'bg-lasu-primary';
-    ring = 'ring-lasu-primary/15';
-  }
-
-  return L.divIcon({
-    html: `
-      <div class="relative ${size} ${bg} rounded-full border-2 border-white text-white flex items-center justify-center shadow-lg font-bold text-xs ring-8 ${ring} transition-transform duration-300 hover:scale-110">
-        <span>${count}</span>
-        <div class="absolute inset-0 rounded-full animate-ping bg-lasu-primary opacity-20 pointer-events-none"></div>
-      </div>
-    `,
-    className: 'custom-cluster-marker-div',
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
-  });
-};
-
 // ── Stable memoized per-POI marker ─────────────────────────────────────────────
 // userLocationRef is a MutableRefObject — its .current updates silently without
 // triggering a re-render, so memo() is never bypassed by GPS tick updates.
@@ -279,6 +244,118 @@ const PoiMarker = memo(({ poi, isSelected, userLocationRef, mapStyle, onPoiSelec
   );
 });
 PoiMarker.displayName = 'PoiMarker';
+
+interface PoiMarkersAndLabelsProps {
+  pois: POI[];
+  filteredPois: POI[];
+  selectedPoi: POI | null;
+  onPoiSelect: (poi: POI) => void;
+  userLocationRef: React.MutableRefObject<[number, number] | null>;
+  mapStyle: MapStyle;
+}
+
+const PoiMarkersAndLabels = memo(({
+  pois,
+  filteredPois,
+  selectedPoi,
+  onPoiSelect,
+  userLocationRef,
+  mapStyle
+}: PoiMarkersAndLabelsProps) => {
+  const map = useMap();
+  const [zoom, setZoom] = useState(map.getZoom());
+
+  useEffect(() => {
+    const handleZoom = () => setZoom(map.getZoom());
+    map.on('zoomend', handleZoom);
+    return () => {
+      map.off('zoomend', handleZoom);
+    };
+  }, [map]);
+
+  const getPriority = useCallback((poi: POI): number => {
+    const name = (poi.name || '').toLowerCase();
+    if (name.includes('senate') || name.includes('library complex')) return 5;
+    if (name.includes('faculty') || name.includes('school of')) return 4;
+    if (poi.category === 'Administrative' || poi.category === 'Library') return 3;
+    if (poi.category === 'Sports' || poi.category === 'Lecture Theatre') return 2;
+    return 1;
+  }, []);
+
+  const labelsToRender = useMemo(() => {
+    if (zoom < 16) return [];
+
+    let minDist = 0;
+    if (zoom <= 16) minDist = 75;
+    else if (zoom === 17) minDist = 40;
+    else if (zoom === 18) minDist = 20;
+    else minDist = 10;
+
+    const result: POI[] = [];
+    const candidatePois = filteredPois.filter(p => !selectedPoi || p.id !== selectedPoi.id);
+    const sortedPois = [...candidatePois].sort((a, b) => getPriority(b) - getPriority(a));
+
+    for (const poi of sortedPois) {
+      let hasOverlap = false;
+      for (const chosen of result) {
+        const dist = haversineDistance(
+          [poi.latitude, poi.longitude],
+          [chosen.latitude, chosen.longitude]
+        );
+        if (dist < minDist) {
+          hasOverlap = true;
+          break;
+        }
+      }
+      if (!hasOverlap) {
+        result.push(poi);
+      }
+    }
+    return result;
+  }, [filteredPois, selectedPoi, zoom, getPriority]);
+
+  return (
+    <>
+      {labelsToRender.map(poi => {
+        const catStyle = CATEGORY_STYLES[poi.category] || CATEGORY_STYLES.Default;
+        const labelIcon = L.divIcon({
+          className: 'custom-building-label-marker',
+          html: `
+            <div class="flex flex-col items-center justify-center pointer-events-auto cursor-pointer group">
+              <div class="w-2 h-2 rounded-full ${catStyle.bg} border border-white shadow-md transition-all duration-300 group-hover:scale-130"></div>
+              <div class="text-[9.5px] font-black text-zinc-800 dark:text-zinc-200 drop-shadow-sm whitespace-nowrap bg-white/95 dark:bg-zinc-900/95 border border-zinc-200/80 dark:border-zinc-800/80 px-2 py-0.5 rounded-md mt-0.5 pointer-events-none transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.1)] group-hover:bg-lasu-primary group-hover:text-white group-hover:border-lasu-primary">${poi.name}</div>
+            </div>
+          `,
+          iconSize: [125, 32],
+          iconAnchor: [62, 6]
+        });
+
+        return (
+          <Marker
+            key={`label-${poi.id}`}
+            position={[poi.latitude, poi.longitude]}
+            icon={labelIcon}
+            eventHandlers={{
+              click: () => onPoiSelect(poi)
+            }}
+          />
+        );
+      })}
+
+      {selectedPoi && (
+        <PoiMarker
+          key={`selected-${selectedPoi.id}`}
+          poi={selectedPoi}
+          isSelected={true}
+          userLocationRef={userLocationRef}
+          mapStyle={mapStyle}
+          onPoiSelect={onPoiSelect}
+        />
+      )}
+    </>
+  );
+});
+PoiMarkersAndLabels.displayName = 'PoiMarkersAndLabels';
 
 function FocusedView({ coordinate }: { coordinate: [number, number] | null | undefined }) {
   const map = useMap();
@@ -563,18 +640,14 @@ export const CampusMap: React.FC<MapProps> = ({
           <Polyline positions={traversedPath} color="#2563eb" weight={10} opacity={0.8} />
         )}
         
-        <MarkerClusterGroup iconCreateFunction={createClusterCustomIcon}>
-          {filteredPois.map((poi) => (
-            <PoiMarker
-              key={poi.id}
-              poi={poi}
-              isSelected={selectedPoi?.id === poi.id}
-              userLocationRef={userLocationRef}
-              mapStyle={mapStyle}
-              onPoiSelect={onPoiSelect}
-            />
-          ))}
-        </MarkerClusterGroup>
+        <PoiMarkersAndLabels
+          pois={pois}
+          filteredPois={filteredPois}
+          selectedPoi={selectedPoi}
+          onPoiSelect={onPoiSelect}
+          userLocationRef={userLocationRef}
+          mapStyle={mapStyle}
+        />
 
         {userLocation && (
           <>

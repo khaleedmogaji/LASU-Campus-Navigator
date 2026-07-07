@@ -98,11 +98,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 const INITIAL_POIS: POI[] = [
   {
     "id": "1",
-    "name": "Lagos State University",
+    "name": "Lagos State University (Main Campus)",
     "description": "Main campus of LASU, Ojo. Established 1983 along Lagos-Badagry Expressway, Alasia, Ojo. Seat of central administration. Houses Faculties of Arts, Education, Law, Management Sciences, Science, Social Sciences, School of Transport, School of Communication, and several centres.",
     "category": "Building",
-    "latitude": 6.466600486821916,
-    "longitude": 3.2010087980515363,
+    "latitude": 6.4664,
+    "longitude": 3.2003,
     "imageUrl": "/senate-building.png",
     "tags": [
       "admin",
@@ -131,11 +131,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "2",
-    "name": "Senate Building",
+    "name": "Babatunde Raji Fashola Senate House",
     "description": "University Senate House and main administrative HQ of LASU Ojo. Named after former Lagos State Governor Babatunde Raji Fashola. Houses Senate Chamber, central administration, and LASU-SDG Centre (3rd floor).",
     "category": "Administrative",
-    "latitude": 6.471234728121685,
-    "longitude": 3.2000209921511447,
+    "latitude": 6.4715,
+    "longitude": 3.2,
     "imageUrl": "/senate-building.png",
     "tags": [
       "admin",
@@ -197,11 +197,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "4",
-    "name": "Fatiu Akesode Library",
+    "name": "Fatiu Ademola Akesode Library (Main Library)",
     "description": "Main university library established 1983. Named after former VC Prof. Fatiu Ademola Akesode. Contains textbooks, journals, digital databases and e-library services. Part of a broader library system including the Law Library and branch libraries.",
     "category": "Library",
-    "latitude": 6.464890552980209,
-    "longitude": 3.2005754349316247,
+    "latitude": 6.465,
+    "longitude": 3.2004,
     "imageUrl": "/main-library.jpg",
     "imageUrls": [
       "/main-library.jpg",
@@ -244,8 +244,8 @@ const INITIAL_POIS: POI[] = [
     "name": "Taslim Olawale Elias Law Library",
     "description": "Specialised law library adjacent to Faculty of Law (Block A). Named after jurist and former ICJ President Taslim Olawale Elias. Open Monday–Sunday 8 AM–6 PM.",
     "category": "Library",
-    "latitude": 6.46787998163229,
-    "longitude": 3.2018192345712313,
+    "latitude": 6.4641,
+    "longitude": 3.2002,
     "imageUrl": "/law-library-1.jpg",
     "tags": [
       "library",
@@ -279,8 +279,8 @@ const INITIAL_POIS: POI[] = [
     "name": "LASU Bookshop",
     "description": "University bookshop located close to the main library. Stocks academic texts and reading materials. Open Monday–Friday 8 AM–4 PM.",
     "category": "Administrative",
-    "latitude": 6.465019395427171,
-    "longitude": 3.200397519738991,
+    "latitude": 6.465,
+    "longitude": 3.2004,
     "imageUrl": "https://picsum.photos/seed/lasu-admin1/800/600",
     "tags": [
       "admin",
@@ -312,8 +312,8 @@ const INITIAL_POIS: POI[] = [
     "name": "Faculty of Law",
     "description": "One of LASU's founding faculties (1983). Located in Block A beside the Taslim Olawale Elias Law Library. Has produced notable alumni including the current Vice-Chancellor. Open Monday–Friday 8 AM–6 PM. Contact: +234 706 644 4999.",
     "category": "Building",
-    "latitude": 6.468810305420531,
-    "longitude": 3.2043812491346735,
+    "latitude": 6.4674,
+    "longitude": 3.202,
     "imageUrl": "/law-1.jpg",
     "tags": [
       "law",
@@ -341,8 +341,8 @@ const INITIAL_POIS: POI[] = [
     "name": "Faculty of Science",
     "description": "Faculty of Science, LASU Ojo. Air-conditioned offices and lecture rooms. Offers science degree programmes. Open daily 7 AM–9 PM.",
     "category": "Building",
-    "latitude": 6.466313029359872,
-    "longitude": 3.200116094596366,
+    "latitude": 6.4663,
+    "longitude": 3.2,
     "imageUrl": "/science-1.jpg",
     "tags": [
       "science",
@@ -431,8 +431,8 @@ const INITIAL_POIS: POI[] = [
     "name": "Faculty of Management Sciences",
     "description": "Located on Igbo Elerin Road. Houses 8 departments: Accounting, Business Administration, Insurance, Banking & Finance, Industrial Relations & Personnel Management, Management Technology, Marketing, and Public Administration. Has 24/7 free Wi-Fi.",
     "category": "Building",
-    "latitude": 6.476540790428714,
-    "longitude": 3.200887433041905,
+    "latitude": 6.476,
+    "longitude": 3.1999,
     "imageUrl": "/management-sciences.png",
     "tags": [
       "management",
@@ -466,8 +466,8 @@ const INITIAL_POIS: POI[] = [
     "name": "Faculty of Social Sciences",
     "description": "Located beside the School of Transport, opposite the old LASU External System Secretariat. Fully accessibility-compliant entrance with security desk.",
     "category": "Building",
-    "latitude": 6.4755769158405085,
-    "longitude": 3.1975277158575857,
+    "latitude": 6.4581,
+    "longitude": 3.1916,
     "imageUrl": "https://picsum.photos/seed/lasu-social/800/600",
     "tags": [
       "social",
@@ -491,11 +491,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "12",
-    "name": "Faculty of Education (3-in-1 Hall)",
+    "name": "Faculty of Education",
     "description": "Faculty of Education, LASU Ojo. Offers undergraduate and postgraduate education programmes. Exact building coordinates require on-ground verification.",
     "category": "Building",
-    "latitude": 6.47306938523979,
-    "longitude": 3.199933437952813,
+    "latitude": 6.468,
+    "longitude": 3.1995,
     "imageUrl": "/education-1.png",
     "tags": [
       "education",
@@ -523,11 +523,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "13",
-    "name": "School of Communication",
+    "name": "School of Communication (LASUSOC)",
     "description": "First-of-its-kind degree-awarding School of Communication in Nigeria. Established early 2000s. Open Monday–Saturday 9 AM–5 PM.",
     "category": "Building",
-    "latitude": 6.472409536604193,
-    "longitude": 3.199629891153961,
+    "latitude": 6.4723,
+    "longitude": 3.2002,
     "imageUrl": "/lasusoc.png",
     "imageUrls": [
       "/lasusoc.png"
@@ -573,8 +573,8 @@ const INITIAL_POIS: POI[] = [
     "name": "School of Transport and Logistics",
     "description": "Offers professional transport and logistics programmes. Well-equipped building with ventilated lecture rooms, modern toilets, and good parking. 100% accessibility compliant. Contact: +234 814 070 8307.",
     "category": "Building",
-    "latitude": 6.474404337101407,
-    "longitude": 3.198833634017693,
+    "latitude": 6.4742,
+    "longitude": 3.1981,
     "imageUrl": "/school-of-transport.jpg",
     "tags": [
       "transport",
@@ -599,11 +599,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "15",
-    "name": "Post Graduate School",
+    "name": "Postgraduate School",
     "description": "Manages all postgraduate programmes at the Ojo campus. Located along Lagos-Badagry Expressway near MBA Bus Stop. Open Monday–Friday 8 AM–4 PM.",
     "category": "Administrative",
-    "latitude": 6.468513470995953,
-    "longitude": 3.20133278658194,
+    "latitude": 6.4685,
+    "longitude": 3.2013,
     "imageUrl": "/postgraduate-school-1.jpg",
     "tags": [
       "postgraduate",
@@ -629,11 +629,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "16",
-    "name": "MBA Hall",
+    "name": "MBA Complex",
     "description": "MBA Complex at LASU Ojo. Located in the Science Shops area of the campus. Gives its name to the nearby MBA Bus Stop. Houses postgraduate management and business administration programmes.",
     "category": "Building",
-    "latitude": 6.468590759870086,
-    "longitude": 3.2004878907995575,
+    "latitude": 6.4682,
+    "longitude": 3.1995,
     "imageUrl": "/mba-complex.png",
     "tags": [
       "mba",
@@ -659,11 +659,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "17",
-    "name": "Kena's Kitchen",
+    "name": "AJ Complex",
     "description": "AJ Complex within LASU campus. Houses shops, food vendors (including Kena's Kitchen, Shop A3), and services for the university community.",
     "category": "Building",
-    "latitude": 6.4698342310347,
-    "longitude": 3.2013090988940482,
+    "latitude": 6.4698,
+    "longitude": 3.2012,
     "imageUrl": "https://picsum.photos/seed/lasu-aj-complex/800/600",
     "tags": [
       "complex"
@@ -800,8 +800,8 @@ const INITIAL_POIS: POI[] = [
     "name": "LASU ICT Centre",
     "description": "Information and Communication Technology Centre (ICTC) of LASU. Located near MBA Bus Stop. Provides ICT services and online/distance learning support. Contact: +234 813 930 9402.",
     "category": "Administrative",
-    "latitude": 6.468994533150156,
-    "longitude": 3.2019330207536485,
+    "latitude": 6.4687,
+    "longitude": 3.2011,
     "imageUrl": "/ict-centre-1.jpg",
     "tags": [
       "ict",
@@ -832,11 +832,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "23",
-    "name": "Lagos State University Radio",
+    "name": "LASU Radio Station (95.7 FM)",
     "description": "Campus radio station broadcasting at 95.7 FM. Founded 2016. Inside LASU campus along Lagos-Badagry Expressway. Fully equipped studios. Open Monday–Friday 8 AM–5 PM.",
     "category": "Administrative",
-    "latitude": 6.471199252490675,
-    "longitude": 3.200082345317681,
+    "latitude": 6.4711,
+    "longitude": 3.1999,
     "imageUrl": "/lasu-radio.jpg",
     "tags": [
       "radio",
@@ -866,11 +866,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "24",
-    "name": "University Press",
+    "name": "LASU Press Centre",
     "description": "University Press and publications centre of LASU Ojo. Handles official printing and publications for the university. Open Monday–Friday 8 AM–4 PM. Gives its name to the nearby LASU Press Bus Stop.",
     "category": "Administrative",
-    "latitude": 6.46614796791818,
-    "longitude": 3.201916098017867,
+    "latitude": 6.4661,
+    "longitude": 3.2018,
     "imageUrl": "/lasu-press-centre.png",
     "tags": [
       "lasu",
@@ -888,11 +888,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "25",
-    "name": "Buba Marwa Auditorium",
+    "name": "LASU Main Auditorium",
     "description": "Main auditorium for large convocations and academic/social events. Wheelchair-accessible with spacious secured parking.",
     "category": "Lecture Theatre",
-    "latitude": 6.473341458279467,
-    "longitude": 3.200822178604921,
+    "latitude": 6.4731,
+    "longitude": 3.2019,
     "imageUrl": "/auditorium-1.jpg",
     "tags": [
       "events",
@@ -964,8 +964,8 @@ const INITIAL_POIS: POI[] = [
     "name": "LASU Health Centre",
     "description": "University Health Centre providing primary healthcare to students and staff of LASU Ojo campus.",
     "category": "Administrative",
-    "latitude": 6.465747640060314,
-    "longitude": 3.202199698773363,
+    "latitude": 6.4654,
+    "longitude": 3.2017,
     "imageUrl": "/health-centre.jpg",
     "tags": [
       "medical",
@@ -993,8 +993,8 @@ const INITIAL_POIS: POI[] = [
     "name": "LASU Central Mosque",
     "description": "Central Mosque of LASU Ojo campus. Open 24 hours. Serves daily and Friday (Jumat) prayers for Muslim students and staff. Houses the Muslim Students' Society (MSS) secretariat. Surrounded by shading trees.",
     "category": "Other",
-    "latitude": 6.4656623553050325,
-    "longitude": 3.1994209304224164,
+    "latitude": 6.4654,
+    "longitude": 3.2,
     "imageUrl": "/mosque-1.jpg",
     "tags": [
       "mosque",
@@ -1033,8 +1033,8 @@ const INITIAL_POIS: POI[] = [
     "name": "LASU Chapel of Light",
     "description": "Christian chapel of LASU Ojo campus. Open 24 hours. Regular services and evangelical activities for Christian students and staff.",
     "category": "Other",
-    "latitude": 6.467634561590337,
-    "longitude": 3.199388743916421,
+    "latitude": 6.4675,
+    "longitude": 3.1987,
     "imageUrl": "/chapel-of-light.jpg",
     "imageUrls": [
       "/chapel-of-light.jpg"
@@ -1060,11 +1060,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "30",
-    "name": "Sports Centre",
+    "name": "LASU Sport Centre",
     "description": "Main sports complex. Grass football pitch with running track, sand football pitches, volleyball, basketball, and tennis courts. Features the Hussam Okoya-Thomas Sports Hall (indoor) nearby. Open daily 7 AM–5 PM. Contact: +234 703 458 7838.",
     "category": "Sports",
-    "latitude": 6.467941043974533,
-    "longitude": 3.201677891556921,
+    "latitude": 6.4679,
+    "longitude": 3.2016,
     "imageUrl": "/sports-centre-1.png",
     "imageUrls": [
       "/sports-centre-1.png",
@@ -1150,11 +1150,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "33",
-    "name": "Amala Extra (Eco Market)",
+    "name": "Eco Market",
     "description": "Main on-campus market at LASU Ojo. Houses food canteens, shops, and service vendors including the campus bank arena (Access Bank, UBA, Wema Bank ATM). A central commercial hub for students.",
     "category": "Other",
-    "latitude": 6.464462981048976,
-    "longitude": 3.2035992985853547,
+    "latitude": 6.4644,
+    "longitude": 3.2037,
     "imageUrl": "https://picsum.photos/seed/lasu-vclodge/800/600",
     "tags": [
       "vc",
@@ -1285,11 +1285,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "38",
-    "name": "Access Bank",
+    "name": "Access Bank LASU Campus Branch",
     "description": "Access Bank Plc branch on the LASU Ojo campus, in the campus bank arena near Eco Market. Contact: +234 27120057.",
     "category": "Administrative",
-    "latitude": 6.4646709189691,
-    "longitude": 3.203433514836525,
+    "latitude": 6.4645,
+    "longitude": 3.2041,
     "imageUrl": "https://picsum.photos/seed/lasu-cbt/800/600",
     "tags": [
       "cbt",
@@ -1319,11 +1319,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "39",
-    "name": "ATM (WEMA Bank)",
+    "name": "Wema Bank ATM (LASU Campus)",
     "description": "Wema Bank ATM located within the LASU campus bank area near Eco Market. Open 24 hours. Contact: +234 12779883.",
     "category": "Administrative",
-    "latitude": 6.4741882,
-    "longitude": 3.1997335,
+    "latitude": 6.4648,
+    "longitude": 3.2041,
     "imageUrl": "https://picsum.photos/seed/lasu-pg/800/600",
     "tags": [
       "postgraduate",
@@ -1526,8 +1526,8 @@ const INITIAL_POIS: POI[] = [
     "name": "MBA Bus Stop",
     "description": "Named bus stop adjacent to the MBA Complex and Postgraduate School area. A key internal shuttle navigation reference point for students and staff.",
     "category": "Other",
-    "latitude": 6.468614322716986,
-    "longitude": 3.200750133732416,
+    "latitude": 6.4686,
+    "longitude": 3.2008,
     "imageUrl": "https://picsum.photos/seed/lasu-mba-busstop/800/600",
     "tags": [
       "bus",
@@ -1582,11 +1582,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "48",
-    "name": "LASUSU Student Arcade",
+    "name": "Student Union Buildings",
     "description": "Student Union Government (SUG) buildings housing the student union secretariat and student representative offices.",
     "category": "Administrative",
-    "latitude": 6.46593953070712,
-    "longitude": 3.20349788784851,
+    "latitude": 6.4658,
+    "longitude": 3.2031,
     "imageUrl": "/student-union.jpg",
     "imageUrls": [
       "/student-union.jpg"
@@ -1639,11 +1639,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "50",
-    "name": "LASU Staff School",
+    "name": "LASU Staff School (Primary School)",
     "description": "Primary school for children of LASU staff within the Ojo campus grounds. Open Monday–Friday 7 AM–4 PM. Contact: +234 703 685 2915.",
     "category": "Other",
-    "latitude": 6.46601415482787,
-    "longitude": 3.19728589219138,
+    "latitude": 6.4658,
+    "longitude": 3.1982,
     "imageUrl": "/staff-school-1.jpg",
     "imageUrls": [
       "/staff-school-1.jpg",
@@ -1704,8 +1704,8 @@ const INITIAL_POIS: POI[] = [
     "name": "LASU Car Wash",
     "description": "Car wash facility on the LASU campus on Igbo Elerin Road, close to the Senior Staff Club. Open Monday–Friday 24 hours.",
     "category": "Other",
-    "latitude": 6.469765672813498,
-    "longitude": 3.200119995745576,
+    "latitude": 6.4697,
+    "longitude": 3.1999,
     "imageUrl": "https://picsum.photos/seed/lasu-lasu-car-wash/800/600",
     "tags": [
       "lasu",
@@ -1871,11 +1871,11 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "58",
-    "name": "Student Affairs Complex",
+    "name": "LASU Student Affairs Building",
     "description": "Handles student welfare, accommodation administration, and student-related services. Located near the Senate House and the Babajide Olusola Sanwo-Olu Library Complex.",
     "category": "Administrative",
-    "latitude": 6.470483379775232,
-    "longitude": 3.201276583178638,
+    "latitude": 6.4716,
+    "longitude": 3.2003,
     "imageUrl": "https://picsum.photos/seed/lasu-staffclub/800/600",
     "tags": [
       "food",
@@ -1944,37 +1944,37 @@ const INITIAL_POIS: POI[] = [
   },
   {
     "id": "60",
-    "name": "LASU Registry / Registrar's Office",
-    "description": "The Office of the University Registrar is responsible for student admissions, academic records, examinations, matriculation, graduation processes, and other academic administrative services at Lagos State University.",
-    "category": "Administrative",
-    "latitude": 6.4715,
-    "longitude": 3.2001,
-    "imageUrl": "/senate-building.png",
-    "tags": [
-      "registry",
-      "registrar",
-      "administration",
-      "admissions",
-      "student records",
-      "academic affairs",
-      "examinations",
-      "matriculation",
-      "graduation",
-      "office"
-    ],
-    "searchAliases": [
-      "registry",
-      "registrar",
-      "registrar office",
-      "registry office",
-      "admissions office",
-      "student records",
-      "academic affairs",
-      "admin office",
-      "administration",
-      "lasu registry"
-    ],
-    "nearbyLandmarks": [
+  "name": "LASU Registry / Registrar's Office",
+  "description": "The Office of the University Registrar is responsible for student admissions, academic records, examinations, matriculation, graduation processes, and other academic administrative services at Lagos State University.",
+  "category": "Administrative",
+  "latitude": 6.4715,
+  "longitude": 3.2001,
+  "imageUrl": "/senate-building.png",
+  "tags": [
+    "registry",
+    "registrar",
+    "administration",
+    "admissions",
+    "student records",
+    "academic affairs",
+    "examinations",
+    "matriculation",
+    "graduation",
+    "office"
+  ],
+  "searchAliases": [
+    "registry",
+    "registrar",
+    "registrar office",
+    "registry office",
+    "admissions office",
+    "student records",
+    "academic affairs",
+    "admin office",
+    "administration",
+    "lasu registry"
+  ],
+  "nearbyLandmarks": [
       "Babatunde Raji Fashola Senate House",
       "LASU Radio Station (95.7 FM)",
       "Babajide Olusola Sanwo-Olu Library Complex",
@@ -2220,610 +2220,6 @@ const INITIAL_POIS: POI[] = [
     "nearbyLandmarks": [
       "Law Bus Stop"
     ]
-  },
-  {
-    "id": "120",
-    "name": "Science Library",
-    "description": "Library serving the Faculty of Science",
-    "category": "Library",
-    "latitude": 6.464563388498464,
-    "longitude": 3.1996374457202577,
-    "imageUrl": "",
-    "tags": [
-      "science",
-      "library"
-    ],
-    "searchAliases": [
-      "science",
-      "library"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "121",
-    "name": "Zenith Bank",
-    "description": "Zenith Bank branch on campus",
-    "category": "Building",
-    "latitude": 6.463882032753872,
-    "longitude": 3.2040128719444443,
-    "imageUrl": "",
-    "tags": [
-      "zenith",
-      "bank"
-    ],
-    "searchAliases": [
-      "zenith",
-      "bank"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "122",
-    "name": "Moot Court",
-    "description": "Moot court facility within the Faculty of Law",
-    "category": "Sports",
-    "latitude": 6.467728343450508,
-    "longitude": 3.201202651276919,
-    "imageUrl": "",
-    "tags": [
-      "moot",
-      "court"
-    ],
-    "searchAliases": [
-      "moot",
-      "court"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "123",
-    "name": "Department of International and Islamic Law",
-    "description": "Department offering international and Islamic law programmes",
-    "category": "Building",
-    "latitude": 6.467217104718152,
-    "longitude": 3.201502171387113,
-    "imageUrl": "",
-    "tags": [
-      "department",
-      "international",
-      "islamic",
-      "law"
-    ],
-    "searchAliases": [
-      "department",
-      "international",
-      "islamic",
-      "law"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "124",
-    "name": "Department of Philosophy",
-    "description": "Department of Philosophy within the Faculty of Arts",
-    "category": "Building",
-    "latitude": 6.473175502500556,
-    "longitude": 3.2004073393023633,
-    "imageUrl": "",
-    "tags": [
-      "department",
-      "philosophy"
-    ],
-    "searchAliases": [
-      "department",
-      "philosophy"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "125",
-    "name": "LASU CBT Centre",
-    "description": "Computer-based testing centre for exams and assessments",
-    "category": "Building",
-    "latitude": 6.475146934481338,
-    "longitude": 3.2015570512444502,
-    "imageUrl": "",
-    "tags": [
-      "cbt",
-      "centre"
-    ],
-    "searchAliases": [
-      "cbt",
-      "centre"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "126",
-    "name": "FMS Shuttle Park",
-    "description": "Shuttle pickup and drop-off point near School of Transport",
-    "category": "Building",
-    "latitude": 6.474570863424578,
-    "longitude": 3.1992912188474905,
-    "imageUrl": "",
-    "tags": [
-      "fms",
-      "shuttle",
-      "park"
-    ],
-    "searchAliases": [
-      "fms",
-      "shuttle",
-      "park"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "127",
-    "name": "LASU International School",
-    "description": "Secondary school located within the university campus",
-    "category": "Building",
-    "latitude": 6.48044246920321,
-    "longitude": 3.197089425334433,
-    "imageUrl": "",
-    "tags": [
-      "international",
-      "school"
-    ],
-    "searchAliases": [
-      "international",
-      "school"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "128",
-    "name": "Gbolahan Elias Hall",
-    "description": "Multipurpose hall used for lectures and events",
-    "category": "Lecture Theatre",
-    "latitude": 6.4769104085997276,
-    "longitude": 3.1994430311932183,
-    "imageUrl": "",
-    "tags": [
-      "gbolahan",
-      "elias",
-      "hall"
-    ],
-    "searchAliases": [
-      "gbolahan",
-      "elias",
-      "hall"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "129",
-    "name": "Department of History and International Relations",
-    "description": "Department offering history and international relations programmes",
-    "category": "Building",
-    "latitude": 6.47327146011797,
-    "longitude": 3.1997040732631596,
-    "imageUrl": "",
-    "tags": [
-      "department",
-      "history",
-      "international",
-      "relations"
-    ],
-    "searchAliases": [
-      "department",
-      "history",
-      "international",
-      "relations"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "130",
-    "name": "Innovation Hub",
-    "description": "Event and innovation space for student and external programmes",
-    "category": "Administrative",
-    "latitude": 6.465547880153592,
-    "longitude": 3.2005384188095283,
-    "imageUrl": "",
-    "tags": [
-      "innovation",
-      "hub"
-    ],
-    "searchAliases": [
-      "innovation",
-      "hub"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "131",
-    "name": "Department of Theatre Arts and Music",
-    "description": "Department offering theatre, performing arts and music programmes",
-    "category": "Lecture Theatre",
-    "latitude": 6.464678991995442,
-    "longitude": 3.200726927736389,
-    "imageUrl": "",
-    "tags": [
-      "department",
-      "theatre",
-      "arts",
-      "music"
-    ],
-    "searchAliases": [
-      "department",
-      "theatre",
-      "arts",
-      "music"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "132",
-    "name": "Faculty of Arts Munch It Stand",
-    "description": "Popular food stand located in the Faculty of Arts area",
-    "category": "Building",
-    "latitude": 6.464102547918738,
-    "longitude": 3.2020920021656263,
-    "imageUrl": "",
-    "tags": [
-      "faculty",
-      "arts",
-      "munch",
-      "it",
-      "stand"
-    ],
-    "searchAliases": [
-      "faculty",
-      "arts",
-      "munch",
-      "it",
-      "stand"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "133",
-    "name": "Pavilion / Quadrangle",
-    "description": "Open relaxation and gathering space in the Faculty of Education area",
-    "category": "Administrative",
-    "latitude": 6.465124989116374,
-    "longitude": 3.202393233191559,
-    "imageUrl": "",
-    "tags": [
-      "pavilion",
-      "quadrangle"
-    ],
-    "searchAliases": [
-      "pavilion",
-      "quadrangle"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "134",
-    "name": "Iya Dayo Restaurant (Eco Market)",
-    "description": "Well-known restaurant in the Eco Market food zone",
-    "category": "Building",
-    "latitude": 6.464173721914673,
-    "longitude": 3.2036483620601244,
-    "imageUrl": "",
-    "tags": [
-      "iya",
-      "dayo",
-      "restaurant",
-      "eco",
-      "market"
-    ],
-    "searchAliases": [
-      "iya",
-      "dayo",
-      "restaurant",
-      "eco",
-      "market"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "135",
-    "name": "Centre for Planning Studies",
-    "description": "Faculty offering urban and regional planning programmes",
-    "category": "Building",
-    "latitude": 6.464600166744562,
-    "longitude": 3.2029082966705356,
-    "imageUrl": "",
-    "tags": [
-      "centre",
-      "planning",
-      "studies"
-    ],
-    "searchAliases": [
-      "centre",
-      "planning",
-      "studies"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "136",
-    "name": "Abe Igi",
-    "description": "Iconic relaxation spot under the trees in the Faculty of Arts",
-    "category": "Administrative",
-    "latitude": 6.4638801145689015,
-    "longitude": 3.201351900855808,
-    "imageUrl": "",
-    "tags": [
-      "abe",
-      "igi"
-    ],
-    "searchAliases": [
-      "abe",
-      "igi"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "137",
-    "name": "Football Pitch",
-    "description": "Main football field within the Sports Centre complex",
-    "category": "Sports",
-    "latitude": 6.467987173640815,
-    "longitude": 3.2032192255159466,
-    "imageUrl": "",
-    "tags": [
-      "football",
-      "pitch"
-    ],
-    "searchAliases": [
-      "football",
-      "pitch"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "138",
-    "name": "Flavours Canteen",
-    "description": "Restaurant adjacent to the Postgraduate School building",
-    "category": "Building",
-    "latitude": 6.46811370076866,
-    "longitude": 3.201509812364915,
-    "imageUrl": "",
-    "tags": [
-      "flavours",
-      "canteen"
-    ],
-    "searchAliases": [
-      "flavours",
-      "canteen"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "139",
-    "name": "S.L. Edu Lecture Hall",
-    "description": "Large lecture hall in the Faculty of Science used for classes and events",
-    "category": "Lecture Theatre",
-    "latitude": 6.468071058592406,
-    "longitude": 3.1999836355389606,
-    "imageUrl": "",
-    "tags": [
-      "s",
-      "l",
-      "edu",
-      "lecture",
-      "hall"
-    ],
-    "searchAliases": [
-      "s",
-      "l",
-      "edu",
-      "lecture",
-      "hall"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "140",
-    "name": "Science Market",
-    "description": "Campus market in the Faculty of Science for stationery and materials",
-    "category": "Building",
-    "latitude": 6.4682736088931945,
-    "longitude": 3.19935768837566,
-    "imageUrl": "",
-    "tags": [
-      "science",
-      "market"
-    ],
-    "searchAliases": [
-      "science",
-      "market"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "141",
-    "name": "AJ Bus Stop",
-    "description": "Popular campus bus stop opposite Love Garden",
-    "category": "Administrative",
-    "latitude": 6.469642683201162,
-    "longitude": 3.200909505018672,
-    "imageUrl": "",
-    "tags": [
-      "aj",
-      "bus",
-      "stop"
-    ],
-    "searchAliases": [
-      "aj",
-      "bus",
-      "stop"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "142",
-    "name": "Faculty of Computing",
-    "description": "The new Faculty of Computing and Information Technologies",
-    "category": "Building",
-    "latitude": 6.4735945,
-    "longitude": 3.1999947,
-    "imageUrl": "",
-    "tags": [
-      "faculty",
-      "computing"
-    ],
-    "searchAliases": [
-      "faculty",
-      "computing"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "143",
-    "name": "Road to School of Transportation",
-    "description": "The Junction opposite CBT centre that leads to school of transportation",
-    "category": "Sports",
-    "latitude": 6.4742798,
-    "longitude": 3.1999062,
-    "imageUrl": "",
-    "tags": [
-      "road",
-      "school",
-      "transportation"
-    ],
-    "searchAliases": [
-      "road",
-      "school",
-      "transportation"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "144",
-    "name": "femi-gbajabiamila-conference-center",
-    "description": "Femi Gbajabiamila Conference Center for events",
-    "category": "Administrative",
-    "latitude": 6.4742105,
-    "longitude": 3.1994831,
-    "imageUrl": "",
-    "tags": [
-      "femi",
-      "gbajabiamila",
-      "conference",
-      "center"
-    ],
-    "searchAliases": [
-      "femi",
-      "gbajabiamila",
-      "conference",
-      "center"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "145",
-    "name": "Laundromat",
-    "description": "On-campus laundry facility",
-    "category": "Building",
-    "latitude": 6.4741755,
-    "longitude": 3.1992631,
-    "imageUrl": "",
-    "tags": [
-      "laundromat"
-    ],
-    "searchAliases": [
-      "laundromat"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "146",
-    "name": "ENT Building",
-    "description": "The building for Enterpreneurship activities",
-    "category": "Building",
-    "latitude": 6.4735732,
-    "longitude": 3.197687,
-    "imageUrl": "",
-    "tags": [
-      "ent",
-      "building"
-    ],
-    "searchAliases": [
-      "ent",
-      "building"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "147",
-    "name": "FSS Market",
-    "description": "Food market serving the Faculty of Social Sciences area",
-    "category": "Building",
-    "latitude": 6.4745766,
-    "longitude": 3.1984595,
-    "imageUrl": "",
-    "tags": [
-      "fss",
-      "market"
-    ],
-    "searchAliases": [
-      "fss",
-      "market"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "148",
-    "name": "STEM Education Laboratory",
-    "description": "",
-    "category": "Building",
-    "latitude": 6.4763792,
-    "longitude": 3.1991545,
-    "imageUrl": "",
-    "tags": [
-      "stem",
-      "education",
-      "laboratory"
-    ],
-    "searchAliases": [
-      "stem",
-      "education",
-      "laboratory"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "149",
-    "name": "FMS Market",
-    "description": "Food market serving the Faculty of Management Sciences area",
-    "category": "Building",
-    "latitude": 6.4748851,
-    "longitude": 3.2003843,
-    "imageUrl": "",
-    "tags": [
-      "fms",
-      "market"
-    ],
-    "searchAliases": [
-      "fms",
-      "market"
-    ],
-    "nearbyLandmarks": []
-  },
-  {
-    "id": "150",
-    "name": "ATM (Providus Bank)",
-    "description": "Providus Bank ATM on campus",
-    "category": "Building",
-    "latitude": 6.4747362,
-    "longitude": 3.2011196,
-    "imageUrl": "",
-    "tags": [
-      "atm",
-      "providus",
-      "bank"
-    ],
-    "searchAliases": [
-      "atm",
-      "providus",
-      "bank"
-    ],
-    "nearbyLandmarks": []
   }
 ];
 
@@ -3064,7 +2460,7 @@ function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLocating, setIsLocating] = useState(false);
   const [isRouteHighlighted, setIsRouteHighlighted] = useState(false);
-  const [mapStyle, setMapStyle] = useState<MapStyle>('voyager');
+  const [mapStyle, setMapStyle] = useState<MapStyle>('street');
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState<{ distance: number; duration: number; coordinates: any[]; segmentsCount: number; instructions: any[] } | null>(null);
   const [focusedCoordinate, setFocusedCoordinate] = useState<[number, number] | null>(null);
@@ -3314,7 +2710,7 @@ function AppContent() {
           <div className="space-y-2.5">
             {[
               { num: '01', icon: 'Tag', title: 'Filter by Category', desc: 'Tap the category filter tags below the search bar to highlight specific building types on the map.' },
-              { num: '02', icon: 'Layers', title: 'Change Map Themes', desc: 'Switch between CARTO Voyager and OpenStreetMap views via the Layers button.' },
+              { num: '02', icon: 'Layers', title: 'Change Map Themes', desc: 'Switch between Google Street and OpenStreetMap views via the Layers button.' },
             ].map((tip) => (
               <div 
                 key={tip.num} 
@@ -3811,10 +3207,6 @@ function AppContent() {
         : routeInfo.distance / 1000)
     : 0;
 
-  const numTurns = routeInfo && routeInfo.instructions
-    ? routeInfo.instructions.filter((step: any) => step.text.toLowerCase().includes('turn left') || step.text.toLowerCase().includes('turn right')).length
-    : 0;
-
   // Find current active instruction step based on currentInstructionIndex state
   let currentInstructionStep: any = null;
   let nextInstructionStep: any = null;
@@ -3881,30 +3273,16 @@ function AppContent() {
   const navCardTop = "top-4";
 
   const LAYER_PREVIEWS = [
-    { id: 'voyager' as MapStyle, label: 'CARTO Voyager', desc: 'OpenStreetMap (CARTO Voyager)', bg: 'from-sky-400 via-sky-300 to-emerald-200' },
+    { id: 'street' as MapStyle, label: 'Google Maps', desc: 'Standard street view', bg: 'from-sky-400 via-sky-300 to-emerald-200' },
     { id: 'osm' as MapStyle, label: 'OSM', desc: 'Pedestrian pathways', bg: 'from-sky-200 to-zinc-200' }
   ] as const;
 
   const filteredStartPois = startSearchQuery && startSearchQuery !== "My Location"
-    ? pois.filter(p => {
-        const q = startSearchQuery.toLowerCase().trim();
-        return p.name.toLowerCase().includes(q) ||
-               p.category.toLowerCase().includes(q) ||
-               (p.description && p.description.toLowerCase().includes(q)) ||
-               p.tags?.some(tag => tag.toLowerCase().includes(q)) ||
-               p.searchAliases?.some(alias => alias.toLowerCase().includes(q));
-      })
+    ? pois.filter(p => p.name.toLowerCase().includes(startSearchQuery.toLowerCase()))
     : pois;
 
   const filteredEndPois = endSearchQuery && endSearchQuery !== "My Location"
-    ? pois.filter(p => {
-        const q = endSearchQuery.toLowerCase().trim();
-        return p.name.toLowerCase().includes(q) ||
-               p.category.toLowerCase().includes(q) ||
-               (p.description && p.description.toLowerCase().includes(q)) ||
-               p.tags?.some(tag => tag.toLowerCase().includes(q)) ||
-               p.searchAliases?.some(alias => alias.toLowerCase().includes(q));
-      })
+    ? pois.filter(p => p.name.toLowerCase().includes(endSearchQuery.toLowerCase()))
     : pois;
 
   const renderRoutePlannerPanel = () => {
@@ -4570,7 +3948,7 @@ function AppContent() {
                         {displayDuration} min
                       </span>
                       <span className="text-[11px] font-bold text-zinc-700">
-                        ({displayDistance.toFixed(2)} km • {numTurns} {numTurns === 1 ? 'turn' : 'turns'} • {routeInfo.segmentsCount} segments)
+                        ({displayDistance.toFixed(2)} km • {routeInfo.segmentsCount} segments)
                       </span>
                     </div>
                   </div>
@@ -4878,7 +4256,7 @@ function AppContent() {
                   <div>
                     <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Features</h3>
                     <ul className="list-disc pl-5 space-y-2 text-sm">
-                      <li>Interactive map with multiple styles (CARTO Voyager, OSM, Dark)</li>
+                      <li>Interactive map with multiple styles (Street, Satellite, Dark)</li>
                       <li>Search for points of interest (POI) across campus</li>
                       <li>Get walking directions and estimated times</li>
                       <li>Follow your current location in real-time</li>
@@ -4891,7 +4269,7 @@ function AppContent() {
                         <strong>🔍 Smart Filter Tags</strong>: Click the tags directly below the search bar to filter building categories instantly.
                       </div>
                       <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-xs leading-relaxed text-zinc-700 font-semibold">
-                        <strong>🗺️ Toggle Map Themes</strong>: Use the Layers icon on the right to switch between CARTO Voyager and OpenStreetMap views.
+                        <strong>🗺️ Toggle Map Themes</strong>: Use the Layers icon on the right to switch between Google Street and OpenStreetMap views.
                       </div>
                     </div>
                   </div>
@@ -5021,7 +4399,7 @@ function AppContent() {
                 <p className="text-xs text-zinc-700 leading-relaxed font-semibold">
                   {tourStep === 1 && "Use the Search bar at the top (desktop) or in the bottom sheet (mobile) to find any landmark. Tap the category tag pills underneath (like 'Library' or 'Sports') to filter locations instantly."}
                   {tourStep === 2 && "Tap any category-coded pin on the map to open its details panel. You will find photos, a directory of academic departments, and quick actions to get directions."}
-                  {tourStep === 3 && "Use the controls on the right of the map: tap GPS to center and lock the camera on your position, or tap Layers to switch between the CARTO Voyager Map and OpenStreetMap pathways."}
+                  {tourStep === 3 && "Use the controls on the right of the map: tap GPS to center and lock the camera on your position, or tap Layers to switch between the Google Street Map and OpenStreetMap pathways."}
                   {tourStep === 4 && "Tap 'Route To Here' on any landmark card to plan a path, and unmute the Speaker icon for spoken turn-by-turn voice directions!"}
                 </p>
 
