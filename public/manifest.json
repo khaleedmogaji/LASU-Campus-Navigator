@@ -1,0 +1,29 @@
+{
+  "name": "LASU Campus Navigator",
+  "short_name": "LASU Nav",
+  "description": "Navigate the LASU campus with ease.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "https://lasu.edu.ng/home/img/logo1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://lasu.edu.ng/home/img/logo1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://lasu.edu.ng/home/img/logo1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

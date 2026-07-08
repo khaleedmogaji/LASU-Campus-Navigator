@@ -179,12 +179,12 @@ const getMarkerIcon = (category: string, isSelected: boolean) => {
 interface PoiMarkerProps {
   poi: POI;
   isSelected: boolean;
-  userLocationRef: React.MutableRefObject<[number, number] | null>;
+  userLocation: [number, number] | null;
   mapStyle: string;
   onPoiSelect: (poi: POI) => void;
 }
 
-const PoiMarker = memo(({ poi, isSelected, userLocationRef, mapStyle, onPoiSelect }: PoiMarkerProps) => {
+const PoiMarker = memo(({ poi, isSelected, userLocation, mapStyle, onPoiSelect }: PoiMarkerProps) => {
   const icon = useMemo(
     () => getMarkerIcon(poi.category, isSelected),
     [poi.category, isSelected]
@@ -192,9 +192,9 @@ const PoiMarker = memo(({ poi, isSelected, userLocationRef, mapStyle, onPoiSelec
 
   const handleClick = useCallback(() => onPoiSelect(poi), [poi, onPoiSelect]);
 
-  // Read current location from ref — does NOT re-render when location changes
-  const dist = userLocationRef.current
-    ? haversineDistance(userLocationRef.current, [poi.latitude, poi.longitude])
+  // Read real-time userLocation so selected marker details update on GPS ticks
+  const dist = userLocation
+    ? haversineDistance(userLocation, [poi.latitude, poi.longitude])
     : null;
 
   return (
@@ -264,12 +264,18 @@ const PoiMarkersAndLabels = memo(({
 }: PoiMarkersAndLabelsProps) => {
   const map = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
+  const [bounds, setBounds] = useState(() => map.getBounds());
 
   useEffect(() => {
-    const handleZoom = () => setZoom(map.getZoom());
-    map.on('zoomend', handleZoom);
+    const handleMapChange = () => {
+      setZoom(map.getZoom());
+      setBounds(map.getBounds());
+    };
+    map.on('zoomend', handleMapChange);
+    map.on('moveend', handleMapChange);
     return () => {
-      map.off('zoomend', handleZoom);
+      map.off('zoomend', handleMapChange);
+      map.off('moveend', handleMapChange);
     };
   }, [map]);
 
@@ -292,7 +298,11 @@ const PoiMarkersAndLabels = memo(({
     else minDist = 10;
 
     const result: POI[] = [];
-    const candidatePois = filteredPois.filter(p => !selectedPoi || p.id !== selectedPoi.id);
+    const candidatePois = filteredPois.filter(p => {
+      if (selectedPoi && p.id === selectedPoi.id) return false;
+      // Frustum culling: only process and render points inside map bounds
+      return bounds.contains(L.latLng(p.latitude, p.longitude));
+    });
     const sortedPois = [...candidatePois].sort((a, b) => getPriority(b) - getPriority(a));
 
     for (const poi of sortedPois) {
@@ -312,7 +322,7 @@ const PoiMarkersAndLabels = memo(({
       }
     }
     return result;
-  }, [filteredPois, selectedPoi, zoom, getPriority]);
+  }, [filteredPois, selectedPoi, zoom, bounds, getPriority]);
 
   return (
     <>
@@ -341,17 +351,6 @@ const PoiMarkersAndLabels = memo(({
           />
         );
       })}
-
-      {selectedPoi && (
-        <PoiMarker
-          key={`selected-${selectedPoi.id}`}
-          poi={selectedPoi}
-          isSelected={true}
-          userLocationRef={userLocationRef}
-          mapStyle={mapStyle}
-          onPoiSelect={onPoiSelect}
-        />
-      )}
     </>
   );
 });
@@ -501,7 +500,7 @@ function SelectedBuilding3D({ lat: rawLat, lng: rawLng, category }: { lat: numbe
   );
 }
 
-export const CampusMap: React.FC<MapProps> = ({
+export const CampusMap: React.FC<MapProps> = memo(({
   pois,
   filterCategory,
   selectedPoi,
@@ -649,6 +648,17 @@ export const CampusMap: React.FC<MapProps> = ({
           mapStyle={mapStyle}
         />
 
+        {selectedPoi && (
+          <PoiMarker
+            key={`selected-${selectedPoi.id}`}
+            poi={selectedPoi}
+            isSelected={true}
+            userLocation={userLocation}
+            mapStyle={mapStyle}
+            onPoiSelect={onPoiSelect}
+          />
+        )}
+
         {userLocation && (
           <>
             <Marker
@@ -659,7 +669,7 @@ export const CampusMap: React.FC<MapProps> = ({
                 html: `
                   <div class="relative w-16 h-16 flex items-center justify-center">
                     ${userHeading !== undefined && userHeading !== null ? `
-                      <div class="absolute inset-0 flex items-center justify-center z-10" style="transform: rotate(${userHeading}deg); transition: transform 0.3s ease-out; transform-origin: center;">
+                      <div class="absolute inset-0 flex items-center justify-center z-10" style="transform: rotate(${userHeading}deg); transition: transform 0.3s ease-out; transform-origin: center; will-change: transform;">
                         <svg viewBox="0 0 64 64" class="w-16 h-16 overflow-visible pointer-events-none">
                           <defs>
                             <radialGradient id="beam-grad" gradientUnits="userSpaceOnUse" cx="32" cy="32" r="30">
@@ -672,7 +682,7 @@ export const CampusMap: React.FC<MapProps> = ({
                       </div>
                     ` : ''}
                     <div class="absolute w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-lg z-20"></div>
-                    <div class="absolute w-9 h-9 bg-blue-500/20 rounded-full animate-pulse z-0"></div>
+                    <div class="absolute w-9 h-9 bg-blue-500/20 rounded-full animate-pulse z-0" style="will-change: opacity;"></div>
                   </div>
                 `,
                 iconSize: [64, 64],
@@ -808,4 +818,6 @@ export const CampusMap: React.FC<MapProps> = ({
       </button>
     </div>
   );
-};
+});
+
+CampusMap.displayName = 'CampusMap';

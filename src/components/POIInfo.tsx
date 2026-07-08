@@ -137,10 +137,10 @@ export const POIInfo: React.FC<POIInfoProps> = ({
   isSidebar = false,
   onShare
 }) => {
-  if (!poi) return null;
-
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+
+  if (!poi) return null;
 
   const mediaItems: { type: 'image' | 'video'; url: string }[] = [];
   
@@ -242,6 +242,7 @@ export const POIInfo: React.FC<POIInfoProps> = ({
                   }}
                   className="absolute inset-0 w-full h-full object-cover"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
                 />
               )}
             </AnimatePresence>

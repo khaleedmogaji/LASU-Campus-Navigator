@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, animate, AnimatePresence } from 'motion/react';
 import { POI } from '../types';
 import { SearchBar } from './SearchBar';
-import { POIInfo } from './POIInfo';
+const POIInfo = React.lazy(() => import('./POIInfo').then(m => ({ default: m.POIInfo })));
 
 // ── Snap point heights ──────────────────────────────────────────────────────
 // All values are in px from the BOTTOM of the screen
@@ -236,17 +236,19 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
               {/* Scrollable content or POIInfo panel directly */}
               {selectedPoi ? (
                 <div className="flex-1 flex flex-col overflow-hidden">
-                  <POIInfo
-                    poi={selectedPoi}
-                    userLocation={userLocation}
-                    onClose={() => { onClose(); snapTo('peek'); }}
-                    onGetDirections={(poi) => { onGetDirections(poi); snapTo('half'); }}
-                    onRouteFromHere={(poi) => { onRouteFromHere(poi); snapTo('full'); }}
-                    isRouteHighlighted={isRouteHighlighted}
-                    onHighlightRoute={onHighlightRoute}
-                    onShare={onShare}
-                    isSidebar={true}
-                  />
+                  <React.Suspense fallback={<div className="p-6 text-center text-xs text-zinc-500 font-semibold bg-white flex-1 flex items-center justify-center">Loading details...</div>}>
+                    <POIInfo
+                      poi={selectedPoi}
+                      userLocation={userLocation}
+                      onClose={() => { onClose(); snapTo('peek'); }}
+                      onGetDirections={(poi) => { onGetDirections(poi); snapTo('half'); }}
+                      onRouteFromHere={(poi) => { onRouteFromHere(poi); snapTo('full'); }}
+                      isRouteHighlighted={isRouteHighlighted}
+                      onHighlightRoute={onHighlightRoute}
+                      onShare={onShare}
+                      isSidebar={true}
+                    />
+                  </React.Suspense>
                 </div>
               ) : (
                 <div className="flex-1 overflow-y-auto scrollbar-hide">

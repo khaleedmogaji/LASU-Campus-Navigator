@@ -73,17 +73,20 @@ self.addEventListener('fetch', (event) => {
     );
   } else {
     event.respondWith(
-      caches.match(event.request).then((response) => {
-        return response || fetch(event.request).then((networkResponse) => {
-          if (networkResponse.ok && (url.origin === self.location.origin)) {
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse.clone()));
-          }
-          return networkResponse;
-        }).catch((err) => {
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
-          }
-          throw err;
+      caches.open(CACHE_NAME).then((cache) => {
+        return cache.match(event.request).then((cachedResponse) => {
+          const fetchPromise = fetch(event.request).then((networkResponse) => {
+            if (networkResponse.ok && (url.origin === self.location.origin)) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          }).catch((err) => {
+            if (event.request.mode === 'navigate' && !cachedResponse) {
+              return caches.match('/index.html');
+            }
+            throw err;
+          });
+          return cachedResponse || fetchPromise;
         });
       })
     );

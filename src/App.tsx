@@ -1,4 +1,7 @@
-import React, { useState, useEffect, Component, useRef, useCallback } from 'react';
+import { CAMPUS_POLYGON, isPointInPolygon, getMinDistanceToRoute } from './utils/geo';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { SafetyInfoModal } from './components/SafetyInfoModal';
 import { 
   db, 
   collection, 
@@ -11,89 +14,21 @@ import { Share2 } from 'lucide-react';
 import { KalmanFilter } from './lib/kalmanFilter';
 import { CampusMap, MapStyle } from './components/Map';
 import { SearchBar } from './components/SearchBar';
-import { POIInfo } from './components/POIInfo';
 import { findShortestPath, getDistance, getBearing } from './lib/pathNetwork';
-
-import { WelcomeScreen } from './components/WelcomeScreen';
 import { MobileBottomSheet, SheetSnap } from './components/MobileBottomSheet';
-import { CampusAssistant } from './components/CampusAssistant';
+
+// Lazy loaded heavy components
+const POIInfo = React.lazy(() => import('./components/POIInfo').then(m => ({ default: m.POIInfo })));
+const WelcomeScreen = React.lazy(() => import('./components/WelcomeScreen').then(m => ({ default: m.WelcomeScreen })));
+const CampusAssistant = React.lazy(() => import('./components/CampusAssistant').then(m => ({ default: m.CampusAssistant })));
 import { Home, Bell, Map as MapIcon, Info, LogIn, User as UserIcon, Navigation, Search, Menu, X, ChevronRight, ChevronUp, ChevronDown, Layers, LogOut, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, CornerUpLeft, CornerUpRight, CornerDownLeft, CornerDownRight, Play, Pause, Square, WifiOff, Wifi, Volume2, VolumeX, Tag, Compass, AlertTriangle, MessageSquare, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-const CAMPUS_POLYGON: [number, number][] = [
-  [6.4610, 3.1960], // South-West (near Main Gate)
-  [6.4610, 3.2090], // South-East (near main road/banks)
-  [6.4720, 3.2090], // Mid-East (near FSS/ODLRI)
-  [6.4820, 3.2050], // North-East (near Igando path)
-  [6.4930, 3.1950], // Far North (near Staff Quarters/Isheri Road Gate)
-  [6.4750, 3.1880], // Mid-West
-  [6.4680, 3.1880], // South-West corner
-  [6.4630, 3.1920]  // Connecting back
-];
 
-function isPointInPolygon(point: [number, number], polygon: [number, number][]): boolean {
-  const x = point[0], y = point[1];
-  let inside = false;
-  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-    const xi = polygon[i][0], yi = polygon[i][1];
-    const xj = polygon[j][0], yj = polygon[j][1];
-    const intersect = ((yi > y) !== (yj > y))
-        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-    if (intersect) inside = !inside;
-  }
-  return inside;
-}
 
-// ErrorBoundary component
-interface ErrorBoundaryProps {
-  children: React.ReactNode;
-}
 
-interface ErrorBoundaryState {
-  hasError: boolean;
-  error: any;
-}
 
-class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
 
-  static getDerivedStateFromError(error: any) {
-    return { hasError: true, error };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      let errorMessage = "Something went wrong.";
-      try {
-        const parsed = JSON.parse(this.state.error.message);
-        if (parsed.error) errorMessage = `Firestore Error: ${parsed.error} (${parsed.operationType} on ${parsed.path})`;
-      } catch (e) {
-        errorMessage = this.state.error.message || errorMessage;
-      }
-
-      return (
-        <div className="h-screen w-screen flex flex-col items-center justify-center bg-zinc-50 p-8 text-center">
-          <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4">
-            <X className="w-8 h-8" />
-          </div>
-          <h2 className="text-xl font-bold mb-2">Application Error</h2>
-          <p className="text-zinc-600 mb-6 max-w-md">{errorMessage}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="bg-orange-600 text-white px-6 py-2 rounded-full font-bold shadow-lg shadow-orange-200"
-          >
-            Reload Application
-          </button>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
-}
 
 const INITIAL_POIS: POI[] = [
   {
@@ -2984,17 +2919,7 @@ export default function App() {
   );
 }
 
-function getMinDistanceToRoute(lat: number, lng: number, routeCoords: { lat: number; lng: number }[]): number {
-  if (!routeCoords || routeCoords.length === 0) return Infinity;
-  let minDist = Infinity;
-  for (const coord of routeCoords) {
-    const d = getDistance(lat, lng, coord.lat, coord.lng);
-    if (d < minDist) {
-      minDist = d;
-    }
-  }
-  return minDist;
-}
+
 
 function AppContent() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -3366,6 +3291,39 @@ function AppContent() {
     }
   }, []);
 
+  const handleMapDrag = useCallback(() => {
+    setFollowMe(false);
+  }, []);
+
+  const filteredStartPois = useMemo(() => {
+    return startSearchQuery && startSearchQuery !== "My Location"
+      ? pois.filter(p => {
+          const q = startSearchQuery.toLowerCase().trim();
+          return p.name.toLowerCase().includes(q) ||
+                 p.category.toLowerCase().includes(q) ||
+                 (p.description && p.description.toLowerCase().includes(q)) ||
+                 p.tags?.some(tag => tag.toLowerCase().includes(q)) ||
+                 p.searchAliases?.some(alias => alias.toLowerCase().includes(q));
+        })
+      : pois;
+  }, [pois, startSearchQuery]);
+
+  const filteredEndPois = useMemo(() => {
+    return endSearchQuery && endSearchQuery !== "My Location"
+      ? pois.filter(p => {
+          const q = endSearchQuery.toLowerCase().trim();
+          return p.name.toLowerCase().includes(q) ||
+                 p.category.toLowerCase().includes(q) ||
+                 (p.description && p.description.toLowerCase().includes(q)) ||
+                 p.tags?.some(tag => tag.toLowerCase().includes(q)) ||
+                 p.searchAliases?.some(alias => alias.toLowerCase().includes(q));
+        })
+      : pois;
+  }, [pois, endSearchQuery]);
+
+  const startCoordinatesKey = startCoordinates ? `${startCoordinates[0]},${startCoordinates[1]}` : '';
+  const endCoordinatesKey = endCoordinates ? `${endCoordinates[0]},${endCoordinates[1]}` : '';
+
   // Calculate shortest path synchronously using local Dijkstra algorithm
   useEffect(() => {
     if (startCoordinates && endCoordinates) {
@@ -3383,7 +3341,7 @@ function AppContent() {
     } else {
       setRouteInfo(null);
     }
-  }, [startCoordinates, endCoordinates, isRouteBlocked]);
+  }, [startCoordinatesKey, endCoordinatesKey, isRouteBlocked]);
 
   // Cleanup simulation when routing changes or stops
   useEffect(() => {
@@ -3885,27 +3843,7 @@ function AppContent() {
     { id: 'osm' as MapStyle, label: 'OSM', desc: 'Pedestrian pathways', bg: 'from-sky-200 to-zinc-200' }
   ] as const;
 
-  const filteredStartPois = startSearchQuery && startSearchQuery !== "My Location"
-    ? pois.filter(p => {
-        const q = startSearchQuery.toLowerCase().trim();
-        return p.name.toLowerCase().includes(q) ||
-               p.category.toLowerCase().includes(q) ||
-               (p.description && p.description.toLowerCase().includes(q)) ||
-               p.tags?.some(tag => tag.toLowerCase().includes(q)) ||
-               p.searchAliases?.some(alias => alias.toLowerCase().includes(q));
-      })
-    : pois;
 
-  const filteredEndPois = endSearchQuery && endSearchQuery !== "My Location"
-    ? pois.filter(p => {
-        const q = endSearchQuery.toLowerCase().trim();
-        return p.name.toLowerCase().includes(q) ||
-               p.category.toLowerCase().includes(q) ||
-               (p.description && p.description.toLowerCase().includes(q)) ||
-               p.tags?.some(tag => tag.toLowerCase().includes(q)) ||
-               p.searchAliases?.some(alias => alias.toLowerCase().includes(q));
-      })
-    : pois;
 
   const renderRoutePlannerPanel = () => {
     return (
@@ -4155,36 +4093,38 @@ function AppContent() {
 
     return (
       <div className="relative w-full min-h-screen overflow-y-auto">
-        <WelcomeScreen 
-          pois={pois}
-          onStart={() => {
-            setShowWelcome(false);
-            setTourStep(1);
-          }}
-          onExplore={(category) => {
-            setShowWelcome(false);
-            if (category) {
-              setFilterCategory(category);
-            } else {
-              setFilterCategory('All');
-            }
-            if (window.innerWidth < 1024) {
-              setSheetSnap('half');
-            }
-          }}
-          onAskAssistant={() => {
-            setShowWelcome(false);
-            setIsAssistantOpen(true);
-          }}
-          onSelectPoi={(poi) => {
-            setShowWelcome(false);
-            setSelectedPoi(poi);
-            setRoutingTo(null);
-            if (window.innerWidth < 1024) {
-              setSheetSnap('half');
-            }
-          }}
-        />
+        <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-zinc-500 font-bold bg-white">Loading Welcome...</div>}>
+          <WelcomeScreen 
+            pois={pois}
+            onStart={() => {
+              setShowWelcome(false);
+              setTourStep(1);
+            }}
+            onExplore={(category) => {
+              setShowWelcome(false);
+              if (category) {
+                setFilterCategory(category);
+              } else {
+                setFilterCategory('All');
+              }
+              if (window.innerWidth < 1024) {
+                setSheetSnap('half');
+              }
+            }}
+            onAskAssistant={() => {
+              setShowWelcome(false);
+              setIsAssistantOpen(true);
+            }}
+            onSelectPoi={(poi) => {
+              setShowWelcome(false);
+              setSelectedPoi(poi);
+              setRoutingTo(null);
+              if (window.innerWidth < 1024) {
+                setSheetSnap('half');
+              }
+            }}
+          />
+        </React.Suspense>
 
         {/* Welcome Back / Session Restore Dialog Overlay */}
         <AnimatePresence>
@@ -4412,29 +4352,31 @@ function AppContent() {
           {routingTo ? (
             renderRoutePlannerPanel()
           ) : selectedPoi ? (
-            <POIInfo 
-              poi={selectedPoi} 
-              userLocation={userLocation}
-              onClose={() => {
-                setSelectedPoi(null);
-                setRoutingTo(null);
-                setIsRouteHighlighted(false);
-              }}
-              onGetDirections={(poi) => {
-                setRoutingTo(poi);
-                setRoutingFrom(null);
-                setSelectedPoi(null);
-              }} 
-              onRouteFromHere={(poi) => {
-                setRoutingFrom(poi);
-                setRoutingTo(null);
-                setSelectedPoi(null);
-              }}
-              isRouteHighlighted={isRouteHighlighted}
-              onHighlightRoute={() => setIsRouteHighlighted(!isRouteHighlighted)}
-              onShare={shareLocation}
-              isSidebar={true}
-            />
+            <React.Suspense fallback={<div className="p-6 text-center text-xs text-zinc-500 font-semibold bg-white flex-1 flex items-center justify-center">Loading details...</div>}>
+              <POIInfo 
+                poi={selectedPoi} 
+                userLocation={userLocation}
+                onClose={() => {
+                  setSelectedPoi(null);
+                  setRoutingTo(null);
+                  setIsRouteHighlighted(false);
+                }}
+                onGetDirections={(poi) => {
+                  setRoutingTo(poi);
+                  setRoutingFrom(null);
+                  setSelectedPoi(null);
+                }} 
+                onRouteFromHere={(poi) => {
+                  setRoutingFrom(poi);
+                  setRoutingTo(null);
+                  setSelectedPoi(null);
+                }}
+                isRouteHighlighted={isRouteHighlighted}
+                onHighlightRoute={() => setIsRouteHighlighted(!isRouteHighlighted)}
+                onShare={shareLocation}
+                isSidebar={true}
+              />
+            </React.Suspense>
           ) : (
             <div className="flex flex-col h-full overflow-y-auto scrollbar-hide">
               {renderHomePanelContent(false)}
@@ -4540,7 +4482,7 @@ function AppContent() {
             focusedCoordinate={focusedCoordinate}
             routeCoordinates={routeInfo?.coordinates}
             routeInfo={routeInfo}
-            onMapDrag={() => setFollowMe(false)}
+            onMapDrag={handleMapDrag}
             searchQuery={searchQuery}
           />
           
@@ -4848,118 +4790,30 @@ function AppContent() {
       {/* Info Modal */}
       <AnimatePresence>
         {isInfoOpen && (
-          <div className="fixed inset-0 z-[3000] flex items-center justify-center p-4 bg-black/45">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white border border-zinc-200 shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh] rounded-3xl"
-            >
-              <div className="p-6 border-b border-zinc-200 flex items-center justify-between shrink-0">
-                <h2 className="text-xl font-bold text-[rgb(49,30,2)] flex items-center gap-2">
-                  <Info className="w-6 h-6 text-lasu-primary" />
-                  About Campus Map
-                </h2>
-                <button
-                  onClick={() => setIsInfoOpen(false)}
-                  className="p-2 hover:bg-zinc-100 rounded-full text-zinc-500 transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="p-6 overflow-y-auto">
-                <div className="space-y-6 text-zinc-700">
-                  <div>
-                    <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Welcome</h3>
-                    <p className="text-sm leading-relaxed">
-                      This application helps you navigate the campus with ease. Find buildings, facilities, and get routing directions from your current location.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Features</h3>
-                    <ul className="list-disc pl-5 space-y-2 text-sm">
-                      <li>Interactive map with multiple styles (CARTO Voyager, OSM, Dark)</li>
-                      <li>Search for points of interest (POI) across campus</li>
-                      <li>Get walking directions and estimated times</li>
-                      <li>Follow your current location in real-time</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">💡 Quick Tips for New Users</h3>
-                    <div className="space-y-3 mt-2">
-                      <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-xs leading-relaxed text-zinc-700 font-semibold">
-                        <strong>🔍 Smart Filter Tags</strong>: Click the tags directly below the search bar to filter building categories instantly.
-                      </div>
-                      <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-xs leading-relaxed text-zinc-700 font-semibold">
-                        <strong>🗺️ Toggle Map Themes</strong>: Use the Layers icon on the right to switch between CARTO Voyager and OpenStreetMap views.
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Safety & Security</h3>
-                    <div className="text-sm space-y-2 text-zinc-700">
-                      <p><strong>LASU Security Unit:</strong> 0800-SECURITY</p>
-                      <p><strong>Campus Health Center:</strong> 0800-HEALTH</p>
-                      <p className="mt-2 text-zinc-700 font-bold italic">"If you see something, say something. Always walk in well-lit areas at night."</p>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Legend</h3>
-                    <div className="grid grid-cols-2 gap-3 text-sm text-zinc-700">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-blue-500" />
-                        <span>Academic</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                        <span>Facility</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-lasu-secondary" />
-                        <span>Food</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-purple-500" />
-                        <span>Library</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 border-t border-zinc-200 bg-zinc-50 shrink-0 flex flex-col gap-2">
-                <button
-                  onClick={() => {
-                    setIsInfoOpen(false);
-                    setTourStep(1);
-                  }}
-                  className="w-full py-3 bg-lasu-primary text-white rounded-xl font-bold hover:bg-lasu-primary-dark transition-colors cursor-pointer text-sm shadow-md shadow-lasu-primary/10"
-                >
-                  Start Walkthrough Tour
-                </button>
-                <button
-                  onClick={() => setIsInfoOpen(false)}
-                  className="w-full py-3 bg-zinc-200 text-zinc-800 rounded-xl font-bold hover:bg-zinc-300 transition-all cursor-pointer text-sm"
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          </div>
+          <SafetyInfoModal
+            onClose={() => setIsInfoOpen(false)}
+            onStartTour={() => {
+              setIsInfoOpen(false);
+              setTourStep(1);
+            }}
+          />
         )}
       </AnimatePresence>
 
       {/* Campus Information Assistant */}
-      <CampusAssistant
-        pois={pois}
-        onNavigate={(poi) => {
-          setRoutingTo(poi);
-          setSelectedPoi(null);
-        }}
-        isVoiceEnabled={isVoiceEnabled}
-        speakInstruction={speakInstruction}
-        externalOpen={isAssistantOpen}
-        onExternalOpenChange={setIsAssistantOpen}
-      />
+      <React.Suspense fallback={null}>
+        <CampusAssistant
+          pois={pois}
+          onNavigate={(poi) => {
+            setRoutingTo(poi);
+            setSelectedPoi(null);
+          }}
+          isVoiceEnabled={isVoiceEnabled}
+          speakInstruction={speakInstruction}
+          externalOpen={isAssistantOpen}
+          onExternalOpenChange={setIsAssistantOpen}
+        />
+      </React.Suspense>
 
       {/* Interactive Welcome Tour */}
       <AnimatePresence>

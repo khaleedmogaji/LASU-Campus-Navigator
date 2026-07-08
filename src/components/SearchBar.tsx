@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Search, X, Clock, TrendingUp, Book, Trophy, Building2, Bed, MapPin, Landmark } from 'lucide-react';
 import { POI } from '../types';
 import { cn } from '../lib/utils';
@@ -87,21 +87,23 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   // Filter POIs based on search query and category
-  const filteredPois = pois.filter((poi) => {
-    const matchesCategory = filterCategory === 'All' || poi.category === filterCategory;
-    if (query) {
-      const q = query.toLowerCase().trim();
-      return matchesCategory && (
-        poi.name.toLowerCase().includes(q) ||
-        poi.category.toLowerCase().includes(q) ||
-        (poi.description && poi.description.toLowerCase().includes(q)) ||
-        poi.tags?.some((tag) => tag.toLowerCase().includes(q)) ||
-        poi.searchAliases?.some((alias) => alias.toLowerCase().includes(q))
-      );
-    } else {
-      return filterCategory !== 'All' && matchesCategory;
-    }
-  }).slice(0, 8);
+  const filteredPois = useMemo(() => {
+    return pois.filter((poi) => {
+      const matchesCategory = filterCategory === 'All' || poi.category === filterCategory;
+      if (query) {
+        const q = query.toLowerCase().trim();
+        return matchesCategory && (
+          poi.name.toLowerCase().includes(q) ||
+          poi.category.toLowerCase().includes(q) ||
+          (poi.description && poi.description.toLowerCase().includes(q)) ||
+          poi.tags?.some((tag) => tag.toLowerCase().includes(q)) ||
+          poi.searchAliases?.some((alias) => alias.toLowerCase().includes(q))
+        );
+      } else {
+        return filterCategory !== 'All' && matchesCategory;
+      }
+    }).slice(0, 8);
+  }, [pois, query, filterCategory]);
 
   // Group search results by category
   const groupedResults: Record<string, POI[]> = {};
