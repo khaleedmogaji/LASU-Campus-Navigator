@@ -285,7 +285,7 @@ Deploy the generated `dist` folder or connect the GitHub repository directly to 
 
 ---
 
-# 👨‍💻 Author
+# 👨💻 Author
 
 **Mogaji Khaleed Korede**
 

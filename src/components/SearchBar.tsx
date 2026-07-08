@@ -12,6 +12,8 @@ interface SearchBarProps {
   isHeader?: boolean;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -41,11 +43,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   setFilterCategory,
   isHeader = false,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  isOpen: propsIsOpen,
+  onOpenChange
 }) => {
   const query = searchQuery;
   const setQuery = setSearchQuery;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenInternal, setIsOpenInternal] = useState(false);
+  const isOpen = propsIsOpen !== undefined ? propsIsOpen : isOpenInternal;
+  const setIsOpen = (val: boolean) => {
+    setIsOpenInternal(val);
+    onOpenChange?.(val);
+  };
   const [history, setHistory] = useState<POI[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
 

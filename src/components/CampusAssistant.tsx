@@ -20,6 +20,7 @@ interface CampusAssistantProps {
   speakInstruction: (text: string) => void;
   externalOpen?: boolean;
   onExternalOpenChange?: (open: boolean) => void;
+  isSearchOpen?: boolean;
 }
 
 export function CampusAssistant({
@@ -29,6 +30,7 @@ export function CampusAssistant({
   speakInstruction,
   externalOpen,
   onExternalOpenChange,
+  isSearchOpen = false,
 }: CampusAssistantProps) {
   const [localOpen, setLocalOpen] = useState(false);
   const isOpen = externalOpen !== undefined ? externalOpen : localOpen;
@@ -656,9 +658,6 @@ export function CampusAssistant({
         poi: response.poi,
       }]);
       setIsTyping(false);
-
-      // Play voice if enabled
-      speakInstruction(response.text);
     }, 600);
   };
 
@@ -685,26 +684,27 @@ export function CampusAssistant({
         poi: response.poi,
       }]);
       setIsTyping(false);
-      speakInstruction(response.text);
     }, 600);
   };
 
   return (
     <>
       {/* Floating Chat Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={cn(
-          "fixed bottom-28 right-6 lg:bottom-10 lg:right-10 z-[2500]",
-          "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-lg animate-fade-in",
-          isOpen 
-            ? "bg-zinc-800 text-white shadow-zinc-800/20"
-            : "bg-lasu-accent text-white shadow-md hover:scale-105 border-none"
-        )}
-        title="Campus Assistant"
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6 text-white" />}
-      </button>
+      {!isSearchOpen && (
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={cn(
+            "fixed bottom-28 right-6 lg:bottom-10 lg:right-10 z-[1200] lg:z-[2500]",
+            "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-lg animate-fade-in",
+            isOpen 
+              ? "bg-zinc-800 text-white shadow-zinc-800/20"
+              : "bg-lasu-accent text-white shadow-md hover:scale-105 border-none"
+          )}
+          title="Campus Assistant"
+        >
+          {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6 text-white" />}
+        </button>
+      )}
 
       {/* Chat Panel Window */}
       <AnimatePresence>

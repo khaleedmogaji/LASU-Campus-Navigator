@@ -41,6 +41,8 @@ interface MobileBottomSheetProps {
   setFilterCategory: (category: string) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  isSearchOpen?: boolean;
+  onSearchOpenChange?: (open: boolean) => void;
 }
 
 export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
@@ -62,7 +64,9 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
   filterCategory,
   setFilterCategory,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  isSearchOpen,
+  onSearchOpenChange
 }) => {
   const y = useMotionValue(getSnapPx(snap));
   const isDragging = useRef(false);
@@ -216,6 +220,8 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
                     setFilterCategory={setFilterCategory}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
+                    isOpen={isSearchOpen}
+                    onOpenChange={onSearchOpenChange}
                   />
                 </div>
               )}

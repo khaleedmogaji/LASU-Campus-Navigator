@@ -2925,6 +2925,7 @@ export default function App() {
 function AppContent() {
   const [showWelcome, setShowWelcome] = useState(true);
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [session, setSession] = useState<{
     firstVisit: boolean;
     lastScreen: string;
@@ -4289,6 +4290,8 @@ function AppContent() {
             setFilterCategory={setFilterCategory}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            isSearchOpen={isSearchOpen}
+            onSearchOpenChange={setIsSearchOpen}
           />
         </div>
 
@@ -4757,6 +4760,7 @@ function AppContent() {
           speakInstruction={speakInstruction}
           externalOpen={isAssistantOpen}
           onExternalOpenChange={setIsAssistantOpen}
+          isSearchOpen={isSearchOpen}
         />
       </React.Suspense>
 
