@@ -2,6 +2,7 @@ import { CAMPUS_POLYGON, isPointInPolygon, getMinDistanceToRoute } from './utils
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SafetyInfoModal } from './components/SafetyInfoModal';
+import { WelcomeBackModal } from './components/WelcomeBackModal';
 import { 
   db, 
   collection, 
@@ -4129,81 +4130,25 @@ function AppContent() {
         {/* Welcome Back / Session Restore Dialog Overlay */}
         <AnimatePresence>
           {showWelcomeBack && (
-            <div className="fixed inset-0 z-[6000] flex items-center justify-center p-4 bg-black/45">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                transition={{ type: "spring", damping: 25, stiffness: 350 }}
-                className="bg-white border border-zinc-250 shadow-2xl rounded-3xl p-6 w-full max-w-sm flex flex-col"
-              >
-                <div className="text-center mb-6">
-                  <span className="text-4xl block mb-3 animate-bounce">👋</span>
-                  <h3 className="text-lg font-black text-zinc-900 tracking-tight">Welcome back</h3>
-                  <p className="text-xs text-zinc-750 mt-1 font-semibold">
-                    Continue your previous session?
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-2.5">
-                  {matchedPoi ? (
-                    <>
-                      <button
-                        onClick={handleContinuePreviousSession}
-                        className="w-full py-3 bg-lasu-primary hover:bg-lasu-primary-dark text-white rounded-2xl font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-lasu-primary/15 cursor-pointer active:scale-[0.98]"
-                      >
-                        Continue Navigation
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowWelcome(false);
-                          setShowWelcomeBack(false);
-                          saveSession({ lastScreen: 'map' });
-                        }}
-                        className="w-full py-3 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border border-zinc-200/50 cursor-pointer active:scale-[0.98]"
-                      >
-                        Skip to Map
-                      </button>
-                    </>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        setShowWelcome(false);
-                        setShowWelcomeBack(false);
-                        saveSession({ lastScreen: 'map' });
-                      }}
-                      className="w-full py-3 bg-lasu-primary hover:bg-lasu-primary-dark text-white rounded-2xl font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-lasu-primary/15 cursor-pointer active:scale-[0.98]"
-                    >
-                      Continue to Map
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => {
-                      setShowWelcome(false);
-                      setIsAssistantOpen(true);
-                      setShowWelcomeBack(false);
-                      saveSession({ lastScreen: 'map' });
-                    }}
-                    className="w-full py-3 bg-white hover:bg-zinc-50 text-zinc-850 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border border-zinc-200 cursor-pointer active:scale-[0.98]"
-                  >
-                    Ask Assistant
-                  </button>
-
-                  <div className="h-px bg-zinc-100 my-1" />
-
-                  <button
-                    onClick={() => {
-                      setShowWelcomeBack(false);
-                      saveSession({ lastScreen: 'welcome' });
-                    }}
-                    className="w-full py-2.5 text-zinc-600 hover:text-zinc-800 font-bold text-xs cursor-pointer transition-colors"
-                  >
-                    Go to Home Dashboard
-                  </button>
-                </div>
-              </motion.div>
-            </div>
+            <WelcomeBackModal
+              matchedPoi={matchedPoi}
+              onContinuePreviousSession={handleContinuePreviousSession}
+              onSkipToMap={() => {
+                setShowWelcome(false);
+                setShowWelcomeBack(false);
+                saveSession({ lastScreen: 'map' });
+              }}
+              onAskAssistant={() => {
+                setShowWelcome(false);
+                setIsAssistantOpen(true);
+                setShowWelcomeBack(false);
+                saveSession({ lastScreen: 'map' });
+              }}
+              onGoToDashboard={() => {
+                setShowWelcomeBack(false);
+                saveSession({ lastScreen: 'welcome' });
+              }}
+            />
           )}
         </AnimatePresence>
       </div>

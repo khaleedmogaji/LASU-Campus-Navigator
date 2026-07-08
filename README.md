@@ -1,119 +1,302 @@
 # LASU Campus Navigation System
 
-A web-based campus navigation system developed for Lagos State University (LASU), Ojo Campus. The system enables users to search for campus locations, view landmarks, and navigate between locations using Dijkstra's shortest path algorithm and an interactive map.
+A modern web-based campus navigation platform developed for **Lagos State University (LASU), Ojo Campus**.
+
+The system enables students, staff, and visitors to quickly locate campus facilities, search for departments and offices, receive intelligent route guidance, and navigate the campus using an interactive digital map.
+
+Built with modern web technologies, the application combines interactive mapping, shortest-path algorithms, GPS tracking, real-time Firestore synchronization, and a rule-based campus assistant to provide a seamless navigation experience.
 
 ---
 
-## 🚀 Features
+# 🚀 Features
 
-* **Interactive Campus Map**: Powered by Leaflet with customized markers, geofenced campus boundaries, and custom image layers.
-* **Campus Search**: Find building entrances, walkways, lecture halls, and administrative offices instantly.
-* **Route Navigation**: Generates turn-by-turn walking directions for students and staff.
-* **Dijkstra Shortest Path Algorithm**: Computes the absolute shortest route across walkway junctions and crossings.
-* **Rule-Based Campus Assistant**: Searchable knowledge assistant panel with custom aliases and parent faculty lookup.
-* **Firebase Firestore Integration**: Real-time updates and synchronization for POIs.
-* **Responsive Design**: Mobile-first interface utilizing responsive bottom sheets and sticky action panels.
-* **Voice Navigation Support**: Built-in speech synthesis engine to read instructions aloud (can be toggled on/off).
+### 🗺️ Interactive Campus Map
+
+* Interactive map powered by Leaflet
+* CARTO Voyager base map
+* Zoom-dependent building labels
+* Responsive map controls
+* Custom campus boundary rendering
+
+### 📍 Smart Navigation
+
+* Turn-by-turn walking directions
+* Dijkstra's Shortest Path Algorithm
+* Google Maps-style user location indicator
+* Dynamic route highlighting
+* Nearby landmark references
+* Voice-guided navigation
+* Walking distance and estimated time
+
+### 🔍 Intelligent Search
+
+* Search buildings, departments, faculties, offices and landmarks
+* Search aliases and abbreviations
+* Smart autocomplete
+* Faculty and department lookup
+* Nearby landmark suggestions
+
+### 🤖 Campus Assistant
+
+* Rule-based campus assistant
+* Faculty information
+* Department lookup
+* Dean information
+* Administrative office lookup
+* Location descriptions
+* Navigation prompts
+
+### 📚 Campus Database
+
+* 90+ mapped campus landmarks
+* Administrative buildings
+* Faculties
+* Departments
+* Libraries
+* Lecture theatres
+* Religious centres
+* Health facilities
+* Hostels
+* Sports facilities
+* Cafeterias
+* Parking areas
+* Bus stops
+* Banks & ATMs
+
+### ☁️ Real-time Synchronization
+
+* Firebase Firestore integration
+* Live POI updates
+* Dynamic landmark synchronization
+* Cloud-based data management
+
+### 📱 Responsive User Experience
+
+* Mobile-first interface
+* Bottom sheet navigation
+* Responsive sidebar
+* Smooth animations
+* Desktop and mobile layouts
+
+### 🎤 Voice Navigation
+
+* Browser Speech Synthesis API
+* Spoken navigation instructions
+* Voice toggle
+* Replay current instruction
+
+### ⚡ Performance Optimizations
+
+* Modular architecture
+* Optimized landmark database
+* Utility extraction
+* Component-based UI
+* Optimized search
+* Faster production builds
 
 ---
 
-## 🛠️ Technologies Used
+# 🛠️ Technology Stack
 
-* **React 19**: Core framework for declarative, component-driven UI.
-* **TypeScript**: Type-safe logic across coordinates, graphs, and search entities.
-* **Vite**: Ultra-fast build tool and development server.
-* **Tailwind CSS**: Utility-first CSS styling.
-* **Leaflet**: Interactive map rendering layer.
-* **Leaflet Routing Machine**: Path display and routing overlay.
-* **Firebase Firestore**: Real-time database for Point of Interest (POI) storage.
-* **Framer Motion**: Smooth animations and gesture-driven bottom sheet transitions.
+## Frontend
+
+* React 19
+* TypeScript
+* Vite
+* Tailwind CSS
+* Framer Motion
+
+## Mapping
+
+* Leaflet
+* React Leaflet
+* CARTO Voyager Tiles
+* OpenStreetMap
+
+## Backend
+
+* Firebase Firestore
+
+## Algorithms
+
+* Dijkstra's Shortest Path Algorithm
+* Haversine Distance Calculation
+* Kalman Filter (GPS smoothing)
+
+## Browser APIs
+
+* Geolocation API
+* Speech Synthesis API
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-```
+```text
 LASU-Campus-Navigator/
-├── public/                 # Static assets (images, service-worker, favicon)
+│
+├── public/
+│   ├── images/
+│   ├── icons/
+│   └── static assets
+│
 ├── src/
-│   ├── components/         # Reusable React components
-│   │   ├── CampusAssistant.tsx  # AI/Rule-based Chatbot interface
-│   │   ├── Map.tsx              # Leaflet Map container & marker layer
-│   │   ├── MobileBottomSheet.tsx# Responsive drawer container
-│   │   ├── POIInfo.tsx          # Detail card with media slider & buttons
-│   │   ├── SearchBar.tsx        # Auto-complete campus search
-│   │   └── WelcomeScreen.tsx    # Dashboard landing modal
-│   ├── lib/                # Core helper libraries & algorithms
-│   │   ├── pathNetwork.ts       # Dijkstra shortest path graph & nodes
-│   │   ├── lasuKnowledgeBase.ts # Faculties, deans, and departments list
-│   │   ├── kalmanFilter.ts      # GPS coordinate smoothing filter
-│   │   └── utils.ts             # Tailwind class merging utility
-│   ├── App.tsx             # Main application layout, state, & controllers
-│   ├── firebase.ts         # Firebase App initialization & SDK setups
-│   ├── index.css           # Global CSS variables & Tailwind directives
-│   ├── main.tsx            # DOM entry point & Service Worker registration
-│   └── types.ts            # POI, Route, Node, and Faculty type definitions
-├── vite.config.ts          # Vite compilation & plugin settings
-├── tsconfig.json           # TypeScript configuration
-└── package.json            # Scripts & package dependencies
+│
+├── components/
+│   ├── CampusAssistant.tsx
+│   ├── Map.tsx
+│   ├── SearchBar.tsx
+│   ├── POIInfo.tsx
+│   ├── MobileBottomSheet.tsx
+│   ├── WelcomeScreen.tsx
+│   ├── ErrorBoundary.tsx
+│   ├── SafetyInfoModal.tsx
+│   └── WelcomeBackModal.tsx
+│
+├── data/
+│   └── initialPois.ts
+│
+├── utils/
+│   ├── geo.ts
+│   └── poi.ts
+│
+├── lib/
+│   ├── pathNetwork.ts
+│   ├── kalmanFilter.ts
+│   ├── lasuKnowledgeBase.ts
+│   └── utils.ts
+│
+├── firebase.ts
+├── types.ts
+├── App.tsx
+├── main.tsx
+└── index.css
+│
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+└── README.md
 ```
 
 ---
 
-## 📦 Installation
+# 📦 Installation
 
-To run the project locally, follow these steps:
+Clone the repository
 
-1. Clone the project repository.
-2. Open your terminal in the project root directory.
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Run the local development server:
-   ```bash
-   npm run dev
-   ```
-   The application will be running at `http://localhost:3000`.
+```bash
+git clone <repository-url>
+```
+
+Navigate into the project
+
+```bash
+cd LASU-Campus-Navigator
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Start the development server
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
 
 ---
 
-## 🏗️ Production Build
+# 🏗️ Production Build
 
-To generate the optimized production assets:
+Generate an optimized production build:
 
 ```bash
 npm run build
 ```
 
-This compiles the source code and outputs static assets into the `dist/` directory, ready to be served by any static host.
+Preview the production build locally:
+
+```bash
+npm run preview
+```
 
 ---
 
-## 🔑 Environment Variables
+# ☁️ Firebase
 
-The application does not require any custom environment variables for its core functionality. Firebase configuration is loaded dynamically at runtime from:
-* `firebase-applet-config.json` (located in the project root)
+The project uses **Firebase Firestore** for real-time storage and synchronization of campus Points of Interest (POIs).
 
----
+Firestore stores:
 
-## 🚀 Deployment
-
-The project can be deployed seamlessly to Vercel:
-
-1. Go to the [Vercel Dashboard](https://vercel.com/dashboard) and click **Add New** > **Project**.
-2. Import your repository.
-3. Vercel will automatically detect Vite. Keep the default settings:
-   * **Framework Preset**: `Vite`
-   * **Build Command**: `npm run build`
-   * **Output Directory**: `dist`
-4. Click **Deploy**.
+* Campus landmarks
+* User profiles
+* Campus events
+* Dynamic location updates
 
 ---
 
-## ✍️ Author
+# 🚀 Deployment
 
-* **Mogaji khaleed Korede 220591186**
+The project is optimized for deployment on **Vercel**.
+
+```bash
+npm run build
+```
+
+Deploy the generated `dist` folder or connect the GitHub repository directly to Vercel for automatic deployments.
 
 ---
 
+# 📈 Core Capabilities
+
+* Interactive campus mapping
+* Real-time GPS positioning
+* Intelligent campus search
+* Voice-guided navigation
+* Turn-by-turn directions
+* Landmark-based routing
+* Faculty and department search
+* Firestore synchronization
+* Mobile responsive design
+* Rule-based campus assistant
+
+---
+
+# 🔮 Future Enhancements
+
+* Admin dashboard
+* Indoor navigation
+* Multi-stop routing
+* Shuttle route integration
+* QR code navigation
+* Event notifications
+* Offline support (PWA)
+* Accessibility routes
+* Analytics dashboard
+* AI-powered campus assistant
+
+---
+
+# 👨‍💻 Author
+
+**Mogaji Khaleed Korede**
+
+**Matric Number:** 220591186
+
+Department of Computer Science
+
+Lagos State University (LASU)
+
+---
+
+## Acknowledgements
+
+Special appreciation to the Department of Computer Science, Lagos State University, for the opportunity to develop this project as part of the undergraduate research and software development experience.
