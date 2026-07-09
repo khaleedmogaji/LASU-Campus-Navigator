@@ -1,5 +1,6 @@
 import React from 'react';
 import { Volume2, VolumeX, RotateCcw, ChevronDown, ChevronUp, X } from 'lucide-react';
+import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 
 interface NavigationCardProps {
@@ -64,10 +65,15 @@ export const NavigationCard: React.FC<NavigationCardProps> = ({
   navCardTop
 }) => {
   return (
-    <div className={cn(
-      "absolute left-1/2 z-[2500] w-[calc(100%-2rem)] max-w-sm transition-all duration-300",
-      navCardTop
-    )}>
+    <motion.div 
+      initial={{ opacity: 0, y: -20, x: '-50%' }}
+      animate={{ opacity: 1, y: 0, x: '-50%' }}
+      exit={{ opacity: 0, y: -20, x: '-50%' }}
+      className={cn(
+        "absolute left-1/2 z-[2500] w-[calc(100%-2rem)] max-w-sm transition-all duration-300",
+        navCardTop
+      )}
+    >
       <div className="bg-white border border-zinc-200 shadow-2xl rounded-3xl p-4 flex items-center gap-4">
         {/* SVG next-turn icon container */}
         <div className="w-12 h-12 rounded-2xl bg-lasu-primary/10 border border-lasu-primary/10 flex items-center justify-center shrink-0 text-lasu-primary">
@@ -151,6 +157,6 @@ export const NavigationCard: React.FC<NavigationCardProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -204,7 +204,19 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
             >
               {/* Search bar — only when home/POI views (not route planner) */}
               {!routingTo && !selectedPoi && (
-                <div className="px-4 pt-1 pb-3 shrink-0">
+                <div className="px-4 pt-1 pb-3 shrink-0 flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[10px] font-black text-lasu-primary uppercase tracking-widest">Explore Campus</p>
+                    <button
+                      onClick={() => {
+                        setSearchQuery('');
+                        onSnapChange('peek');
+                      }}
+                      className="text-[10px] font-bold text-zinc-650 hover:text-zinc-800 transition-colors cursor-pointer"
+                    >
+                      Close ✕
+                    </button>
+                  </div>
                   <SearchBar
                     pois={pois}
                     onSelect={(poi) => {
