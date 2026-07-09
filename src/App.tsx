@@ -3586,7 +3586,7 @@ function AppContent() {
           if (followMe) {
             setFocusedCoordinate(loc); // Pan the map to keep the user centered
             setSelectedPoi({ 
-              id: `follow-${Date.now()}`, 
+              id: 'my-location', 
               name: 'My Location', 
               latitude: loc[0], 
               longitude: loc[1], 
@@ -3603,7 +3603,7 @@ function AppContent() {
             setUserLocation(gateLoc);
             setLocationAccuracy(null);
             setSelectedPoi({ 
-              id: `sim-loc-${Date.now()}`, 
+              id: 'simulated-location', 
               name: 'Simulated Location (Gate)', 
               latitude: gateLoc[0], 
               longitude: gateLoc[1], 
@@ -3739,7 +3739,7 @@ function AppContent() {
     setUserLocation(gateLoc);
     setLocationAccuracy(null);
     setSelectedPoi({ 
-      id: `sim-loc-${Date.now()}`, 
+      id: 'simulated-location', 
       name: 'Simulated Location (Gate)', 
       latitude: gateLoc[0], 
       longitude: gateLoc[1], 
@@ -4539,7 +4539,7 @@ function AppContent() {
                           setUserLocation(gateLoc);
                           setLocationAccuracy(null);
                           setSelectedPoi({ 
-                            id: `sim-loc-${Date.now()}`, 
+                            id: 'simulated-location', 
                             name: 'Simulated Location (Gate)', 
                             latitude: gateLoc[0], 
                             longitude: gateLoc[1], 
@@ -4552,7 +4552,7 @@ function AppContent() {
                           setFocusedCoordinate(loc); // Pan/center map on user location
                           setFollowMe(true); // Lock map tracking on user
                           setSelectedPoi({ 
-                            id: `user-loc-${Date.now()}`, 
+                            id: 'my-location', 
                             name: 'My Location', 
                             latitude: loc[0], 
                             longitude: loc[1], 
@@ -4580,7 +4580,7 @@ function AppContent() {
                         setUserLocation(gateLoc);
                         setLocationAccuracy(null);
                         setSelectedPoi({ 
-                          id: `sim-loc-${Date.now()}`, 
+                          id: 'simulated-location', 
                           name: 'Simulated Location (Gate)', 
                           latitude: gateLoc[0], 
                           longitude: gateLoc[1], 

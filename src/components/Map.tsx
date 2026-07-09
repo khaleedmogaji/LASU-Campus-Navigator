@@ -329,7 +329,7 @@ function FocusedView({ coordinate }: { coordinate: [number, number] | null | und
   const map = useMap();
   useEffect(() => {
     if (coordinate) {
-      map.flyTo(coordinate, 18);
+      map.setView(coordinate, 18, { animate: true, duration: 0.6 });
     }
   }, [coordinate, map]);
   return null;
@@ -590,6 +590,7 @@ export const CampusMap: React.FC = memo(() => {
         maxBounds={campusBounds}
         maxBoundsViscosity={1.0}
         scrollWheelZoom={true}
+        preferCanvas={true}
         className="h-full w-full"
       >
         <FocusedView coordinate={focusedCoordinate} />
@@ -602,6 +603,9 @@ export const CampusMap: React.FC = memo(() => {
           url={MAP_LAYERS[mapStyle]}
           subdomains={MAP_SUBDOMAINS[mapStyle]}
           maxZoom={20}
+          keepBuffer={8}
+          updateWhenZooming={false}
+          updateWhenIdle={true}
         />
         
         {traversedPath.length > 0 && (
