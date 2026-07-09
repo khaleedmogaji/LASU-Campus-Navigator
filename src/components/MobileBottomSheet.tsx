@@ -21,53 +21,48 @@ function getSnapPx(snap: SheetSnap): number {
 
 const VEL_THRESHOLD = 400; // px/s — fast flick triggers snap
 
+import { useNavigation } from '../context/NavigationContext';
+
 interface MobileBottomSheetProps {
-  snap: SheetSnap;
-  onSnapChange: (s: SheetSnap) => void;
-  pois: POI[];
-  selectedPoi: POI | null;
-  routingTo: any | null;
-  userLocation: [number, number] | null;
-  isRouteHighlighted: boolean;
-  onPoiSelect: (poi: POI) => void;
-  onClose: () => void;
-  onGetDirections: (poi: POI) => void;
-  onRouteFromHere: (poi: POI) => void;
-  onHighlightRoute: () => void;
   onShare: (poi: POI) => void;
   renderRoutePlannerPanel: () => React.ReactNode;
   renderHomePanel: () => React.ReactNode;
-  filterCategory: string;
-  setFilterCategory: (category: string) => void;
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  isSearchOpen?: boolean;
-  onSearchOpenChange?: (open: boolean) => void;
 }
 
 export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
-  snap,
-  onSnapChange,
-  pois,
-  selectedPoi,
-  routingTo,
-  userLocation,
-  isRouteHighlighted,
-  onPoiSelect,
-  onClose,
-  onGetDirections,
-  onRouteFromHere,
-  onHighlightRoute,
   onShare,
   renderRoutePlannerPanel,
   renderHomePanel,
-  filterCategory,
-  setFilterCategory,
-  searchQuery,
-  setSearchQuery,
-  isSearchOpen,
-  onSearchOpenChange
 }) => {
+  const {
+    sheetSnap: snap,
+    setSheetSnap: onSnapChange,
+    pois,
+    selectedPoi,
+    setSelectedPoi,
+    routingTo,
+    setRoutingTo,
+    userLocation,
+    handlePoiSelect: onPoiSelect,
+    filterCategory,
+    setFilterCategory,
+    searchQuery,
+    setSearchQuery,
+    isSearchOpen,
+    setIsSearchOpen: onSearchOpenChange,
+  } = useNavigation();
+
+  const onClose = () => {
+    setSelectedPoi(null);
+    setRoutingTo(null);
+    onSnapChange('peek');
+  };
+
+  const onGetDirections = (poi: POI) => {
+    setRoutingTo(poi);
+    setSelectedPoi(null);
+    onSnapChange('half');
+  };
   const y = useMotionValue(getSnapPx(snap));
   const isDragging = useRef(false);
   const dragStartClientY = useRef(0);
@@ -248,9 +243,6 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
                       userLocation={userLocation}
                       onClose={() => { onClose(); snapTo('peek'); }}
                       onGetDirections={(poi) => { onGetDirections(poi); snapTo('half'); }}
-                      onRouteFromHere={(poi) => { onRouteFromHere(poi); snapTo('full'); }}
-                      isRouteHighlighted={isRouteHighlighted}
-                      onHighlightRoute={onHighlightRoute}
                       onShare={onShare}
                       isSidebar={true}
                     />

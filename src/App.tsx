@@ -13,16 +13,18 @@ import { POI } from './types';
 import { cn } from './lib/utils';
 import { Share2 } from 'lucide-react';
 import { KalmanFilter } from './lib/kalmanFilter';
-import { CampusMap, MapStyle } from './components/Map';
+import type { MapStyle } from './components/Map';
 import { SearchBar } from './components/SearchBar';
-import { findShortestPath, getDistance, getBearing } from './lib/pathNetwork';
+import { findShortestPath, getDistance } from './lib/pathNetwork';
 import { MobileBottomSheet, SheetSnap } from './components/MobileBottomSheet';
+import { NavigationProvider, NavigationContextType } from './context/NavigationContext';
 
 // Lazy loaded heavy components
+const CampusMap = React.lazy(() => import('./components/Map').then(m => ({ default: m.CampusMap })));
 const POIInfo = React.lazy(() => import('./components/POIInfo').then(m => ({ default: m.POIInfo })));
 const WelcomeScreen = React.lazy(() => import('./components/WelcomeScreen').then(m => ({ default: m.WelcomeScreen })));
 const CampusAssistant = React.lazy(() => import('./components/CampusAssistant').then(m => ({ default: m.CampusAssistant })));
-import { Home, Bell, Map as MapIcon, Info, LogIn, User as UserIcon, Navigation, Search, Menu, X, ChevronRight, ChevronUp, ChevronDown, Layers, LogOut, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, CornerUpLeft, CornerUpRight, CornerDownLeft, CornerDownRight, Play, Pause, Square, WifiOff, Wifi, Volume2, VolumeX, Tag, Compass, AlertTriangle, MessageSquare, RotateCcw } from 'lucide-react';
+import { Home, Map as MapIcon, Info, Navigation, X, ChevronUp, ChevronDown, Layers, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, CornerUpLeft, CornerUpRight, WifiOff, Volume2, VolumeX, AlertTriangle, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 
@@ -2986,20 +2988,16 @@ function AppContent() {
   }, [routingTo]);
   const [locationAccuracy, setLocationAccuracy] = useState<number | null>(null);
   const [followMe, setFollowMe] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sheetSnap, setSheetSnap] = useState<SheetSnap>('peek');
   const [isLoading, setIsLoading] = useState(true);
   const [isLocating, setIsLocating] = useState(false);
-  const [isRouteHighlighted, setIsRouteHighlighted] = useState(false);
   const [mapStyle, setMapStyle] = useState<MapStyle>('voyager');
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState<{ distance: number; duration: number; coordinates: any[]; segmentsCount: number; instructions: any[] } | null>(null);
   const [focusedCoordinate, setFocusedCoordinate] = useState<[number, number] | null>(null);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [filterCategory, setFilterCategory] = useState<string | 'All'>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [showAccuracyWarning, setShowAccuracyWarning] = useState(false);
-  const [isRouteBlocked, setIsRouteBlocked] = useState(false);
   const [isUserOffCampus, setIsUserOffCampus] = useState(false);
   const [isSimulated, setIsSimulated] = useState(false);
   const [isRouteDrawerExpanded, setIsRouteDrawerExpanded] = useState(false);
@@ -3011,6 +3009,8 @@ function AppContent() {
   const latFilter = useRef<KalmanFilter | null>(null);
   const lonFilter = useRef<KalmanFilter | null>(null);
   const userLocationRef = useRef<[number, number] | null>(null);
+  const lastCalculatedStartRef = useRef<[number, number] | null>(null);
+  const lastCalculatedEndRef = useRef<string | null>(null);
 
   useEffect(() => {
     userLocationRef.current = userLocation;
@@ -3107,7 +3107,6 @@ function AppContent() {
         setUserLocation([6.4642, 3.1972]); // Main Gate
         setRoutingFrom(null);
         setRoutingTo(senatePoi);
-        setIsRouteHighlighted(true);
         setIsRouteDrawerExpanded(false);
         setTourMockedRouteActive(true);
       }
@@ -3119,15 +3118,11 @@ function AppContent() {
       if (tourMockedRouteActive && tourStep !== 4) {
         setRoutingTo(null);
         setRoutingFrom(null);
-        setIsRouteHighlighted(false);
         setTourMockedRouteActive(false);
       }
     }
   }, [tourStep, pois]);
 
-  const [isWalkSimulationActive, setIsWalkSimulationActive] = useState(false);
-  const [walkSimulationIndex, setWalkSimulationIndex] = useState(0);
-  const walkIntervalRef = useRef<any>(null);
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
   const lastSpokenIndexRef = useRef<number | null>(null);
 
@@ -3220,8 +3215,6 @@ function AppContent() {
 
   const renderHomePanelContent = (isMobile: boolean = false) => {
     const paddingClass = isMobile ? "p-4 space-y-4 pb-12" : "p-5 space-y-4";
-    const brandPadding = isMobile ? "p-4" : "p-5";
-    const textSmall = isMobile ? "text-[10px]" : "text-[11px]";
 
     return (
       <div className={paddingClass}>
@@ -3329,31 +3322,46 @@ function AppContent() {
   // Calculate shortest path synchronously using local Dijkstra algorithm
   useEffect(() => {
     if (startCoordinates && endCoordinates) {
+      const endKey = `${endCoordinates[0]},${endCoordinates[1]}`;
+      const destChanged = lastCalculatedEndRef.current !== endKey;
+
+      if (routeInfo && lastCalculatedStartRef.current && !destChanged) {
+        const distanceMoved = getDistance(
+          startCoordinates[0],
+          startCoordinates[1],
+          lastCalculatedStartRef.current[0],
+          lastCalculatedStartRef.current[1]
+        );
+        if (distanceMoved < 5) {
+          return;
+        }
+      }
+
       try {
         const route = findShortestPath(
           startCoordinates,
           endCoordinates,
-          isRouteBlocked
+          false
         );
         setRouteInfo(route);
+        lastCalculatedStartRef.current = startCoordinates;
+        lastCalculatedEndRef.current = endKey;
       } catch (err) {
         console.error("Pathfinding error:", err);
         setRouteInfo(null);
+        lastCalculatedStartRef.current = null;
+        lastCalculatedEndRef.current = null;
       }
     } else {
       setRouteInfo(null);
+      lastCalculatedStartRef.current = null;
+      lastCalculatedEndRef.current = null;
     }
-  }, [startCoordinatesKey, endCoordinatesKey, isRouteBlocked]);
+  }, [startCoordinatesKey, endCoordinatesKey]);
 
   // Cleanup simulation when routing changes or stops
   useEffect(() => {
     if (!routingTo || !routeInfo) {
-      if (walkIntervalRef.current) {
-        clearInterval(walkIntervalRef.current);
-        walkIntervalRef.current = null;
-      }
-      setIsWalkSimulationActive(false);
-      setWalkSimulationIndex(0);
       setUserHeading(null);
       if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
@@ -3362,89 +3370,6 @@ function AppContent() {
       setRoutingFrom(null);
     }
   }, [routingTo, routeInfo]);
-
-  useEffect(() => {
-    return () => {
-      if (walkIntervalRef.current) {
-        clearInterval(walkIntervalRef.current);
-      }
-    };
-  }, []);
-
-  const handleStartWalkSimulation = () => {
-    if (!routeInfo || !routeInfo.coordinates || routeInfo.coordinates.length === 0) return;
-    
-    setIsSimulated(true); // Enable simulation mode so user's real GPS is ignored
-    setIsWalkSimulationActive(true);
-    
-    // Clear any existing interval first to be safe
-    if (walkIntervalRef.current) {
-      clearInterval(walkIntervalRef.current);
-    }
-    
-    // Determine where to start/resume from
-    let currentIndex = walkSimulationIndex;
-    if (currentIndex >= routeInfo.coordinates.length - 1) {
-      currentIndex = 0;
-      setWalkSimulationIndex(0);
-    }
-    
-    walkIntervalRef.current = setInterval(() => {
-      currentIndex++;
-      if (currentIndex < routeInfo.coordinates.length) {
-        setWalkSimulationIndex(currentIndex);
-        const coord = routeInfo.coordinates[currentIndex];
-        const prevCoord = routeInfo.coordinates[currentIndex - 1];
-        if (prevCoord) {
-          const heading = getBearing(prevCoord.lat, prevCoord.lng, coord.lat, coord.lng);
-          setUserHeading(heading);
-        }
-        setUserLocation([coord.lat, coord.lng]);
-        setFocusedCoordinate([coord.lat, coord.lng]); // Pan map to user location
-      } else {
-        // Finished the route!
-        if (walkIntervalRef.current) {
-          clearInterval(walkIntervalRef.current);
-          walkIntervalRef.current = null;
-        }
-        setIsWalkSimulationActive(false);
-        setWalkSimulationIndex(0);
-        setUserHeading(null);
-        
-        // Congratulatory Toast/Alert
-        alert(`You have arrived at ${routingTo?.name || 'your destination'}! 🎉`);
-        setIsSimulated(false); // Resume real GPS tracking
-      }
-    }, 350); // smooth stepping
-  };
-
-  const handlePauseWalkSimulation = () => {
-    if (walkIntervalRef.current) {
-      clearInterval(walkIntervalRef.current);
-      walkIntervalRef.current = null;
-    }
-    setIsWalkSimulationActive(false);
-  };
-
-  const handleStopWalkSimulation = () => {
-    if (walkIntervalRef.current) {
-      clearInterval(walkIntervalRef.current);
-      walkIntervalRef.current = null;
-    }
-    setIsWalkSimulationActive(false);
-    setWalkSimulationIndex(0);
-    setUserHeading(null);
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-    }
-    lastSpokenIndexRef.current = null;
-    if (routeInfo && routeInfo.coordinates && routeInfo.coordinates.length > 0) {
-      const startCoord = routeInfo.coordinates[0];
-      setUserLocation([startCoord.lat, startCoord.lng]);
-      setFocusedCoordinate([startCoord.lat, startCoord.lng]);
-    }
-    setIsSimulated(false); // Resume real GPS tracking
-  };
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -3754,22 +3679,8 @@ function AppContent() {
       </div>
     );
   }
-  // Walk simulation progress and countdown calculations
-  const totalCoordinates = routeInfo && routeInfo.coordinates ? routeInfo.coordinates.length - 1 : 1;
-  const progressPercent = routeInfo && totalCoordinates > 0 ? (walkSimulationIndex / totalCoordinates) * 100 : 0;
-  const remainingFraction = routeInfo && totalCoordinates > 0 ? 1 - walkSimulationIndex / totalCoordinates : 1;
-  
-  const displayDuration = routeInfo
-    ? (isWalkSimulationActive
-        ? Math.max(Math.round((routeInfo.duration * remainingFraction) / 60), 0)
-        : Math.round(routeInfo.duration / 60))
-    : 0;
-
-  const displayDistance = routeInfo
-    ? (isWalkSimulationActive
-        ? Math.max((routeInfo.distance * remainingFraction) / 1000, 0)
-        : routeInfo.distance / 1000)
-    : 0;
+  const displayDuration = routeInfo ? Math.round(routeInfo.duration / 60) : 0;
+  const displayDistance = routeInfo ? routeInfo.distance / 1000 : 0;
 
   const numTurns = routeInfo && routeInfo.instructions
     ? routeInfo.instructions.filter((step: any) => step.text.toLowerCase().includes('turn left') || step.text.toLowerCase().includes('turn right')).length
@@ -4156,7 +4067,44 @@ function AppContent() {
     );
   }
 
+  const navigationContextValue: NavigationContextType = {
+    pois,
+    filterCategory,
+    setFilterCategory,
+    selectedPoi,
+    setSelectedPoi,
+    userLocation,
+    setUserLocation,
+    locationAccuracy,
+    setLocationAccuracy,
+    isLocating,
+    setIsLocating,
+    userHeading,
+    setUserHeading,
+    routingTo,
+    setRoutingTo,
+    routingFrom,
+    setRoutingFrom,
+    mapStyle,
+    setMapStyle,
+    focusedCoordinate,
+    setFocusedCoordinate,
+    routeInfo,
+    setRouteInfo,
+    searchQuery,
+    setSearchQuery,
+    isSearchOpen,
+    setIsSearchOpen,
+    sheetSnap,
+    setSheetSnap,
+    isLocatingState: isLocating,
+    isOffline,
+    handlePoiSelect,
+    handleMapDrag,
+  };
+
   return (
+    <NavigationProvider value={navigationContextValue}>
     <>
       <div className="h-screen w-screen bg-white flex flex-col overflow-hidden font-sans text-[rgb(49,30,2)] transition-colors duration-300">
       {/* Header */}
@@ -4252,46 +4200,9 @@ function AppContent() {
         {/* ── Mobile Bottom Sheet ─────────────────────────────────────── */}
         <div className="lg:hidden">
           <MobileBottomSheet
-            snap={sheetSnap}
-            onSnapChange={setSheetSnap}
-            pois={pois}
-            selectedPoi={selectedPoi}
-            routingTo={routingTo}
-            userLocation={userLocation}
-            isRouteHighlighted={isRouteHighlighted}
-            onPoiSelect={(poi) => {
-              setSelectedPoi(poi);
-              setRoutingTo(null);
-              setSheetSnap('half');
-            }}
-            onClose={() => {
-              setSelectedPoi(null);
-              setRoutingTo(null);
-              setIsRouteHighlighted(false);
-              setSheetSnap('peek');
-            }}
-            onGetDirections={(poi) => {
-              setRoutingTo(poi);
-              setRoutingFrom(null);
-              setSelectedPoi(null);
-              setSheetSnap('half');
-            }}
-            onRouteFromHere={(poi) => {
-              setRoutingFrom(poi);
-              setRoutingTo(null);
-              setSelectedPoi(null);
-              setSheetSnap('full');
-            }}
-            onHighlightRoute={() => setIsRouteHighlighted(!isRouteHighlighted)}
             onShare={shareLocation}
             renderRoutePlannerPanel={renderRoutePlannerPanel}
             renderHomePanel={() => renderHomePanelContent(true)}
-            filterCategory={filterCategory}
-            setFilterCategory={setFilterCategory}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            isSearchOpen={isSearchOpen}
-            onSearchOpenChange={setIsSearchOpen}
           />
         </div>
 
@@ -4307,20 +4218,13 @@ function AppContent() {
                 onClose={() => {
                   setSelectedPoi(null);
                   setRoutingTo(null);
-                  setIsRouteHighlighted(false);
                 }}
                 onGetDirections={(poi) => {
                   setRoutingTo(poi);
                   setRoutingFrom(null);
                   setSelectedPoi(null);
                 }} 
-                onRouteFromHere={(poi) => {
-                  setRoutingFrom(poi);
-                  setRoutingTo(null);
-                  setSelectedPoi(null);
-                }}
-                isRouteHighlighted={isRouteHighlighted}
-                onHighlightRoute={() => setIsRouteHighlighted(!isRouteHighlighted)}
+
                 onShare={shareLocation}
                 isSidebar={true}
               />
@@ -4413,26 +4317,14 @@ function AppContent() {
             </AnimatePresence>
           )}
 
-          <CampusMap 
-            pois={pois} 
-            filterCategory={filterCategory}
-            selectedPoi={selectedPoi} 
-            onPoiSelect={handlePoiSelect} 
-            userLocation={userLocation}
-            locationAccuracy={locationAccuracy}
-            isLocating={isLocating}
-            userHeading={userHeading}
-            routingTo={routingTo}
-            routingFrom={routingFrom}
-            onRouteFound={setRouteInfo}
-            mapStyle={mapStyle}
-            isRouteHighlighted={isRouteHighlighted}
-            focusedCoordinate={focusedCoordinate}
-            routeCoordinates={routeInfo?.coordinates}
-            routeInfo={routeInfo}
-            onMapDrag={handleMapDrag}
-            searchQuery={searchQuery}
-          />
+          <React.Suspense fallback={
+            <div className="flex-1 flex flex-col items-center justify-center bg-zinc-50 min-h-[400px]">
+              <div className="w-10 h-10 border-2 border-zinc-200 border-t-lasu-primary rounded-full animate-spin mb-3"></div>
+              <p className="text-zinc-550 text-xs font-semibold">Loading Campus Map...</p>
+            </div>
+          }>
+            <CampusMap />
+          </React.Suspense>
           
           {routingTo && routeInfo && (
             <motion.div 
@@ -4560,7 +4452,6 @@ function AppContent() {
                         <button 
                           key={i}
                           onClick={() => {
-                            setIsRouteHighlighted(true);
                             if (routeInfo.coordinates[step.index]) {
                               setFocusedCoordinate([routeInfo.coordinates[step.index].lat, routeInfo.coordinates[step.index].lng]);
                             }
@@ -4756,8 +4647,6 @@ function AppContent() {
             setRoutingTo(poi);
             setSelectedPoi(null);
           }}
-          isVoiceEnabled={isVoiceEnabled}
-          speakInstruction={speakInstruction}
           externalOpen={isAssistantOpen}
           onExternalOpenChange={setIsAssistantOpen}
           isSearchOpen={isSearchOpen}
@@ -4874,5 +4763,6 @@ function AppContent() {
 
     </div>
     </>
+    </NavigationProvider>
   );
 }

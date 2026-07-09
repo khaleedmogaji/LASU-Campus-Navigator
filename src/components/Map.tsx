@@ -16,27 +16,7 @@ const DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 
-export interface MapProps {
-  pois: POI[];
-  filterCategory: string | 'All';
-  selectedPoi: POI | null;
-  onPoiSelect: (poi: POI) => void;
-  userLocation: [number, number] | null;
-  locationAccuracy?: number | null;
-  isLocating?: boolean;
-  userHeading?: number | null;
-
-  routingTo: any | null;
-  routingFrom: any | null;
-  onRouteFound?: (info: { distance: number; duration: number; coordinates: any[]; segmentsCount: number; instructions: any[] } | null) => void;
-  mapStyle: MapStyle;
-  isRouteHighlighted: boolean;
-  focusedCoordinate?: [number, number] | null;
-  routeCoordinates?: any[];
-  routeInfo?: any | null;
-  onMapDrag?: () => void;
-  searchQuery: string;
-}
+import { useNavigation } from '../context/NavigationContext';
 
 function MapEvents({ onMapDrag }: { onMapDrag?: () => void }) {
   useMapEvents({
@@ -79,11 +59,7 @@ const MAP_SUBDOMAINS: Record<MapStyle, string[]> = {
   dark: ['a', 'b', 'c', 'd'],
 };
 
-const getAccuracyColor = (accuracy: number) => {
-  if (accuracy < 20) return '#22c55e'; // Green
-  if (accuracy < 50) return '#eab308'; // Yellow
-  return '#ef4444'; // Red
-};
+
 
 const CATEGORY_STYLES: Record<string, { bg: string; fill: string; ping: string }> = {
   Administrative: { bg: 'bg-amber-500', fill: '#f59e0b', ping: 'bg-amber-400' },
@@ -180,11 +156,10 @@ interface PoiMarkerProps {
   poi: POI;
   isSelected: boolean;
   userLocation: [number, number] | null;
-  mapStyle: string;
   onPoiSelect: (poi: POI) => void;
 }
 
-const PoiMarker = memo(({ poi, isSelected, userLocation, mapStyle, onPoiSelect }: PoiMarkerProps) => {
+const PoiMarker = memo(({ poi, isSelected, userLocation, onPoiSelect }: PoiMarkerProps) => {
   const icon = useMemo(
     () => getMarkerIcon(poi.category, isSelected),
     [poi.category, isSelected]
@@ -246,21 +221,15 @@ const PoiMarker = memo(({ poi, isSelected, userLocation, mapStyle, onPoiSelect }
 PoiMarker.displayName = 'PoiMarker';
 
 interface PoiMarkersAndLabelsProps {
-  pois: POI[];
   filteredPois: POI[];
   selectedPoi: POI | null;
   onPoiSelect: (poi: POI) => void;
-  userLocationRef: React.MutableRefObject<[number, number] | null>;
-  mapStyle: MapStyle;
 }
 
 const PoiMarkersAndLabels = memo(({
-  pois,
   filteredPois,
   selectedPoi,
-  onPoiSelect,
-  userLocationRef,
-  mapStyle
+  onPoiSelect
 }: PoiMarkersAndLabelsProps) => {
   const map = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
@@ -500,26 +469,26 @@ function SelectedBuilding3D({ lat: rawLat, lng: rawLng, category }: { lat: numbe
   );
 }
 
-export const CampusMap: React.FC<MapProps> = memo(({
-  pois,
-  filterCategory,
-  selectedPoi,
-  onPoiSelect,
-  userLocation,
-  locationAccuracy,
-  isLocating,
-  userHeading,
-  routingTo,
-  routingFrom,
-  onRouteFound,
-  mapStyle,
-  isRouteHighlighted,
-  focusedCoordinate,
-  routeInfo,
-  routeCoordinates,
-  onMapDrag,
-  searchQuery
-}) => {
+export const CampusMap: React.FC = memo(() => {
+  const {
+    pois,
+    filterCategory,
+    selectedPoi,
+    handlePoiSelect: onPoiSelect,
+    userLocation,
+    locationAccuracy,
+    isLocating,
+    userHeading,
+    routingTo,
+    routingFrom,
+    mapStyle,
+    focusedCoordinate,
+    routeInfo,
+    handleMapDrag: onMapDrag,
+    searchQuery,
+  } = useNavigation();
+
+  const routeCoordinates = routeInfo?.coordinates;
   const defaultCenter: [number, number] = [6.4664, 3.2003]; // LASU Ojo Campus Center
   const campusBounds: L.LatLngBoundsExpression = [
     [6.4550, 3.1900], // South-West (expanded to cover Faculty of Social Sciences)
@@ -640,12 +609,9 @@ export const CampusMap: React.FC<MapProps> = memo(({
         )}
         
         <PoiMarkersAndLabels
-          pois={pois}
           filteredPois={filteredPois}
           selectedPoi={selectedPoi}
           onPoiSelect={onPoiSelect}
-          userLocationRef={userLocationRef}
-          mapStyle={mapStyle}
         />
 
         {selectedPoi && (
@@ -654,7 +620,6 @@ export const CampusMap: React.FC<MapProps> = memo(({
             poi={selectedPoi}
             isSelected={true}
             userLocation={userLocation}
-            mapStyle={mapStyle}
             onPoiSelect={onPoiSelect}
           />
         )}

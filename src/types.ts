@@ -13,25 +13,3 @@ export interface POI {
   nearbyLandmarks?: string[];
   searchAliases?: string[];
 }
-
-export interface Event {
-  id: string;
-  title: string;
-  description: string;
-  location: string;
-  date: string;
-  poiId?: string;
-  time?: string;
-  category?: 'Academic' | 'Social' | 'Sports' | 'Administrative' | 'Other';
-  imageUrl?: string;
-}
-
-export interface UserProfile {
-  uid: string;
-  displayName: string;
-  email: string;
-  photoURL?: string;
-  role: 'admin' | 'user';
-  homeFaculty?: string;
-  savedRoutes?: any[];
-}

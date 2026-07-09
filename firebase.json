@@ -1,6 +1,6 @@
 {
   "firestore": {
-    "databaseId": "ai-studio-3bb727ce-ad8b-4679-8278-bb4a66a6ba71",
+    "databaseId": "lasu-locations",
     "rules": "firestore.rules",
     "edition": "ENTERPRISE",
     "dataAccessMode": "FIRESTORE_NATIVE"
@@ -9,5 +9,19 @@
     "providers": {
       "emailPassword": true
     }
+  },
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

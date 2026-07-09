@@ -80,9 +80,6 @@ interface POIInfoProps {
   userLocation: [number, number] | null;
   onClose: () => void;
   onGetDirections: (poi: POI) => void;
-  onRouteFromHere?: (poi: POI) => void;
-  isRouteHighlighted: boolean;
-  onHighlightRoute: () => void;
   isSidebar?: boolean;
   onShare: (poi: POI) => void;
 }
@@ -131,9 +128,6 @@ export const POIInfo: React.FC<POIInfoProps> = ({
   userLocation,
   onClose,
   onGetDirections,
-  onRouteFromHere,
-  isRouteHighlighted,
-  onHighlightRoute,
   isSidebar = false,
   onShare
 }) => {
