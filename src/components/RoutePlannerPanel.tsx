@@ -45,7 +45,7 @@ export const RoutePlannerPanel: React.FC<RoutePlannerPanelProps> = ({
   setIsSimulated,
 }) => {
   return (
-    <div className="flex flex-col h-full bg-white p-6 space-y-6">
+    <div className="flex flex-col flex-1 min-h-0 overflow-y-auto scrollbar-hide bg-white p-6 space-y-6">
       <div className="flex items-center justify-between border-b border-zinc-150 pb-3">
         <h3 className="text-xs font-black text-zinc-800 uppercase tracking-wider flex items-center gap-2">
           <Navigation className="w-4 h-4 text-lasu-primary animate-pulse" />

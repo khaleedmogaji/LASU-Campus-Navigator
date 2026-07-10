@@ -21,6 +21,17 @@ function getSnapPx(snap: SheetSnap): number {
 
 const VEL_THRESHOLD = 400; // px/s — fast flick triggers snap
 
+function getScrollableParent(el: HTMLElement | null): HTMLElement | null {
+  if (!el) return null;
+  if (el.scrollHeight > el.clientHeight) {
+    const overflowY = window.getComputedStyle(el).overflowY;
+    if (overflowY === 'auto' || overflowY === 'scroll') {
+      return el;
+    }
+  }
+  return getScrollableParent(el.parentElement);
+}
+
 import { useNavigation } from '../context/NavigationContext';
 
 interface MobileBottomSheetProps {
@@ -95,13 +106,19 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
   }, [y, onSnapChange]);
 
   const onTouchStart = useCallback((e: React.TouchEvent) => {
+    const scrollEl = getScrollableParent(e.target as HTMLElement);
+    if (scrollEl && snap === 'full') {
+      isDragging.current = false;
+      return;
+    }
+
     isDragging.current = true;
     dragStartClientY.current = e.touches[0].clientY;
     dragStartMotionY.current = y.get();
     lastClientY.current = e.touches[0].clientY;
     lastVel.current = 0;
     lastT.current = Date.now();
-  }, [y]);
+  }, [y, snap]);
 
   const onTouchMove = useCallback((e: React.TouchEvent) => {
     if (!isDragging.current) return;
@@ -119,7 +136,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
       lastT.current = now;
       lastClientY.current = clientY;
     }
-  }, [y]);
+  }, [y, snap]);
 
   const onTouchEnd = useCallback(() => {
     if (!isDragging.current) return;
@@ -261,7 +278,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
                   </React.Suspense>
                 </div>
               ) : (
-                <div className="flex-1 overflow-y-auto scrollbar-hide">
+                <div className="flex-1 min-h-0 overflow-y-auto touch-pan-y scrollbar-hide">
                   {routingTo ? renderRoutePlannerPanel() : renderHomePanel()}
                 </div>
               )}

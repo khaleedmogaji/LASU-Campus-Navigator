@@ -337,7 +337,7 @@ function AppContent() {
       : undefined;
 
     return (
-      <div className="h-screen w-screen relative overflow-hidden bg-white">
+      <div className="relative w-full min-h-screen overflow-y-auto bg-white">
         <React.Suspense fallback={<div className="min-h-screen flex items-center justify-center text-zinc-500 font-bold bg-white">Loading Welcome...</div>}>
           <WelcomeScreen 
             pois={pois}
