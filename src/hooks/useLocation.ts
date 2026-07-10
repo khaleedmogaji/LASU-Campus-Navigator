@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { KalmanFilter } from '../lib/kalmanFilter';
 import { CAMPUS_POLYGON, isPointInPolygon } from '../utils/geo';
 import { getDistance } from '../lib/pathNetwork';
@@ -123,10 +123,16 @@ export function useLocation({
     }
   }, [isSimulated, followMe, setFocusedCoordinate, setSelectedPoi, setUserLocation, setLocationAccuracy, setUserHeading, setIsSimulated]);
 
+  const resetFilters = useCallback(() => {
+    latFilter.current = null;
+    lonFilter.current = null;
+  }, []);
+
   return {
     isLocating,
     setIsLocating,
     isUserOffCampus,
     setIsUserOffCampus,
+    resetFilters
   };
 }

@@ -8,6 +8,10 @@ import { cn } from './lib/utils';
 import type { MapStyle } from './components/Map';
 import { NavigationProvider } from './context/NavigationContext';
 
+// Icons
+import { Layers, Navigation } from 'lucide-react';
+import { getDistance } from './lib/pathNetwork';
+
 // Custom Hooks
 import { useSearch } from './hooks/useSearch';
 import { useLocation } from './hooks/useLocation';
@@ -33,6 +37,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import { INITIAL_POIS } from './data/initialPois';
 import { overridePoiData } from './utils/poi';
 
+const LAYER_PREVIEWS = [
+  { id: 'voyager' as MapStyle, label: 'CARTO Voyager', desc: 'OpenStreetMap (CARTO Voyager)', bg: 'from-sky-400 via-sky-300 to-emerald-200' },
+  { id: 'osm' as MapStyle, label: 'OSM', desc: 'Pedestrian pathways', bg: 'from-sky-200 to-zinc-200' }
+] as const;
+
 export default function App() {
   return (
     <ErrorBoundary>
@@ -51,6 +60,7 @@ function AppContent() {
     lastDestination: string;
   } | null>(null);
   const [showWelcomeBack, setShowWelcomeBack] = useState(false);
+  const [showLayerPanel, setShowLayerPanel] = useState(false);
 
   useEffect(() => {
     localStorage.removeItem('lasu_navigator_dark_mode');
@@ -598,6 +608,158 @@ function AppContent() {
                   numTurns={numTurns}
                 />
               )}
+
+              {/* Glassmorphic Map Control HUD */}
+              <div className="absolute top-6 right-6 z-[2000] flex gap-3.5 items-start select-none">
+                {/* Visual Layer Selector Drawer */}
+                <AnimatePresence>
+                  {showLayerPanel && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                      className="bg-white border border-zinc-200 shadow-2xl rounded-[28px] p-3 flex gap-3 items-center mr-1"
+                    >
+                      {LAYER_PREVIEWS.map((layer) => (
+                        <button
+                          key={layer.id}
+                          onClick={() => setMapStyle(layer.id)}
+                          className={cn(
+                            "w-20 h-20 rounded-2xl overflow-hidden relative border transition-all duration-300 flex flex-col justify-end p-2 cursor-pointer shadow-md text-left active:scale-95 group shrink-0",
+                            mapStyle === layer.id 
+                              ? "border-lasu-primary ring-4 ring-lasu-primary/20 scale-102" 
+                              : "border-white/40 hover:border-zinc-300/80 hover:scale-102"
+                          )}
+                        >
+                          <div className={cn("absolute inset-0 bg-gradient-to-tr opacity-90 z-0", layer.bg)} />
+                          {/* Grid representation */}
+                          <div className="absolute inset-0 z-0 opacity-10 flex flex-col justify-between p-1.5 pointer-events-none">
+                            <div className="h-px bg-white w-full" />
+                            <div className="h-px bg-white w-full transform rotate-12" />
+                            <div className="h-px bg-white w-full transform -rotate-12" />
+                          </div>
+                          <div className="relative z-10 text-[9px] font-black uppercase text-white drop-shadow-md leading-none">
+                            {layer.label}
+                          </div>
+                          <div className="relative z-10 text-[7px] text-white/90 drop-shadow-sm font-semibold truncate leading-none mt-1 max-w-full">
+                            {layer.desc}
+                          </div>
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Vertical Control Bar */}
+                <div className="bg-white border border-zinc-200 shadow-2xl rounded-[28px] p-2 flex flex-col gap-3 items-center">
+                  {/* GPS Locate Button */}
+                  <button 
+                    onClick={() => {
+                      setIsSimulated(false); // Resume real GPS updates
+                      location.resetFilters();
+                      if ("geolocation" in navigator) {
+                        location.setIsLocating(true);
+                        setUserLocation(null);
+                        setLocationAccuracy(null);
+                        navigator.geolocation.getCurrentPosition(
+                          (position) => {
+                            const loc: [number, number] = [position.coords.latitude, position.coords.longitude];
+                            const distToCenter = getDistance(loc[0], loc[1], 6.4687, 3.2000);
+                            const isFarOffCampus = distToCenter >= 1500;
+                            
+                            location.setIsUserOffCampus(isFarOffCampus);
+
+                            if (isFarOffCampus) {
+                              alert("Your real GPS location is outside the LASU Ojo campus bounds. Switched to Simulation Mode at the Main Gate so you can test the application.");
+                              setIsSimulated(true);
+                              const gateLoc: [number, number] = [6.4642, 3.1972];
+                              setUserLocation(gateLoc);
+                              setLocationAccuracy(null);
+                              setSelectedPoi({ 
+                                id: 'simulated-location', 
+                                name: 'Simulated Location (Gate)', 
+                                latitude: gateLoc[0], 
+                                longitude: gateLoc[1], 
+                                category: 'Other', 
+                                description: 'Simulated position for testing navigation.' 
+                              });
+                            } else {
+                              setUserLocation(loc);
+                              setLocationAccuracy(position.coords.accuracy);
+                              setFocusedCoordinate(loc); // Pan/center map on user location
+                              setFollowMe(true); // Lock map tracking on user
+                              setSelectedPoi({ 
+                                id: 'my-location', 
+                                name: 'My Location', 
+                                latitude: loc[0], 
+                                longitude: loc[1], 
+                                category: 'Other', 
+                                description: 'Your current position on campus.' 
+                              });
+                            }
+                            location.setIsLocating(false);
+                          },
+                          (error) => {
+                            console.error("Error getting location:", error);
+                            let msg = "Could not access your location.";
+                            if (error.code === error.PERMISSION_DENIED) {
+                              msg = "Location access was denied. Please check your browser/system settings to allow location permissions for this app.";
+                            } else if (error.code === error.POSITION_UNAVAILABLE) {
+                              msg = "Location coordinates are currently unavailable. Ensure your device's location services (GPS) are turned on.";
+                            } else if (error.code === error.TIMEOUT) {
+                              msg = "Location request timed out. Please try again or move to an area with a stronger GPS signal.";
+                            }
+                            
+                            alert(`${msg}\n\nDefaulting to Simulation Mode at the Main Gate so you can test navigation.`);
+                            
+                            setIsSimulated(true);
+                            const gateLoc: [number, number] = [6.4642, 3.1972];
+                            setUserLocation(gateLoc);
+                            setLocationAccuracy(null);
+                            setSelectedPoi({ 
+                              id: 'simulated-location', 
+                              name: 'Simulated Location (Gate)', 
+                              latitude: gateLoc[0], 
+                              longitude: gateLoc[1], 
+                              category: 'Other', 
+                              description: 'Simulated position for testing navigation.' 
+                            });
+                            location.setIsLocating(false);
+                          },
+                          { enableHighAccuracy: true, maximumAge: 0, timeout: 30000 }
+                        );
+                      } else {
+                        alert("Geolocation is not supported by your browser.");
+                      }
+                    }}
+                    className={cn(
+                      "relative w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-sm border",
+                      (location.isLocating || followMe)
+                        ? "bg-lasu-primary text-white border-lasu-primary shadow-lg shadow-lasu-primary/20 scale-102" 
+                        : "bg-white border-zinc-250 hover:bg-zinc-50 text-zinc-800 hover:text-zinc-950 hover:border-zinc-300   "
+                    )}
+                    disabled={location.isLocating}
+                    title="Find my location"
+                  >
+                    <Navigation className={cn("w-4.5 h-4.5", location.isLocating && "animate-spin")} />
+                  </button>
+
+                  {/* Layer Panel Switcher */}
+                  <button 
+                    onClick={() => setShowLayerPanel(!showLayerPanel)}
+                    className={cn(
+                      "w-11 h-11 rounded-2xl flex flex-col items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer shadow-sm border",
+                      showLayerPanel 
+                        ? "bg-lasu-primary text-white border-lasu-primary shadow-lg shadow-lasu-primary/20 scale-102" 
+                        : "bg-white  border-zinc-200  hover:bg-zinc-50  text-zinc-700  hover:text-lasu-primary "
+                    )}
+                    title="Select map style layers"
+                  >
+                    <Layers className="w-4.5 h-4.5" />
+                    <span className="text-[7px] font-black uppercase mt-0.5 leading-none">{mapStyle}</span>
+                  </button>
+                </div>
+              </div>
             </section>
           </main>
 
