@@ -117,7 +117,7 @@ export function useRouting({
 
   // Cleanups on stop/dest changes
   useEffect(() => {
-    if (!routingTo || !routeInfo) {
+    if (!routingTo) {
       setUserHeading(null);
       if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
@@ -125,7 +125,7 @@ export function useRouting({
       lastSpokenIndexRef.current = null;
       setRoutingFrom(null);
     }
-  }, [routingTo, routeInfo, setUserHeading, setRoutingFrom]);
+  }, [routingTo, setUserHeading, setRoutingFrom]);
 
   // Speech prompt transitions when destination changes or route is left
   useEffect(() => {
