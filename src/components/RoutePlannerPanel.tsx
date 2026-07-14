@@ -2,6 +2,8 @@ import React from 'react';
 import { X, Navigation } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { POI } from '../types';
+import { useNavigation } from '../context/NavigationContext';
+import { cn } from '../lib/utils';
 
 interface RoutePlannerPanelProps {
   routingTo: POI | null;
@@ -44,9 +46,11 @@ export const RoutePlannerPanel: React.FC<RoutePlannerPanelProps> = ({
   handleSwapRoute,
   setIsSimulated,
 }) => {
+  const { routingMode, setRoutingMode } = useNavigation();
+
   return (
     <div className="flex flex-col flex-1 min-h-0 overflow-y-auto scrollbar-hide bg-white p-6 space-y-6">
-      <div className="flex items-center justify-between border-b border-zinc-150 pb-3">
+      <div className="flex items-center justify-between border-b border-zinc-150 pb-3 font-semibold">
         <h3 className="text-xs font-black text-zinc-800 uppercase tracking-wider flex items-center gap-2">
           <Navigation className="w-4 h-4 text-lasu-primary animate-pulse" />
           Route Planner
@@ -56,10 +60,47 @@ export const RoutePlannerPanel: React.FC<RoutePlannerPanelProps> = ({
             setRoutingTo(null);
             setRoutingFrom(null);
             setRouteInfo(null);
+            setStartSearchQuery('');
+            setEndSearchQuery('');
           }}
           className="text-[10px] font-black text-zinc-650 hover:text-red-600 uppercase tracking-widest transition-colors cursor-pointer"
         >
           Clear Route
+        </button>
+      </div>
+
+      {/* Routing Mode Toggle */}
+      <div className="flex bg-zinc-100 p-1 rounded-xl shrink-0">
+        <button
+          onClick={() => {
+            setRoutingMode('gps');
+            setRoutingFrom(null);
+            setStartSearchQuery('');
+          }}
+          className={cn(
+            "flex-1 py-1.5 text-center text-[10.5px] font-black uppercase tracking-wider rounded-lg transition-all cursor-pointer",
+            routingMode === 'gps'
+              ? "bg-white text-lasu-primary shadow-sm"
+              : "text-zinc-500 hover:text-zinc-800"
+          )}
+        >
+          GPS Location
+        </button>
+        <button
+          onClick={() => {
+            setRoutingMode('landmark');
+            if (!routingFrom) {
+              setStartSearchQuery('');
+            }
+          }}
+          className={cn(
+            "flex-1 py-1.5 text-center text-[10.5px] font-black uppercase tracking-wider rounded-lg transition-all cursor-pointer",
+            routingMode === 'landmark'
+              ? "bg-white text-lasu-primary shadow-sm"
+              : "text-zinc-500 hover:text-zinc-800"
+          )}
+        >
+          Select Start
         </button>
       </div>
 
@@ -74,19 +115,29 @@ export const RoutePlannerPanel: React.FC<RoutePlannerPanelProps> = ({
             <span className="absolute left-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-500 ring-4 ring-emerald-500/10 z-10" />
             <input
               type="text"
-              value={startSearchQuery}
+              value={routingMode === 'gps' ? 'My Location (GPS)' : startSearchQuery}
+              disabled={routingMode === 'gps'}
               onFocus={() => {
-                setIsStartDropdownOpen(true);
-                setIsEndDropdownOpen(false);
+                if (routingMode !== 'gps') {
+                  setIsStartDropdownOpen(true);
+                  setIsEndDropdownOpen(false);
+                }
               }}
               onChange={(e) => {
-                setStartSearchQuery(e.target.value);
-                setIsStartDropdownOpen(true);
+                if (routingMode !== 'gps') {
+                  setStartSearchQuery(e.target.value);
+                  setIsStartDropdownOpen(true);
+                }
               }}
-              placeholder="Choose starting point..."
-              className="w-full pl-8.5 pr-8 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-800 focus:outline-none focus:ring-2 focus:ring-lasu-primary/20 focus:border-lasu-primary/70 focus:bg-white transition-all shadow-sm"
+              placeholder={routingMode === 'gps' ? 'My Location (GPS)' : 'Choose starting point...'}
+              className={cn(
+                "w-full pl-8.5 pr-8 py-2.5 border border-zinc-200 rounded-xl text-xs font-bold shadow-sm transition-all focus:outline-none",
+                routingMode === 'gps'
+                  ? "bg-zinc-100 text-zinc-550 cursor-not-allowed select-none opacity-90"
+                  : "bg-zinc-50 text-zinc-800 focus:ring-2 focus:ring-lasu-primary/20 focus:border-lasu-primary/70 focus:bg-white"
+              )}
             />
-            {startSearchQuery && (
+            {routingMode !== 'gps' && startSearchQuery && (
               <button
                 onClick={() => {
                   setStartSearchQuery('');
@@ -100,7 +151,7 @@ export const RoutePlannerPanel: React.FC<RoutePlannerPanelProps> = ({
 
             {/* Start Dropdown */}
             <AnimatePresence>
-              {isStartDropdownOpen && (
+              {routingMode !== 'gps' && isStartDropdownOpen && (
                 <>
                   <div className="fixed inset-0 z-[1000]" onClick={() => setIsStartDropdownOpen(false)} />
                   <motion.div
@@ -211,19 +262,29 @@ export const RoutePlannerPanel: React.FC<RoutePlannerPanelProps> = ({
         </div>
 
         {/* Swap Button */}
-        <button
-          onClick={handleSwapRoute}
-          className="p-2.5 bg-zinc-100 hover:bg-lasu-primary/10 hover:text-lasu-primary text-zinc-700 rounded-xl transition-all cursor-pointer hover:scale-105 active:scale-95 shrink-0 border border-zinc-200 shadow-sm z-10"
-          title="Swap start and end locations"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4.5 h-4.5">
-            <path d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l-4-4M17 20l4-4"/>
-          </svg>
-        </button>
+        {routingMode === 'landmark' && (
+          <button
+            onClick={handleSwapRoute}
+            className="p-2.5 bg-zinc-100 hover:bg-lasu-primary/10 hover:text-lasu-primary text-zinc-700 rounded-xl transition-all cursor-pointer hover:scale-105 active:scale-95 shrink-0 border border-zinc-200 shadow-sm z-10"
+            title="Swap start and end locations"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-4.5 h-4.5">
+              <path d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l-4-4M17 20l4-4"/>
+            </svg>
+          </button>
+        )}
       </div>
 
+      {/* Conflict Validation warning */}
+      {routingFrom && routingTo && routingFrom.id === routingTo.id && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 animate-pulse">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping shrink-0" />
+          Start and destination cannot be the same landmark.
+        </div>
+      )}
+
       {/* Detailed directions preview summary */}
-      {routeInfo && (
+      {routeInfo && routingFrom?.id !== routingTo?.id && (
         <div className="bg-zinc-50 border border-zinc-200/50 rounded-2xl p-4 flex flex-col gap-2">
           <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest">Selected Path Info</span>
           <div className="flex justify-between items-center text-xs font-bold text-zinc-700">

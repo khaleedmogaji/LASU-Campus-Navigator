@@ -22,6 +22,7 @@ interface WelcomeScreenProps {
   onExplore: (category?: string) => void;
   onAskAssistant: () => void;
   onSelectPoi: (poi: POI) => void;
+  onOpenRoutePlanner: () => void;
 }
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ 
@@ -29,7 +30,8 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   onStart, 
   onExplore, 
   onAskAssistant, 
-  onSelectPoi
+  onSelectPoi,
+  onOpenRoutePlanner
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -149,26 +151,26 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
 
       {/* Header bar */}
       <header className="relative z-30 w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <img 
             src="https://lasu.edu.ng/home/img/logo1.png"
             alt="LASU Logo"
-            className="w-10 h-10 object-contain"
+            className="w-11 h-11 object-contain drop-shadow-sm"
             referrerPolicy="no-referrer"
           />
           <div>
-            <h2 className="text-xs font-black tracking-widest text-lasu-primary uppercase">Lagos State University</h2>
-            <p className="text-[10px] text-zinc-700 font-bold uppercase tracking-wider">Official Digital Service</p>
+            <h2 className="text-[12.5px] font-black tracking-widest text-lasu-primary uppercase leading-tight">Lagos State University</h2>
+            <p className="text-[9.5px] text-zinc-550 font-bold uppercase tracking-wider leading-none mt-0.5">Official Digital Service</p>
           </div>
         </div>
 
       </header>
 
       {/* Main Page Area */}
-      <main className="relative z-20 flex-1 max-w-4xl w-full mx-auto px-6 py-6 flex flex-col justify-center gap-8 md:gap-12">
+      <main className="relative z-20 flex-1 max-w-4xl w-full mx-auto px-6 py-8 flex flex-col justify-center gap-8 md:gap-12">
         
         {/* Hero Section */}
-        <section className="text-center flex flex-col items-center gap-5">
+        <section className="text-center flex flex-col items-center gap-6">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -183,12 +185,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             />
           </motion.div>
 
-          <div className="space-y-2">
-            <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-none text-lasu-primary">
+          <div className="space-y-3">
+            <h1 className="text-3.5xl md:text-5.5xl font-black tracking-tight leading-tight text-lasu-primary">
               LASU Campus Navigator
             </h1>
-            <p className="text-sm md:text-lg text-zinc-800 font-bold max-w-lg mx-auto">
-              Navigate LASU with confidence.
+            <p className="text-xs md:text-base text-zinc-650 font-semibold max-w-lg leading-relaxed mx-auto">
+              Navigate Lagos State University with confidence. Find departments, offices, faculties, and landmarks using turn-by-turn route pathfinding.
             </p>
           </div>
 
@@ -314,14 +316,14 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             </button>
 
             <button
-              onClick={onAskAssistant}
+              onClick={onOpenRoutePlanner}
               className="glass-card glass-card-hover p-5 rounded-3xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer relative overflow-hidden group"
             >
-              <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-650 flex items-center justify-center transition-transform group-hover:scale-105">
-                <MessageSquare className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center transition-transform group-hover:scale-105">
+                <Navigation className="w-5 h-5" />
               </div>
-              <span className="text-xs font-black">Campus Assistant</span>
-              <span className="text-[10px] text-zinc-600 uppercase tracking-wider font-bold">Smart Guide</span>
+              <span className="text-xs font-black">Plan a Route</span>
+              <span className="text-[10px] text-zinc-650 uppercase tracking-wider font-bold">No GPS Required</span>
             </button>
           </div>
         </section>
@@ -334,7 +336,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             </div>
             <div>
               <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">Smart Navigation</h4>
-              <p className="text-xs text-zinc-850 mt-1 leading-relaxed font-semibold">Turn-by-turn routing across Ojo walkways using coordinate pathfinding.</p>
+              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">Turn-by-turn routing across Ojo walkways using coordinate pathfinding.</p>
             </div>
           </div>
           <div className="flex gap-4 items-start bg-white p-5 rounded-3xl border border-zinc-200 shadow-sm">
@@ -343,7 +345,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             </div>
             <div>
               <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">Campus Assistant</h4>
-              <p className="text-xs text-zinc-850 mt-1 leading-relaxed font-semibold">Rule-based campus assistant for finding faculties, departments, and offices.</p>
+              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">Rule-based campus assistant for finding faculties, departments, and offices.</p>
             </div>
           </div>
           <div className="flex gap-4 items-start bg-white p-5 rounded-3xl border border-zinc-200 shadow-sm">
@@ -352,7 +354,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             </div>
             <div>
               <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">Official Identity</h4>
-              <p className="text-xs text-zinc-850 mt-1 leading-relaxed font-semibold">Built using official LASU mapping resources and verified data directories.</p>
+              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">Built using official LASU mapping resources and verified data directories.</p>
             </div>
           </div>
         </section>
@@ -361,16 +363,16 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         <section className="bg-zinc-50 border border-zinc-200 rounded-3xl p-6 md:p-8">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2xl md:text-3xl font-black text-lasu-primary">{pois.length}+</p>
-              <p className="text-[11px] text-zinc-800 uppercase font-black tracking-widest mt-1">Landmarks</p>
+              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-primary">{pois.length}+</p>
+              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">Landmarks</p>
             </div>
             <div className="border-x border-zinc-250">
-              <p className="text-2xl md:text-3xl font-black text-lasu-secondary">18</p>
-              <p className="text-[11px] text-zinc-800 uppercase font-black tracking-widest mt-1">Faculties</p>
+              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-secondary">18</p>
+              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">Faculties</p>
             </div>
             <div>
-              <p className="text-2xl md:text-3xl font-black text-lasu-primary">90</p>
-              <p className="text-[11px] text-zinc-800 uppercase font-black tracking-widest mt-1">Departments</p>
+              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-primary">90</p>
+              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">Departments</p>
             </div>
           </div>
         </section>

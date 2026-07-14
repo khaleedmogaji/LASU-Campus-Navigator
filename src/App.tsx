@@ -112,6 +112,8 @@ function AppContent() {
   const [showAccuracyWarning, setShowAccuracyWarning] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [isSimulated, setIsSimulated] = useState(false);
+  const [isRoutePlannerOpen, setIsRoutePlannerOpen] = useState(false);
+  const [routingMode, setRoutingMode] = useState<'gps' | 'landmark'>('gps');
   const [currentInstructionIndex, setCurrentInstructionIndex] = useState(0);
 
   // 1. Voice Navigation Hook
@@ -385,6 +387,15 @@ function AppContent() {
                 setSheetSnap('half');
               }
             }}
+            onOpenRoutePlanner={() => {
+              setShowWelcome(false);
+              saveSession({ lastScreen: 'map' });
+              setIsRoutePlannerOpen(true);
+              setSelectedPoi(null);
+              if (window.innerWidth < 1024) {
+                setSheetSnap('half');
+              }
+            }}
           />
         </React.Suspense>
 
@@ -471,7 +482,11 @@ function AppContent() {
     handleMapDrag,
     isLocatingState: location.isLocating,
     filterCategory: search.filterCategory,
-    setFilterCategory: search.setFilterCategory
+    setFilterCategory: search.setFilterCategory,
+    isRoutePlannerOpen,
+    setIsRoutePlannerOpen,
+    routingMode,
+    setRoutingMode
   };
 
   return (

@@ -41,13 +41,13 @@ function ChangeView({ center }: { center: [number, number] }) {
 
 export type MapStyle = 'voyager' | 'osm' | 'dark';
 
-const MAP_LAYERS = {
+const MAP_LAYERS: Record<MapStyle, string> = {
   voyager: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
   osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
 };
 
-const MAP_ATTRIBUTIONS = {
+const MAP_ATTRIBUTIONS: Record<MapStyle, string> = {
   voyager: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
   osm: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   dark: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -184,14 +184,19 @@ const PoiMarker = memo(({ poi, isSelected, userLocation, onPoiSelect }: PoiMarke
         opacity={1}
         className="!bg-transparent !border-none !shadow-none pointer-events-none z-[1000]"
       >
-        <div className="flex flex-col items-center gap-1 border border-zinc-200 rounded-2xl px-3 py-2 shadow-2xl transition-all duration-300 bg-white text-zinc-800">
-          <span className="font-bold text-xs leading-tight whitespace-nowrap">{poi.name}</span>
-          <div className="flex items-center gap-1">
+        <div className="flex flex-col items-center gap-1.5 border border-zinc-200 rounded-2xl px-3 py-2.5 shadow-2xl transition-all duration-300 bg-white text-zinc-800 max-w-[200px] text-center">
+          <span className="font-extrabold text-xs leading-snug text-zinc-900">{poi.name}</span>
+          <div className="flex items-center gap-1 justify-center">
             <span className={`w-2 h-2 rounded-full ${CATEGORY_STYLES[poi.category]?.bg || CATEGORY_STYLES.Default.bg}`}></span>
-            <span className="text-[10px] font-semibold text-zinc-700 font-bold uppercase tracking-wider">{poi.category}</span>
+            <span className="text-[9px] font-black text-zinc-600 uppercase tracking-wider">{poi.category}</span>
           </div>
+          {poi.description && (
+            <p className="text-[9px] text-zinc-650 leading-relaxed border-t border-zinc-150 pt-1 w-full mt-0.5 line-clamp-2 font-medium">
+              {poi.description}
+            </p>
+          )}
           {dist !== null && (
-            <span className="text-[9px] text-amber-600 font-bold border-t border-zinc-200 w-full text-center pt-1 mt-0.5">
+            <span className="text-[9px] text-amber-600 font-bold border-t border-zinc-150 w-full text-center pt-1 mt-0.5">
               {getWalkTimeStr(dist)}
             </span>
           )}
@@ -298,15 +303,19 @@ const PoiMarkersAndLabels = memo(({
       {labelsToRender.map(poi => {
         const catStyle = CATEGORY_STYLES[poi.category] || CATEGORY_STYLES.Default;
         const labelIcon = L.divIcon({
-          className: 'custom-building-label-marker',
+          className: 'custom-building-label-dot',
           html: `
-            <div class="flex flex-col items-center justify-center pointer-events-auto cursor-pointer group">
-              <div class="w-2 h-2 rounded-full ${catStyle.bg} border border-white shadow-md transition-all duration-300 group-hover:scale-130"></div>
-              <div class="text-[9.5px] font-black text-zinc-800 dark:text-zinc-200 drop-shadow-sm whitespace-nowrap bg-white/95 dark:bg-zinc-900/95 border border-zinc-200/80 dark:border-zinc-800/80 px-2 py-0.5 rounded-md mt-0.5 pointer-events-none transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.1)] group-hover:bg-lasu-primary group-hover:text-white group-hover:border-lasu-primary">${poi.name}</div>
+            <div class="flex flex-col items-center justify-center pointer-events-none select-none">
+              <div class="w-2.5 h-2.5 rounded-full ${catStyle.bg} border-2 border-white shadow-md transition-all duration-300 pointer-events-auto cursor-pointer group-hover:scale-130"></div>
+              ${zoom >= 17 ? `
+                <div class="modern-map-label mt-0.5 whitespace-nowrap">
+                  ${poi.name}
+                </div>
+              ` : ''}
             </div>
           `,
-          iconSize: [125, 32],
-          iconAnchor: [62, 6]
+          iconSize: zoom >= 17 ? [140, 24] : [12, 12],
+          iconAnchor: zoom >= 17 ? [70, 5] : [6, 6]
         });
 
         return (
@@ -317,7 +326,27 @@ const PoiMarkersAndLabels = memo(({
             eventHandlers={{
               click: () => onPoiSelect(poi)
             }}
-          />
+          >
+            <Tooltip
+              direction="top"
+              offset={[0, -5]}
+              opacity={1}
+              className="!bg-transparent !border-none !shadow-none pointer-events-none z-[1000]"
+            >
+              <div className="flex flex-col items-center gap-1.5 border border-zinc-200 rounded-2xl px-3 py-2.5 shadow-2xl transition-all duration-300 bg-white text-zinc-800 max-w-[200px] text-center">
+                <span className="font-extrabold text-xs leading-snug text-zinc-900">{poi.name}</span>
+                <div className="flex items-center gap-1 justify-center">
+                  <span className={`w-2 h-2 rounded-full ${catStyle.bg}`}></span>
+                  <span className="text-[9px] font-black text-zinc-600 uppercase tracking-wider">{poi.category}</span>
+                </div>
+                {poi.description && (
+                  <p className="text-[9px] text-zinc-650 leading-relaxed border-t border-zinc-150 pt-1 w-full mt-0.5 line-clamp-2 font-medium">
+                    {poi.description}
+                  </p>
+                )}
+              </div>
+            </Tooltip>
+          </Marker>
         );
       })}
     </>

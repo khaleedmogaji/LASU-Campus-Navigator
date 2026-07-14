@@ -61,11 +61,14 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
     setSearchQuery,
     isSearchOpen,
     setIsSearchOpen: onSearchOpenChange,
+    isRoutePlannerOpen,
+    setIsRoutePlannerOpen
   } = useNavigation();
 
   const onClose = () => {
     setSelectedPoi(null);
     setRoutingTo(null);
+    setIsRoutePlannerOpen(false);
     onSnapChange('peek');
   };
 
@@ -279,7 +282,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
                 </div>
               ) : (
                 <div className="flex-1 min-h-0 overflow-y-auto touch-pan-y scrollbar-hide">
-                  {routingTo ? renderRoutePlannerPanel() : renderHomePanel()}
+                  {routingTo || isRoutePlannerOpen ? renderRoutePlannerPanel() : renderHomePanel()}
                 </div>
               )}
             </motion.div>

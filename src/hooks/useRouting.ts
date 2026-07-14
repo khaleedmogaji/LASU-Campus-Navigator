@@ -74,6 +74,10 @@ export function useRouting({
   // Calculate shortest path using local Dijkstra
   useEffect(() => {
     if (startCoordinates && endCoordinates) {
+      if (routingFrom && routingTo && routingFrom.id === routingTo.id) {
+        setRouteInfo(null);
+        return;
+      }
       const endKey = `${endCoordinates[0]},${endCoordinates[1]}`;
       const destChanged = lastCalculatedEndRef.current !== endKey;
 

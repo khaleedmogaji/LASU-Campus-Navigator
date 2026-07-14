@@ -217,3 +217,36 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   color: #f4f4f5 !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
+
+/* Modern Flat Map-Integrated Label Styles */
+.modern-map-label {
+  color: #5c5850 !important; /* Muted grey-brown map-label color */
+  font-weight: 700;
+  font-family: system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.025em;
+  font-size: 9px;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 
+    -1px -1px 0 #ffffff, 
+     1px -1px 0 #ffffff, 
+    -1px  1px 0 #ffffff, 
+     1px  1px 0 #ffffff,
+    -1.5px 0px 0 #ffffff,
+     1.5px 0px 0 #ffffff,
+     0px -1.5px 0 #ffffff,
+     0px  1.5px 0 #ffffff;
+}
+
+.dark .modern-map-label {
+  color: #a1a1aa !important; /* Muted zinc-400 for dark mode */
+  text-shadow: 
+    -1px -1px 0 #18181b, 
+     1px -1px 0 #18181b, 
+    -1px  1px 0 #18181b, 
+     1px  1px 0 #18181b,
+    -1.5px 0px 0 #18181b,
+     1.5px 0px 0 #18181b,
+     0px -1.5px 0 #18181b,
+     0px  1.5px 0 #18181b;
+}

@@ -50,6 +50,10 @@ const renderWithContext = (ui: React.ReactElement, contextOverride: Partial<Navi
     isOffline: false,
     handlePoiSelect: vi.fn(),
     handleMapDrag: vi.fn(),
+    isRoutePlannerOpen: false,
+    setIsRoutePlannerOpen: vi.fn(),
+    routingMode: 'gps',
+    setRoutingMode: vi.fn(),
     ...contextOverride,
   };
 

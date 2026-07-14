@@ -2,6 +2,7 @@ import React from 'react';
 import { POI } from '../types';
 import { RoutePlannerPanel } from './RoutePlannerPanel';
 import { HomePanelContent } from './HomePanelContent';
+import { useNavigation } from '../context/NavigationContext';
 
 const POIInfo = React.lazy(() => import('./POIInfo').then(m => ({ default: m.POIInfo })));
 
@@ -56,9 +57,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   handleSwapRoute,
   setIsSimulated,
 }) => {
+  const { isRoutePlannerOpen } = useNavigation();
+
   return (
     <aside className="hidden lg:flex w-80 border-r border-zinc-200 bg-white flex-col shrink-0">
-      {routingTo ? (
+      {routingTo || isRoutePlannerOpen ? (
         <RoutePlannerPanel
           routingTo={routingTo}
           setRoutingTo={setRoutingTo}

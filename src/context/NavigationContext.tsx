@@ -36,6 +36,10 @@ export interface NavigationContextType {
   isOffline: boolean;
   handlePoiSelect: (poi: POI) => void;
   handleMapDrag: () => void;
+  isRoutePlannerOpen: boolean;
+  setIsRoutePlannerOpen: (open: boolean) => void;
+  routingMode: 'gps' | 'landmark';
+  setRoutingMode: (mode: 'gps' | 'landmark') => void;
 }
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);

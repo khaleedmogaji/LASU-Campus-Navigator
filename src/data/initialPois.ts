@@ -36,7 +36,7 @@ export const INITIAL_POIS: POI[] = [
   },
   {
     "id": "2",
-    "name": "Senate Building",
+    "name": "Babatunde Raji Fashola Senate Building",
     "description": "University Senate House and main administrative HQ of LASU Ojo. Named after former Lagos State Governor Babatunde Raji Fashola. Houses Senate Chamber, central administration, and LASU-SDG Centre (3rd floor).",
     "category": "Administrative",
     "latitude": 6.471234728121685,
@@ -102,7 +102,7 @@ export const INITIAL_POIS: POI[] = [
   },
   {
     "id": "4",
-    "name": "Fatiu Akesode Library",
+    "name": "Fatiu Ademola Akesode Library",
     "description": "Main university library established 1983. Named after former VC Prof. Fatiu Ademola Akesode. Contains textbooks, journals, digital databases and e-library services. Part of a broader library system including the Law Library and branch libraries.",
     "category": "Library",
     "latitude": 6.464890552980209,
@@ -504,7 +504,7 @@ export const INITIAL_POIS: POI[] = [
   },
   {
     "id": "15",
-    "name": "Post Graduate School",
+    "name": "Postgraduate School",
     "description": "Manages all postgraduate programmes at the Ojo campus. Located along Lagos-Badagry Expressway near MBA Bus Stop. Open Monday–Friday 8 AM–4 PM.",
     "category": "Administrative",
     "latitude": 6.468513470995953,
@@ -737,7 +737,7 @@ export const INITIAL_POIS: POI[] = [
   },
   {
     "id": "23",
-    "name": "Lagos State University Radio",
+    "name": "LASU Radio (95.7 FM)",
     "description": "Campus radio station broadcasting at 95.7 FM. Founded 2016. Inside LASU campus along Lagos-Badagry Expressway. Fully equipped studios. Open Monday–Friday 8 AM–5 PM.",
     "category": "Administrative",
     "latitude": 6.471199252490675,
@@ -2600,8 +2600,8 @@ export const INITIAL_POIS: POI[] = [
   },
   {
     "id": "144",
-    "name": "femi-gbajabiamila-conference-center",
-    "description": "Femi Gbajabiamila Conference Center for events",
+    "name": "Femi Gbajabiamila Conference Centre",
+    "description": "Femi Gbajabiamila Conference Centre for events.",
     "category": "Administrative",
     "latitude": 6.4742105,
     "longitude": 3.1994831,
