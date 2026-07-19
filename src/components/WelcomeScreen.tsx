@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Compass, 
-  Navigation, 
-  Search, 
-  BookOpen, 
-  GraduationCap, 
-  MapPin, 
-  MessageSquare, 
-  X, 
-  ChevronRight, 
-  Award, 
-  Map 
-} from 'lucide-react';
-import { POI } from '../types';
-import { LASU_KNOWLEDGE_BASE, Faculty } from '../lib/lasuKnowledgeBase';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  Compass,
+  Navigation,
+  Search,
+  BookOpen,
+  GraduationCap,
+  MapPin,
+  MessageSquare,
+  X,
+  ChevronRight,
+  Award,
+  Map,
+} from "lucide-react";
+import { POI } from "../types";
+import { LASU_KNOWLEDGE_BASE, Faculty } from "../lib/lasuKnowledgeBase";
 
 interface WelcomeScreenProps {
   pois: POI[];
@@ -25,46 +25,52 @@ interface WelcomeScreenProps {
   onOpenRoutePlanner: () => void;
 }
 
-export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ 
-  pois, 
-  onStart, 
-  onExplore, 
-  onAskAssistant, 
+export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
+  pois,
+  onStart,
+  onExplore,
+  onAskAssistant,
   onSelectPoi,
-  onOpenRoutePlanner
+  onOpenRoutePlanner,
 }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [activeModal, setActiveModal] = useState<'departments' | 'faculties' | 'categories' | null>(null);
+  const [activeModal, setActiveModal] = useState<
+    "departments" | "faculties" | "categories" | null
+  >(null);
 
   // Reference helper to map faculty to a POI on campus
   const findPOIForFaculty = (faculty: Faculty): POI | undefined => {
     const abbr = faculty.abbreviation.toLowerCase();
     const mapping: { [key: string]: string } = {
-      'fa': '9',    // Faculty of Arts
-      'fs': '8',    // Faculty of Science
-      'fl': '7',    // Faculty of Law
-      'fe': '12',   // Faculty of Education
-      'fms': '10',  // Faculty of Management Sciences
-      'fss': '11',  // Faculty of Social Sciences
-      'stl': '14',  // School of Transport & Logistics
-      'sc': '13',   // School of Communication
-      'fcs': '13',  // Faculty of Clinical Sciences
-      'fcit': '8',  // Faculty of Computing and Information Technology
-      'stfpc': '9', // School of Tourism, Film, Performing Arts
-      'slais': '4'  // School of Library
+      fa: "9", // Faculty of Arts
+      fs: "8", // Faculty of Science
+      fl: "7", // Faculty of Law
+      fe: "12", // Faculty of Education
+      fms: "10", // Faculty of Management Sciences
+      fss: "11", // Faculty of Social Sciences
+      stl: "14", // School of Transport & Logistics
+      sc: "13", // School of Communication
+      fcs: "13", // Faculty of Clinical Sciences
+      fcit: "8", // Faculty of Computing and Information Technology
+      stfpc: "9", // School of Tourism, Film, Performing Arts
+      slais: "4", // School of Library
     };
 
     const poiId = mapping[abbr];
     if (poiId) {
-      const match = pois.find(p => String(p.id).trim() === poiId);
+      const match = pois.find((p) => String(p.id).trim() === poiId);
       if (match) return match;
     }
 
-    const normalizedFaculty = faculty.faculty.toLowerCase().replace(/faculty of|school of/g, '').trim();
-    return pois.find(p => 
-      p.name.toLowerCase().includes(normalizedFaculty) ||
-      normalizedFaculty.includes(p.name.toLowerCase())
+    const normalizedFaculty = faculty.faculty
+      .toLowerCase()
+      .replace(/faculty of|school of/g, "")
+      .trim();
+    return pois.find(
+      (p) =>
+        p.name.toLowerCase().includes(normalizedFaculty) ||
+        normalizedFaculty.includes(p.name.toLowerCase()),
     );
   };
 
@@ -72,52 +78,60 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
   const getSearchResults = () => {
     if (!searchQuery.trim()) return [];
     const query = searchQuery.toLowerCase().trim();
-    
+
     const results: Array<{
-      type: 'landmark' | 'department' | 'faculty';
+      type: "landmark" | "department" | "faculty";
       name: string;
       subText: string;
       poi?: POI;
     }> = [];
 
     // Search landmarks
-    pois.forEach(p => {
-      if (p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)) {
+    pois.forEach((p) => {
+      if (
+        p.name.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query)
+      ) {
         results.push({
-          type: 'landmark',
+          type: "landmark",
           name: p.name,
           subText: `${p.category} Landmark`,
-          poi: p
+          poi: p,
         });
       }
     });
 
     // Search departments
-    LASU_KNOWLEDGE_BASE.forEach(f => {
-      f.departments.forEach(d => {
+    LASU_KNOWLEDGE_BASE.forEach((f) => {
+      f.departments.forEach((d) => {
         const matchesName = d.name.toLowerCase().includes(query);
-        const matchesAlias = d.aliases.some(alias => alias.toLowerCase().includes(query));
+        const matchesAlias = d.aliases.some((alias) =>
+          alias.toLowerCase().includes(query),
+        );
         if (matchesName || matchesAlias) {
           const facultyPoi = findPOIForFaculty(f);
           results.push({
-            type: 'department',
+            type: "department",
             name: `${d.name} Department`,
             subText: `Under ${f.faculty}`,
-            poi: facultyPoi
+            poi: facultyPoi,
           });
         }
       });
     });
 
     // Search faculties
-    LASU_KNOWLEDGE_BASE.forEach(f => {
-      if (f.faculty.toLowerCase().includes(query) || f.abbreviation.toLowerCase().includes(query)) {
+    LASU_KNOWLEDGE_BASE.forEach((f) => {
+      if (
+        f.faculty.toLowerCase().includes(query) ||
+        f.abbreviation.toLowerCase().includes(query)
+      ) {
         const facultyPoi = findPOIForFaculty(f);
         results.push({
-          type: 'faculty',
+          type: "faculty",
           name: f.faculty,
           subText: `${f.abbreviation} • Faculty Office`,
-          poi: facultyPoi
+          poi: facultyPoi,
         });
       }
     });
@@ -137,38 +151,67 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
 
   // Categories list
   const categories = [
-    { name: 'Library', count: pois.filter(p => p.category === 'Library').length, icon: '📚' },
-    { name: 'Lecture Theatre', count: pois.filter(p => p.category === 'Lecture Theatre').length, icon: '🎓' },
-    { name: 'Administrative', count: pois.filter(p => p.category === 'Administrative').length, icon: '🏛️' },
-    { name: 'Sports', count: pois.filter(p => p.category === 'Sports').length, icon: '⚽' },
-    { name: 'Building', count: pois.filter(p => p.category === 'Building').length, icon: '🏫' },
-    { name: 'Hostel', count: pois.filter(p => p.category === 'Hostel').length, icon: '🏢' },
-    { name: 'Other', count: pois.filter(p => p.category === 'Other').length, icon: '📍' },
+    {
+      name: "Library",
+      count: pois.filter((p) => p.category === "Library").length,
+      icon: "📚",
+    },
+    {
+      name: "Lecture Theatre",
+      count: pois.filter((p) => p.category === "Lecture Theatre").length,
+      icon: "🎓",
+    },
+    {
+      name: "Administrative",
+      count: pois.filter((p) => p.category === "Administrative").length,
+      icon: "🏛️",
+    },
+    {
+      name: "Sports",
+      count: pois.filter((p) => p.category === "Sports").length,
+      icon: "⚽",
+    },
+    {
+      name: "Building",
+      count: pois.filter((p) => p.category === "Building").length,
+      icon: "🏫",
+    },
+    {
+      name: "Hostel",
+      count: pois.filter((p) => p.category === "Hostel").length,
+      icon: "🏢",
+    },
+    {
+      name: "Other",
+      count: pois.filter((p) => p.category === "Other").length,
+      icon: "📍",
+    },
   ];
 
   return (
     <div className="min-h-screen w-full bg-white text-[rgb(49,30,2)] transition-colors duration-300 relative overflow-x-hidden flex flex-col justify-between">
-
       {/* Header bar */}
       <header className="relative z-30 w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img 
-            src="https://lasu.edu.ng/home/img/logo1.png"
+          <img
+            src="lasu-logo.png"
             alt="LASU Logo"
             className="w-11 h-11 object-contain drop-shadow-sm"
             referrerPolicy="no-referrer"
           />
           <div>
-            <h2 className="text-[12.5px] font-black tracking-widest text-lasu-primary uppercase leading-tight">Lagos State University</h2>
-            <p className="text-[9.5px] text-zinc-550 font-bold uppercase tracking-wider leading-none mt-0.5">Official Digital Service</p>
+            <h2 className="text-[12.5px] font-black tracking-widest text-lasu-primary uppercase leading-tight">
+              Lagos State University
+            </h2>
+            <p className="text-[9.5px] text-zinc-550 font-bold uppercase tracking-wider leading-none mt-0.5">
+              Official Digital Service
+            </p>
           </div>
         </div>
-
       </header>
 
       {/* Main Page Area */}
       <main className="relative z-20 flex-1 max-w-4xl w-full mx-auto px-6 py-8 flex flex-col justify-center gap-8 md:gap-12">
-        
         {/* Hero Section */}
         <section className="text-center flex flex-col items-center gap-6">
           <motion.div
@@ -177,7 +220,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
             transition={{ duration: 0.6 }}
             className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white p-2.5 shadow-xl border border-zinc-150 flex items-center justify-center shrink-0"
           >
-            <img 
+            <img
               src="https://lasu.edu.ng/home/img/logo1.png"
               alt="LASU Emblem"
               className="w-full h-full object-contain"
@@ -190,7 +233,9 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
               LASU Campus Navigator
             </h1>
             <p className="text-xs md:text-base text-zinc-650 font-semibold max-w-lg leading-relaxed mx-auto">
-              Navigate Lagos State University with confidence. Find departments, offices, faculties, and landmarks using turn-by-turn route pathfinding.
+              Navigate Lagos State University with confidence. Find departments,
+              offices, faculties, and landmarks using turn-by-turn route
+              pathfinding.
             </p>
           </div>
 
@@ -202,14 +247,14 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
                 type="text"
                 placeholder="Search departments, faculties, libraries..."
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
                 className="w-full pl-12 pr-4 py-3.5 bg-white border border-zinc-200 rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-lasu-green/20 focus:border-lasu-green transition-all text-xs font-semibold"
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => setSearchQuery("")}
                   className="absolute right-4 p-1 hover:bg-zinc-100 rounded-full"
                 >
                   <X className="w-3.5 h-3.5 text-zinc-650" />
@@ -234,8 +279,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
                         className="w-full text-left px-4 py-3 hover:bg-zinc-50 rounded-xl transition-all duration-200 flex items-center justify-between group cursor-pointer"
                       >
                         <div className="min-w-0">
-                          <p className="text-xs font-black text-zinc-850 truncate leading-snug">{item.name}</p>
-                          <p className="text-[11px] text-zinc-600 font-bold uppercase tracking-wider mt-0.5">{item.subText}</p>
+                          <p className="text-xs font-black text-zinc-850 truncate leading-snug">
+                            {item.name}
+                          </p>
+                          <p className="text-[11px] text-zinc-600 font-bold uppercase tracking-wider mt-0.5">
+                            {item.subText}
+                          </p>
                         </div>
                         <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-lasu-green transition-colors" />
                       </button>
@@ -283,36 +332,42 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <button
-              onClick={() => setActiveModal('departments')}
+              onClick={() => setActiveModal("departments")}
               className="glass-card glass-card-hover p-5 rounded-3xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer relative overflow-hidden group"
             >
               <div className="w-10 h-10 rounded-2xl bg-lasu-primary/10 text-lasu-primary flex items-center justify-center transition-transform group-hover:scale-105">
                 <BookOpen className="w-5 h-5" />
               </div>
               <span className="text-xs font-black">Find Department</span>
-              <span className="text-[10px] text-zinc-650 uppercase tracking-wider font-bold">90 Departments</span>
+              <span className="text-[10px] text-zinc-650 uppercase tracking-wider font-bold">
+                90 Departments
+              </span>
             </button>
 
             <button
-              onClick={() => setActiveModal('faculties')}
+              onClick={() => setActiveModal("faculties")}
               className="glass-card glass-card-hover p-5 rounded-3xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer relative overflow-hidden group"
             >
               <div className="w-10 h-10 rounded-2xl bg-lasu-secondary/10 text-lasu-secondary flex items-center justify-center transition-transform group-hover:scale-105">
                 <GraduationCap className="w-5 h-5" />
               </div>
               <span className="text-xs font-black">Find Faculty</span>
-              <span className="text-[10px] text-zinc-650 uppercase tracking-wider font-bold">18 Schools</span>
+              <span className="text-[10px] text-zinc-650 uppercase tracking-wider font-bold">
+                18 Schools
+              </span>
             </button>
 
             <button
-              onClick={() => setActiveModal('categories')}
+              onClick={() => setActiveModal("categories")}
               className="glass-card glass-card-hover p-5 rounded-3xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer relative overflow-hidden group"
             >
               <div className="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-650 flex items-center justify-center transition-transform group-hover:scale-105">
                 <MapPin className="w-5 h-5" />
               </div>
               <span className="text-xs font-black">Explore Buildings</span>
-              <span className="text-[10px] text-zinc-600 uppercase tracking-wider font-bold">Categories</span>
+              <span className="text-[10px] text-zinc-600 uppercase tracking-wider font-bold">
+                Categories
+              </span>
             </button>
 
             <button
@@ -323,7 +378,9 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
                 <Navigation className="w-5 h-5" />
               </div>
               <span className="text-xs font-black">Plan a Route</span>
-              <span className="text-[10px] text-zinc-650 uppercase tracking-wider font-bold">No GPS Required</span>
+              <span className="text-[10px] text-zinc-650 uppercase tracking-wider font-bold">
+                No GPS Required
+              </span>
             </button>
           </div>
         </section>
@@ -335,8 +392,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
               <Map className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">Smart Navigation</h4>
-              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">Turn-by-turn routing across Ojo walkways using coordinate pathfinding.</p>
+              <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">
+                Smart Navigation
+              </h4>
+              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">
+                Turn-by-turn routing across Ojo walkways using coordinate
+                pathfinding.
+              </p>
             </div>
           </div>
           <div className="flex gap-4 items-start bg-white p-5 rounded-3xl border border-zinc-200 shadow-sm">
@@ -344,8 +406,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
               <MessageSquare className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">Campus Assistant</h4>
-              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">Rule-based campus assistant for finding faculties, departments, and offices.</p>
+              <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">
+                Campus Assistant
+              </h4>
+              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">
+                Rule-based campus assistant for finding faculties, departments,
+                and offices.
+              </p>
             </div>
           </div>
           <div className="flex gap-4 items-start bg-white p-5 rounded-3xl border border-zinc-200 shadow-sm">
@@ -353,8 +420,13 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">Official Identity</h4>
-              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">Built using official LASU mapping resources and verified data directories.</p>
+              <h4 className="font-black text-xs uppercase tracking-wider text-zinc-900">
+                Official Identity
+              </h4>
+              <p className="text-xs text-zinc-600 mt-1 leading-relaxed font-medium">
+                Built using official LASU mapping resources and verified data
+                directories.
+              </p>
             </div>
           </div>
         </section>
@@ -363,20 +435,31 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         <section className="bg-zinc-50 border border-zinc-200 rounded-3xl p-6 md:p-8">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-primary">{pois.length}+</p>
-              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">Landmarks</p>
+              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-primary">
+                {pois.length}+
+              </p>
+              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">
+                Landmarks
+              </p>
             </div>
             <div className="border-x border-zinc-250">
-              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-secondary">18</p>
-              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">Faculties</p>
+              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-secondary">
+                18
+              </p>
+              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">
+                Faculties
+              </p>
             </div>
             <div>
-              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-primary">90</p>
-              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">Departments</p>
+              <p className="text-2.5xl md:text-3.5xl font-black text-lasu-primary">
+                90
+              </p>
+              <p className="text-[10px] md:text-[11px] text-zinc-550 uppercase font-black tracking-widest mt-1">
+                Departments
+              </p>
             </div>
           </div>
         </section>
-
       </main>
 
       {/* Footer */}
@@ -385,15 +468,15 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
           Lagos State University • Campus Guide & Navigation Service
         </p>
         <p className="text-[10px] text-zinc-600 font-semibold">
-          Built with React 19 • TypeScript • Tailwind CSS • Framer Motion • Firebase • Leaflet
-
+          Built with React 19 • TypeScript • Tailwind CSS • Framer Motion •
+          Firebase • Leaflet
         </p>
       </footer>
 
       {/* ── MODALS FOR QUICK ACTIONS ───────────────────────────────── */}
       <AnimatePresence>
         {/* Department modal */}
-        {activeModal === 'departments' && (
+        {activeModal === "departments" && (
           <div className="fixed inset-0 z-[5000] flex items-center justify-center p-4 bg-black/45">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -447,7 +530,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         )}
 
         {/* Faculty Modal */}
-        {activeModal === 'faculties' && (
+        {activeModal === "faculties" && (
           <div className="fixed inset-0 z-[5000] flex items-center justify-center p-4 bg-black/45">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -484,8 +567,12 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
                     className="w-full text-left p-3.5 rounded-2xl border border-zinc-200 hover:bg-zinc-50 hover:border-lasu-green/20 hover:text-lasu-green transition-all duration-200 flex items-center justify-between group cursor-pointer"
                   >
                     <div className="min-w-0 pr-3">
-                      <p className="text-xs font-black text-zinc-800 group-hover:text-lasu-green truncate">{f.faculty}</p>
-                      <p className="text-[11px] text-zinc-600 font-bold uppercase tracking-wider mt-0.5">{f.departments.length} Departments</p>
+                      <p className="text-xs font-black text-zinc-800 group-hover:text-lasu-green truncate">
+                        {f.faculty}
+                      </p>
+                      <p className="text-[11px] text-zinc-600 font-bold uppercase tracking-wider mt-0.5">
+                        {f.departments.length} Departments
+                      </p>
                     </div>
                     <span className="text-[10px] font-black uppercase text-lasu-green border border-lasu-green/20 px-2 py-0.5 rounded-lg shrink-0">
                       {f.abbreviation}
@@ -498,7 +585,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
         )}
 
         {/* Explore Categories Modal */}
-        {activeModal === 'categories' && (
+        {activeModal === "categories" && (
           <div className="fixed inset-0 z-[5000] flex items-center justify-center p-4 bg-black/45">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -531,7 +618,9 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-lg">{cat.icon}</span>
-                      <span className="text-xs font-black text-zinc-800">{cat.name}</span>
+                      <span className="text-xs font-black text-zinc-800">
+                        {cat.name}
+                      </span>
                     </div>
                     <span className="text-[11px] text-zinc-650 font-bold">
                       {cat.count} landmarks
