@@ -84,7 +84,6 @@ function AppContent() {
     lastScreen: string;
     lastDestination: string;
   } | null>(null);
-  const [showWelcomeBack, setShowWelcomeBack] = useState(false);
   const [showLayerPanel, setShowLayerPanel] = useState(false);
 
   useEffect(() => {
@@ -247,9 +246,6 @@ function AppContent() {
     const delay = isFirstTime ? 2500 : 1500;
     const timer = setTimeout(() => {
       setIsLoading(false);
-      if (!isFirstTime) {
-        setShowWelcomeBack(true);
-      }
     }, delay);
 
     return () => clearTimeout(timer);
@@ -300,23 +296,6 @@ function AppContent() {
       localStorage.setItem("lasu_navigator_session", JSON.stringify(next));
       return next;
     });
-  };
-
-  const handleContinuePreviousSession = () => {
-    if (session?.lastDestination) {
-      const matchedPoi = pois.find(
-        (p) =>
-          p.name.toLowerCase() === session.lastDestination.toLowerCase() ||
-          p.name.toLowerCase().includes(session.lastDestination.toLowerCase()),
-      );
-      if (matchedPoi) {
-        setRoutingTo(matchedPoi);
-        setSelectedPoi(null);
-      }
-    }
-    setShowWelcome(false);
-    setShowWelcomeBack(false);
-    saveSession({ lastScreen: "map" });
   };
 
   const shareLocation = async (poi: POI) => {
