@@ -7,6 +7,7 @@ import {
   MessageSquare,
   X,
   ChevronRight,
+  MapPin,
 } from "lucide-react";
 import { POI } from "../../types";
 import { LASU_KNOWLEDGE_BASE } from "../../lib/lasuKnowledgeBase";
@@ -26,6 +27,8 @@ interface HeroSectionProps {
   onAskAssistant: () => void;
   onSelectPoi: (poi: POI) => void;
 }
+
+const QUICK_CHIPS = ["Library", "Hostel", "Sports", "Lecture Theatre"];
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   pois,
@@ -104,12 +107,63 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section className="text-center flex flex-col items-center gap-6">
+    <section className="relative text-center flex flex-col items-center gap-7">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 700 180"
+        className="pointer-events-none absolute -z-10 top-2 left-1/2 -translate-x-1/2 w-[640px] max-w-[150vw] h-auto opacity-[0.16]"
+      >
+        <motion.path
+          d="M 40 150 C 180 40, 260 160, 350 90 S 560 20, 660 60"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeDasharray="2 14"
+          className="text-lasu-secondary"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.6, ease: "easeInOut", delay: 0.2 }}
+        />
+        <motion.circle
+          cx="40"
+          cy="150"
+          r="7"
+          className="text-lasu-primary"
+          fill="currentColor"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
+        />
+        <motion.circle
+          cx="660"
+          cy="60"
+          r="7"
+          className="text-lasu-accent"
+          fill="currentColor"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 1.8, type: "spring", stiffness: 300 }}
+        />
+      </svg>
+
+      <motion.div
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-lasu-primary/8 border border-lasu-primary/15"
+      >
+        <MapPin className="w-3 h-3 text-lasu-primary" />
+        <span className="text-[10px] font-black uppercase tracking-widest text-lasu-primary">
+          Ojo Campus • Live Wayfinding
+        </span>
+      </motion.div>
+
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white p-2.5 shadow-xl border border-zinc-150 flex items-center justify-center shrink-0"
+        className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white p-2 shadow-xl ring-4 ring-lasu-primary/10 border border-zinc-150 flex items-center justify-center shrink-0"
       >
         <img
           src="https://lasu.edu.ng/home/img/logo1.png"
@@ -119,19 +173,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         />
       </motion.div>
 
-      <div className="space-y-3">
-        <h1 className="text-3.5xl md:text-5.5xl font-black tracking-tight leading-tight text-lasu-primary">
-          LASU Campus Navigator
+      <div className="space-y-3 max-w-xl">
+        <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] text-zinc-900">
+          Find any building
+          <br />
+          <span className="text-lasu-primary">in seconds.</span>
         </h1>
-        <p className="text-xs md:text-base text-zinc-650 font-semibold max-w-lg leading-relaxed mx-auto">
-          Navigate Lagos State University with confidence. Find departments,
-          offices, faculties, and landmarks using turn-by-turn route
-          pathfinding.
+        <p className="text-sm md:text-base text-zinc-600 font-medium leading-relaxed max-w-md mx-auto">
+          Search departments, faculties, and landmarks, then get turn-by-turn
+          walking directions across LASU Ojo.
         </p>
       </div>
 
-      {/* Quick Search */}
-      <div className="relative w-full max-w-lg mt-2">
+      <div className="relative w-full max-w-lg">
         <div className="relative flex items-center">
           <Search className="absolute left-4.5 w-4.5 h-4.5 text-zinc-600" />
           <input
@@ -141,7 +195,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
-            className="w-full pl-12 pr-4 py-3.5 bg-white border border-zinc-200 rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-lasu-green/20 focus:border-lasu-green transition-all text-xs font-semibold"
+            className="w-full pl-12 pr-4 py-4 bg-white border border-zinc-200 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-lasu-primary/15 focus:border-lasu-primary transition-all text-xs font-semibold"
           />
           {searchQuery && (
             <button
@@ -187,29 +241,47 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.div>
           )}
         </AnimatePresence>
+
+        {!isSearchFocused && (
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
+            <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500">
+              Popular:
+            </span>
+            {QUICK_CHIPS.map((chip) => (
+              <button
+                key={chip}
+                onClick={() => onExplore(chip)}
+                className="px-3 py-1.5 rounded-full border border-zinc-200 bg-white hover:border-lasu-primary/30 hover:bg-lasu-primary/5 hover:text-lasu-primary text-[11px] font-bold text-zinc-650 transition-all cursor-pointer"
+              >
+                {chip}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Action CTAs */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-2xl mt-1">
         <button
           onClick={onStart}
-          className="py-4 px-6 bg-lasu-primary hover:bg-lasu-primary-dark text-white rounded-2xl font-black shadow-md active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase border-none"
+          className="py-4 px-6 bg-lasu-primary hover:bg-lasu-primary-dark text-white rounded-2xl font-black shadow-lg shadow-lasu-primary/25 hover:shadow-xl hover:shadow-lasu-primary/30 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase border-none"
         >
           <Navigation className="w-4 h-4 fill-current animate-pulse text-white" />
           Start Navigation
         </button>
+
         <button
           onClick={() => onExplore()}
-          className="py-4 px-6 bg-lasu-secondary hover:bg-lasu-secondary-dark text-white rounded-2xl font-black shadow-md active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase border-none"
+          className="py-4 px-6 bg-white border-2 border-lasu-secondary text-lasu-secondary hover:bg-lasu-secondary/5 rounded-2xl font-black active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase"
         >
-          <Compass className="w-4 h-4 text-white" />
+          <Compass className="w-4 h-4" />
           Explore Campus
         </button>
+
         <button
           onClick={onAskAssistant}
-          className="py-4 px-6 bg-lasu-accent hover:bg-lasu-accent-dark text-white rounded-2xl font-black shadow-md active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase border-none"
+          className="py-4 px-6 bg-transparent text-lasu-accent hover:bg-lasu-accent/5 rounded-2xl font-black active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase"
         >
-          <MessageSquare className="w-4 h-4 text-white" />
+          <MessageSquare className="w-4 h-4" />
           Ask Assistant
         </button>
       </div>
