@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { SafetyInfoModal } from "./components/SafetyInfoModal";
-import { db, collection, onSnapshot, query } from "./firebase";
 import { POI } from "./types";
 import { cn } from "./lib/utils";
 import type { MapStyle } from "./components/Map";
@@ -26,7 +25,6 @@ import { useVoiceNavigation } from "./hooks/useVoiceNavigation";
 // Modular UI Components
 import { Header } from "./components/Header";
 import { Sidebar } from "./components/Sidebar";
-import { StatusBadge } from "./components/StatusBadge";
 import { NavigationCard } from "./components/NavigationCard";
 import { RouteDirectionsDrawer } from "./components/RouteDirectionsDrawer";
 import { RoutePlannerPanel } from "./components/RoutePlannerPanel";
