@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Info, X } from 'lucide-react';
+import React from "react";
+import { motion } from "motion/react";
+import { Info, X } from "lucide-react";
 
 interface SafetyInfoModalProps {
   onClose: () => void;
@@ -9,7 +9,7 @@ interface SafetyInfoModalProps {
 
 export const SafetyInfoModal: React.FC<SafetyInfoModalProps> = ({
   onClose,
-  onStartTour
+  onStartTour,
 }) => {
   return (
     <div className="fixed inset-0 z-[3000] flex items-center justify-center p-4 bg-black/45">
@@ -34,41 +34,66 @@ export const SafetyInfoModal: React.FC<SafetyInfoModalProps> = ({
         <div className="p-6 overflow-y-auto">
           <div className="space-y-6 text-zinc-700">
             <div>
-              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Welcome</h3>
+              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">
+                Welcome
+              </h3>
               <p className="text-sm leading-relaxed">
-                This application helps you navigate the campus with ease. Find buildings, facilities, and get routing directions from your current location.
+                This application helps you navigate the campus with ease. Find
+                buildings, facilities, and get routing directions from your
+                current location.
               </p>
             </div>
             <div>
-              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Features</h3>
+              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">
+                Features
+              </h3>
               <ul className="list-disc pl-5 space-y-2 text-sm">
-                <li>Interactive map with multiple styles (CARTO Voyager, OSM, Dark)</li>
+                <li>
+                  Interactive map with multiple styles (CARTO Voyager, OSM,
+                  Dark)
+                </li>
                 <li>Search for points of interest (POI) across campus</li>
                 <li>Get walking directions and estimated times</li>
                 <li>Follow your current location in real-time</li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">💡 Quick Tips for New Users</h3>
+              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">
+                💡 Quick Tips for New Users
+              </h3>
               <div className="space-y-3 mt-2">
                 <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-xs leading-relaxed text-zinc-700 font-semibold">
-                  <strong>🔍 Smart Filter Tags</strong>: Click the tags directly below the search bar to filter building categories instantly.
+                  <strong>🔍 Smart Filter Tags</strong>: Click the tags directly
+                  below the search bar to filter building categories instantly.
                 </div>
                 <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-3 text-xs leading-relaxed text-zinc-700 font-semibold">
-                  <strong>🗺️ Toggle Map Themes</strong>: Use the Layers icon on the right to switch between CARTO Voyager and OpenStreetMap views.
+                  <strong>🗺️ Toggle Map Themes</strong>: Use the Layers icon on
+                  the right to switch between CARTO Voyager and OpenStreetMap
+                  views.
                 </div>
               </div>
             </div>
             <div>
-              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Safety & Security</h3>
+              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">
+                Safety & Security
+              </h3>
               <div className="text-sm space-y-2 text-zinc-700">
-                <p><strong>LASU Security Unit:</strong> 0800-SECURITY</p>
-                <p><strong>Campus Health Center:</strong> 0800-HEALTH</p>
-                <p className="mt-2 text-zinc-700 font-bold italic">"If you see something, say something. Always walk in well-lit areas at night."</p>
+                <p>
+                  <strong>LASU Security Unit:</strong> 0800-SECURITY
+                </p>
+                <p>
+                  <strong>Campus Health Center:</strong> 0800-HEALTH
+                </p>
+                <p className="mt-2 text-zinc-700 font-bold italic">
+                  "If you see something, say something. Always walk in well-lit
+                  areas at night."
+                </p>
               </div>
             </div>
             <div>
-              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">Legend</h3>
+              <h3 className="text-sm font-black text-[rgb(49,30,2)] uppercase tracking-wider mb-2">
+                Legend
+              </h3>
               <div className="grid grid-cols-2 gap-3 text-sm text-zinc-700">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-blue-500" />
