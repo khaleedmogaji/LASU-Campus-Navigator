@@ -15,9 +15,9 @@ interface UseRoutingProps {
   >;
   setIsSimulated: React.Dispatch<React.SetStateAction<boolean>>;
   routingTo: POI | null;
-  setRoutingTo: React.Dispatch<React.SetStateAction<POI | null>>;
+  setRoutingTo: (poi: POI | null) => void;
   routingFrom: POI | null;
-  setRoutingFrom: React.Dispatch<React.SetStateAction<POI | null>>;
+  setRoutingFrom: (poi: POI | null) => void;
   routeInfo: {
     distance: number;
     duration: number;

@@ -385,7 +385,7 @@ export default function MapPage() {
             {/* Mobile Bottom Sheet */}
             <div className="lg:hidden">
               <MobileBottomSheet
-                onShare={shareLocation}
+                onShare={(poi) => shareLocation({ poi })}
                 renderRoutePlannerPanel={() => (
                   <RoutePlannerPanel
                     routingTo={routingTo}
@@ -421,7 +421,7 @@ export default function MapPage() {
               selectedPoi={selectedPoi}
               setSelectedPoi={setSelectedPoi}
               userLocation={userLocation}
-              shareLocation={shareLocation}
+              shareLocation={(poi) => shareLocation({ poi })}
               routeInfo={routeInfo}
               setRouteInfo={setRouteInfo}
               startSearchQuery={search.startSearchQuery}
