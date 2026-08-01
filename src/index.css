@@ -1,55 +1,246 @@
 @import "tailwindcss";
 
-@theme {
-  --color-lasu-primary: rgb(49, 30, 2);
-  --color-lasu-secondary: rgb(172, 106, 6);
-  --color-lasu-accent: rgb(120, 59, 18);
-
-  /* Map old green/gold variables for compatibility */
-  --color-lasu-green: var(--color-lasu-primary);
-  --color-lasu-gold: var(--color-lasu-secondary);
-}
-
+/* =========================
+   LIGHT THEME (DEFAULT)
+========================= */
 :root {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  color: rgb(49, 30, 2);
-  background-color: #ffffff;
+  /* ── Surfaces ── */
+  --background: #ffffff;
+  --background-subtle: #faf9f7;
+
+  --card: #ffffff;
+  --card-raised: #ffffff;
+
+  --foreground: rgb(49, 30, 2);
+  --foreground-muted: #6b4f3a;
+
+  /* ── Primary (LASU dark brown) ── */
+  --primary: rgb(49, 30, 2);
+  --primary-hover: rgb(35, 21, 1);
+  --primary-foreground: #ffffff;
+
+  /* ── Secondary (LASU gold) ── */
+  --secondary: rgb(172, 106, 6);
+  --secondary-hover: rgb(140, 86, 5);
+  --secondary-foreground: rgb(49, 30, 2);
+
+  /* ── Accent (LASU rust-brown) ── */
+  --accent: rgb(120, 59, 18);
+  --accent-hover: rgb(96, 47, 14);
+  --accent-foreground: #ffffff;
+
+  /* ── Muted ── */
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+
+  /* ── Semantic ── */
+  --success: #006633;
+  --success-foreground: #ffffff;
+  --warning: rgb(172, 106, 6);
+  --warning-foreground: rgb(49, 30, 2);
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+
+  /* ── Borders & Inputs ── */
+  --border: #d4d4d8;
+  --border-subtle: #e4e4e7;
+  --input: #ffffff;
+  --input-focus: rgb(49, 30, 2);
+
+  --ring: rgb(49, 30, 2);
+
+  /* ── Highlight (gold used in mesh gradient / callouts) ── */
+  --highlight: rgb(229, 169, 60);
+  --highlight-foreground: rgb(49, 30, 2);
 }
 
-h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  color: rgb(49, 30, 2);
+/* =========================
+   DARK THEME (OVERRIDES)
+========================= */
+.dark {
+  --background: #0f0e0c;
+  --background-subtle: #18120a;
+
+  --card: #18120a;
+  --card-raised: #221a10;
+
+  --foreground: #f5ede6;
+  --foreground-muted: #c2a892;
+
+  /* Gold reads better than dark brown against a dark background */
+  --primary: rgb(229, 169, 60);
+  --primary-hover: rgb(205, 148, 40);
+  --primary-foreground: rgb(49, 30, 2);
+
+  --secondary: rgb(172, 106, 6);
+  --secondary-hover: rgb(196, 128, 20);
+  --secondary-foreground: #18120a;
+
+  --accent: rgb(198, 130, 70);
+  --accent-hover: rgb(215, 150, 90);
+  --accent-foreground: #18120a;
+
+  --muted: #221a10;
+  --muted-foreground: #a98b73;
+
+  --success: #2fa96b;
+  --success-foreground: #0f0e0c;
+  --warning: rgb(229, 169, 60);
+  --warning-foreground: #18120a;
+  --destructive: #e0554f;
+  --destructive-foreground: #18120a;
+
+  --border: #3a2a1a;
+  --border-subtle: #281f13;
+  --input: #18120a;
+  --input-focus: rgb(229, 169, 60);
+
+  --ring: rgb(229, 169, 60);
+
+  --highlight: rgb(229, 169, 60);
+  --highlight-foreground: #18120a;
 }
 
-/* Premium solid helpers (reverted from glassmorphism for accessibility) */
+/* =========================
+   THEME MAPPING (Tailwind v4 native tokens)
+========================= */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-subtle: var(--background-subtle);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-card: var(--card);
+  --color-card-raised: var(--card-raised);
+  --color-card-foreground: var(--foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-input: var(--input);
+  --color-input-focus: var(--input-focus);
+  --color-ring: var(--ring);
+
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+
+  /* ── Legacy LASU aliases — kept so existing bg-lasu-* classes don't break ── */
+  --color-lasu-primary: var(--primary);
+  --color-lasu-secondary: var(--secondary);
+  --color-lasu-accent: var(--accent);
+  --color-lasu-green: var(--success);
+  --color-lasu-gold: var(--secondary);
+}
+
+/* =========================
+   DARK MODE VARIANT (required for `dark:` utilities in Tailwind v4)
+========================= */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================
+   GLOBAL STYLES
+========================= */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family:
+    "Plus Jakarta Sans",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
+  color: var(--foreground);
+}
+
+/* =========================
+   COMPONENT UTILITIES
+========================= */
 .glass-panel {
-  background: #ffffff;
-  border: 1px solid #d4d4d8; /* zinc-300 */
+  background: var(--card);
+  border: 1px solid var(--border);
 }
 
 .glass-card {
-  background: #ffffff;
-  border: 1px solid #e4e4e7; /* zinc-200 */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  background: var(--card);
+  border: 1px solid var(--border-subtle);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -2px rgba(0, 0, 0, 0.05);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card-hover:hover {
-  background: #f4f4f5; /* zinc-100 */
-  border: 1px solid #006633; /* lasu-green */
-  box-shadow: 0 10px 15px -3px rgba(0, 102, 51, 0.08), 0 4px 6px -4px rgba(0, 102, 51, 0.08);
+  background: var(--muted);
+  border: 1px solid var(--success);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 102, 51, 0.08),
+    0 4px 6px -4px rgba(0, 102, 51, 0.08);
   transform: translateY(-2px);
 }
 
 .glass-input {
-  background: #ffffff;
-  border: 1px solid #d4d4d8; /* zinc-300 */
+  background: var(--input);
+  border: 1px solid var(--border);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-input:focus {
-  background: #ffffff;
-  border-color: #006633;
+  background: var(--input);
+  border-color: var(--input-focus);
   box-shadow: 0 0 0 3px rgba(0, 102, 51, 0.15);
 }
 
@@ -88,7 +279,8 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -111,7 +303,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .user-location-ripple::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: -2px;
@@ -175,10 +367,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* Premium Animated Mesh Gradient Background */
 .bg-mesh-gradient {
-  background-color: #fafafa; /* Light zinc base */
-  background-image: 
-    radial-gradient(at 10% 20%, rgba(0, 102, 51, 0.04) 0px, transparent 50%),   /* Light LASU Green */
-    radial-gradient(at 90% 10%, rgba(229, 169, 60, 0.05) 0px, transparent 50%),  /* Light LASU Gold */
+  background-color: #fafafa;
+  background-image:
+    radial-gradient(at 10% 20%, rgba(0, 102, 51, 0.04) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(229, 169, 60, 0.05) 0px, transparent 50%),
     radial-gradient(at 50% 85%, rgba(0, 102, 51, 0.03) 0px, transparent 50%),
     radial-gradient(at 80% 90%, rgba(229, 169, 60, 0.04) 0px, transparent 50%),
     radial-gradient(at 20% 80%, rgba(0, 102, 51, 0.04) 0px, transparent 50%);
@@ -200,53 +392,51 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* Route Polyline Drop Shadow */
 .route-polyline-shadow {
-  filter: drop-shadow(0px 3px 5px rgba(234, 88, 12, 0.4)) drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0px 3px 5px rgba(234, 88, 12, 0.4))
+    drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.2));
 }
-
 
 /* Leaflet Popup & Accessibility Customization */
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  background: #ffffff !important;
-  color: #18181b !important;
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--card) !important;
+  color: var(--foreground) !important;
   border-radius: 16px !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
-.dark .leaflet-popup-content-wrapper, .dark .leaflet-popup-tip {
-  background: #18181b !important;
-  color: #f4f4f5 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--border-subtle) !important;
 }
 
 /* Modern Flat Map-Integrated Label Styles */
 .modern-map-label {
-  color: #5c5850 !important; /* Muted grey-brown map-label color */
+  color: #5c5850 !important;
   font-weight: 700;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
   letter-spacing: 0.025em;
   font-size: 9px;
   pointer-events: none;
   user-select: none;
-  text-shadow: 
-    -1px -1px 0 #ffffff, 
-     1px -1px 0 #ffffff, 
-    -1px  1px 0 #ffffff, 
-     1px  1px 0 #ffffff,
+  text-shadow:
+    -1px -1px 0 #ffffff,
+    1px -1px 0 #ffffff,
+    -1px 1px 0 #ffffff,
+    1px 1px 0 #ffffff,
     -1.5px 0px 0 #ffffff,
-     1.5px 0px 0 #ffffff,
-     0px -1.5px 0 #ffffff,
-     0px  1.5px 0 #ffffff;
+    1.5px 0px 0 #ffffff,
+    0px -1.5px 0 #ffffff,
+    0px 1.5px 0 #ffffff;
 }
 
 .dark .modern-map-label {
-  color: #a1a1aa !important; /* Muted zinc-400 for dark mode */
-  text-shadow: 
-    -1px -1px 0 #18181b, 
-     1px -1px 0 #18181b, 
-    -1px  1px 0 #18181b, 
-     1px  1px 0 #18181b,
+  color: #a1a1aa !important;
+  text-shadow:
+    -1px -1px 0 #18181b,
+    1px -1px 0 #18181b,
+    -1px 1px 0 #18181b,
+    1px 1px 0 #18181b,
     -1.5px 0px 0 #18181b,
-     1.5px 0px 0 #18181b,
-     0px -1.5px 0 #18181b,
-     0px  1.5px 0 #18181b;
+    1.5px 0px 0 #18181b,
+    0px -1.5px 0 #18181b,
+    0px 1.5px 0 #18181b;
 }
