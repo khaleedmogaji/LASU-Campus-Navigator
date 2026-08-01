@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { findShortestPath, getDistance } from '../lib/pathNetwork';
-import { getMinDistanceToRoute } from '../utils/geo';
-import { POI } from '../types';
-import { INITIAL_POIS } from '../data/initialPois';
+import { useState, useEffect, useRef, useMemo } from "react";
+import { findShortestPath, getDistance } from "../lib/pathNetwork";
+import { getMinDistanceToRoute } from "../utils/geo";
+import { POI } from "../types";
+import { INITIAL_POIS } from "../data/initialPois";
 
 interface UseRoutingProps {
   userLocation: [number, number] | null;
@@ -10,13 +10,21 @@ interface UseRoutingProps {
   pois: POI[];
   setSheetSnap: (snap: any) => void;
   speakInstruction: (text: string) => void;
-  setUserLocation: React.Dispatch<React.SetStateAction<[number, number] | null>>;
+  setUserLocation: React.Dispatch<
+    React.SetStateAction<[number, number] | null>
+  >;
   setIsSimulated: React.Dispatch<React.SetStateAction<boolean>>;
   routingTo: POI | null;
   setRoutingTo: React.Dispatch<React.SetStateAction<POI | null>>;
   routingFrom: POI | null;
   setRoutingFrom: React.Dispatch<React.SetStateAction<POI | null>>;
-  routeInfo: { distance: number; duration: number; coordinates: any[]; segmentsCount: number; instructions: any[] } | null;
+  routeInfo: {
+    distance: number;
+    duration: number;
+    coordinates: any[];
+    segmentsCount: number;
+    instructions: any[];
+  } | null;
   setRouteInfo: React.Dispatch<React.SetStateAction<any | null>>;
   currentInstructionIndex: number;
   setCurrentInstructionIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -37,7 +45,7 @@ export function useRouting({
   routeInfo,
   setRouteInfo,
   currentInstructionIndex,
-  setCurrentInstructionIndex
+  setCurrentInstructionIndex,
 }: UseRoutingProps) {
   const [traversedPath, setTraversedPath] = useState<[number, number][]>([]);
   const [isRouteDrawerExpanded, setIsRouteDrawerExpanded] = useState(false);
@@ -46,12 +54,17 @@ export function useRouting({
 
   const lastCalculatedStartRef = useRef<[number, number] | null>(null);
   const lastCalculatedEndRef = useRef<string | null>(null);
-  const prevRouteInfoRef = useRef<{ coordinates: any[]; destinationName: string } | null>(null);
+  const prevRouteInfoRef = useRef<{
+    coordinates: any[];
+    destinationName: string;
+  } | null>(null);
   const lastSpokenIndexRef = useRef<number | null>(null);
 
   const getCoordinatesForPoint = (point: any): [number, number] | null => {
     if (!point) {
-      return userLocation ? [Number(userLocation[0]), Number(userLocation[1])] : null;
+      return userLocation
+        ? [Number(userLocation[0]), Number(userLocation[1])]
+        : null;
     }
     const lat = Number(point.latitude);
     const lng = Number(point.longitude);
@@ -59,11 +72,21 @@ export function useRouting({
     return [lat, lng];
   };
 
-  const startCoordinates = useMemo(() => getCoordinatesForPoint(routingFrom), [routingFrom, userLocation]);
-  const endCoordinates = useMemo(() => getCoordinatesForPoint(routingTo), [routingTo]);
+  const startCoordinates = useMemo(
+    () => getCoordinatesForPoint(routingFrom),
+    [routingFrom, userLocation],
+  );
+  const endCoordinates = useMemo(
+    () => getCoordinatesForPoint(routingTo),
+    [routingTo],
+  );
 
-  const startCoordinatesKey = startCoordinates ? `${startCoordinates[0]},${startCoordinates[1]}` : '';
-  const endCoordinatesKey = endCoordinates ? `${endCoordinates[0]},${endCoordinates[1]}` : '';
+  const startCoordinatesKey = startCoordinates
+    ? `${startCoordinates[0]},${startCoordinates[1]}`
+    : "";
+  const endCoordinatesKey = endCoordinates
+    ? `${endCoordinates[0]},${endCoordinates[1]}`
+    : "";
 
   const handleSwapRoute = () => {
     const temp = routingFrom;
@@ -86,7 +109,7 @@ export function useRouting({
           startCoordinates[0],
           startCoordinates[1],
           lastCalculatedStartRef.current[0],
-          lastCalculatedStartRef.current[1]
+          lastCalculatedStartRef.current[1],
         );
         if (distanceMoved < 5) {
           return;
@@ -94,11 +117,7 @@ export function useRouting({
       }
 
       try {
-        const route = findShortestPath(
-          startCoordinates,
-          endCoordinates,
-          false
-        );
+        const route = findShortestPath(startCoordinates, endCoordinates, false);
         setRouteInfo(route);
         lastCalculatedStartRef.current = startCoordinates;
         lastCalculatedEndRef.current = endKey;
@@ -130,32 +149,39 @@ export function useRouting({
   // Speech prompt transitions when destination changes or route is left
   useEffect(() => {
     if (routingTo && routeInfo) {
-      const isNewDestination = !prevRouteInfoRef.current || prevRouteInfoRef.current.destinationName !== routingTo.name;
-      
+      const isNewDestination =
+        !prevRouteInfoRef.current ||
+        prevRouteInfoRef.current.destinationName !== routingTo.name;
+
       if (isNewDestination) {
         console.log("[Voice Nav] Starting new navigation to:", routingTo.name);
         setCurrentInstructionIndex(0);
         prevRouteInfoRef.current = {
           coordinates: routeInfo.coordinates,
-          destinationName: routingTo.name
+          destinationName: routingTo.name,
         };
         return;
       }
 
-      if (userLocation && prevRouteInfoRef.current.coordinates) {
+      if (userLocation && prevRouteInfoRef.current!.coordinates) {
         const minDist = getMinDistanceToRoute(
           userLocation[0],
           userLocation[1],
-          prevRouteInfoRef.current.coordinates
+          prevRouteInfoRef.current!.coordinates,
         );
-        
-        console.log("[Voice Nav] Distance to original route:", minDist.toFixed(1) + "m");
+
+        console.log(
+          "[Voice Nav] Distance to original route:",
+          minDist.toFixed(1) + "m",
+        );
 
         if (minDist > 25) {
-          console.log("[Speech Event] Off-route detected. Recalculating route.");
+          console.log(
+            "[Speech Event] Off-route detected. Recalculating route.",
+          );
           speakInstruction("You have left the route. Recalculating.");
           setCurrentInstructionIndex(0);
-          prevRouteInfoRef.current.coordinates = routeInfo.coordinates;
+          prevRouteInfoRef.current!.coordinates = routeInfo.coordinates;
         }
       }
     } else {
@@ -169,7 +195,13 @@ export function useRouting({
 
   // Waypoint arrival tracking & turn directions speech trigger
   useEffect(() => {
-    if (!routingTo || !routeInfo || !userLocation || !routeInfo.instructions || routeInfo.instructions.length === 0) {
+    if (
+      !routingTo ||
+      !routeInfo ||
+      !userLocation ||
+      !routeInfo.instructions ||
+      routeInfo.instructions.length === 0
+    ) {
       return;
     }
 
@@ -190,19 +222,25 @@ export function useRouting({
         userLocation[0],
         userLocation[1],
         targetStep.coords.lat,
-        targetStep.coords.lng
+        targetStep.coords.lng,
       );
 
-      console.log(`[Voice Nav Debug] Current location: [${userLocation[0].toFixed(6)}, ${userLocation[1].toFixed(6)}], target: [${targetStep.coords.lat.toFixed(6)}, ${targetStep.coords.lng.toFixed(6)}], distance to next waypoint: ${dist.toFixed(1)}m, current instruction index: ${currentInstructionIndex}`);
+      console.log(
+        `[Voice Nav Debug] Current location: [${userLocation[0].toFixed(6)}, ${userLocation[1].toFixed(6)}], target: [${targetStep.coords.lat.toFixed(6)}, ${targetStep.coords.lng.toFixed(6)}], distance to next waypoint: ${dist.toFixed(1)}m, current instruction index: ${currentInstructionIndex}`,
+      );
 
       if (dist <= 20) {
         if (currentInstructionIndex < instructions.length) {
           const nextStep = instructions[currentInstructionIndex];
-          console.log(`[Speech Event] Waypoint reached. Index: ${currentInstructionIndex}, Speaking: ${nextStep.text}`);
+          console.log(
+            `[Speech Event] Waypoint reached. Index: ${currentInstructionIndex}, Speaking: ${nextStep.text}`,
+          );
           speakInstruction(nextStep.text);
-          setCurrentInstructionIndex(prev => prev + 1);
+          setCurrentInstructionIndex((prev) => prev + 1);
         } else {
-          console.log("[Speech Event] Reached final destination. Stopping voice guidance.");
+          console.log(
+            "[Speech Event] Reached final destination. Stopping voice guidance.",
+          );
           speakInstruction("You have arrived at your destination.");
           setRoutingTo(null);
           setRouteInfo(null);
@@ -215,19 +253,19 @@ export function useRouting({
   useEffect(() => {
     if (tourStep === 1) {
       if (window.innerWidth < 1024) {
-        setSheetSnap('half');
+        setSheetSnap("half");
       }
     } else if (tourStep === 2) {
       if (window.innerWidth < 1024) {
-        setSheetSnap('peek');
+        setSheetSnap("peek");
       }
     } else if (tourStep === 3) {
       if (window.innerWidth < 1024) {
-        setSheetSnap('peek');
+        setSheetSnap("peek");
       }
     } else if (tourStep === 4) {
       if (!routingTo) {
-        const senatePoi = pois.find(p => p.id === '1') || INITIAL_POIS[0];
+        const senatePoi = pois.find((p) => p.id === "1") || INITIAL_POIS[0];
         setUserLocation([6.4642, 3.1972]);
         setRoutingFrom(null);
         setRoutingTo(senatePoi);
@@ -235,7 +273,7 @@ export function useRouting({
         setTourMockedRouteActive(true);
       }
       if (window.innerWidth < 1024) {
-        setSheetSnap('peek');
+        setSheetSnap("peek");
       }
     } else {
       if (tourMockedRouteActive && tourStep !== 4) {

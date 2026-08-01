@@ -1,16 +1,10 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { SafetyInfoModal } from "./components/SafetyInfoModal";
-import { POI } from "./types";
 import { cn } from "./lib/utils";
 import type { MapStyle } from "./components/Map";
 import { NavigationProvider } from "./context/NavigationContext";
+import { useAppStore } from "@/store/useAppStore";
 
 // Icons
 import { Layers, Navigation } from "lucide-react";
@@ -21,6 +15,9 @@ import { useSearch } from "./hooks/useSearch";
 import { useLocation } from "./hooks/useLocation";
 import { useRouting } from "./hooks/useRouting";
 import { useVoiceNavigation } from "./hooks/useVoiceNavigation";
+import { shareCurrentLocation } from "@/src/helpers/shareCurrentLocation";
+import { shareLocation } from "./helpers/shareLocation";
+import { handleEnableSimulationFromBanner } from "./helpers/handleEnableSimulationFromBanner";
 
 // Modular UI Components
 import { Header } from "./components/Header";
@@ -38,11 +35,6 @@ const CampusMap = React.lazy(() =>
 const CampusAssistant = React.lazy(() =>
   import("./components/CampusAssistant").then((m) => ({
     default: m.CampusAssistant,
-  })),
-);
-const WelcomeScreen = React.lazy(() =>
-  import("./components/WelcomeScreen").then((m) => ({
-    default: m.WelcomeScreen,
   })),
 );
 
@@ -74,8 +66,6 @@ export default function App() {
 }
 
 function AppContent() {
-  const [showWelcome, setShowWelcome] = useState(true);
-  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [session, setSession] = useState<{
     firstVisit: boolean;
@@ -83,46 +73,23 @@ function AppContent() {
     lastDestination: string;
   } | null>(null);
   const [showLayerPanel, setShowLayerPanel] = useState(false);
+  const pois = useAppStore((s) => s.pois);
 
   useEffect(() => {
     localStorage.removeItem("lasu_navigator_dark_mode");
     document.documentElement.classList.remove("dark");
   }, []);
 
-  const [pois, setPois] = useState<POI[]>(() => {
-    localStorage.removeItem("poi_data");
-    localStorage.removeItem("poi_data_v4");
-    localStorage.removeItem("poi_data_v5");
-    localStorage.removeItem("poi_data_v10");
-
-    const cached = localStorage.getItem("poi_data_v10");
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed)) {
-          const merged = [...parsed];
-          INITIAL_POIS.forEach((initial) => {
-            const idx = merged.findIndex(
-              (p) => String(p.id).trim() === String(initial.id).trim(),
-            );
-            if (idx !== -1) {
-              merged[idx] = { ...merged[idx], ...initial };
-            } else {
-              merged.push(initial);
-            }
-          });
-          return overridePoiData(merged);
-        }
-      } catch (e) {
-        console.warn("Failed to parse cached POIs:", e);
-      }
-    }
-    return overridePoiData(INITIAL_POIS);
-  });
-
-  const [selectedPoi, setSelectedPoi] = useState<POI | null>(null);
-  const [routingTo, setRoutingTo] = useState<POI | null>(null);
-  const [routingFrom, setRoutingFrom] = useState<POI | null>(null);
+  const selectedPoi = useAppStore((s) => s.selectedPoi);
+  const setSelectedPoi = useAppStore((s) => s.setSelectedPoi);
+  const routingTo = useAppStore((s) => s.routingTo);
+  const setRoutingTo = useAppStore((s) => s.setRoutingTo);
+  const routingFrom = useAppStore((s) => s.routingFrom);
+  const setRoutingFrom = useAppStore((s) => s.setRoutingFrom);
+  const isAssistantOpen = useAppStore((s) => s.isAssistantOpen);
+  const setIsAssistantOpen = useAppStore((s) => s.setIsAssistantOpen);
+  const isRoutePlannerOpen = useAppStore((s) => s.isRoutePlannerOpen);
+  const setIsRoutePlannerOpen = useAppStore((s) => s.setIsRoutePlannerOpen);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(
     null,
   );
@@ -146,7 +113,6 @@ function AppContent() {
   const [showAccuracyWarning, setShowAccuracyWarning] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [isSimulated, setIsSimulated] = useState(false);
-  const [isRoutePlannerOpen, setIsRoutePlannerOpen] = useState(false);
   const [routingMode, setRoutingMode] = useState<"gps" | "landmark">("gps");
   const [currentInstructionIndex, setCurrentInstructionIndex] = useState(0);
 
@@ -257,7 +223,6 @@ function AppContent() {
       const poi = pois.find((p) => p.id === poiId);
       if (poi) {
         setSelectedPoi(poi);
-        setShowWelcome(false);
       }
     }
   }, [pois]);
@@ -296,79 +261,6 @@ function AppContent() {
     });
   };
 
-  const shareLocation = async (poi: POI) => {
-    const shareUrl = `${window.location.origin}${window.location.pathname}?poiId=${poi.id}`;
-    const shareData = {
-      title: poi.name,
-      text: `Check out this location at LASU: ${poi.name}`,
-      url: shareUrl,
-    };
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(`${poi.name}: ${shareUrl}`);
-        alert("Link copied to clipboard!");
-      }
-    } catch (err) {
-      console.error("Error sharing:", err);
-    }
-  };
-
-  const shareCurrentLocation = async () => {
-    if (!userLocation) {
-      alert("Please enable your location to share it.");
-      return;
-    }
-    const shareData = {
-      title: "My Location at LASU",
-      text: `Check out my current location at LASU: ${userLocation[0]}, ${userLocation[1]}`,
-      url: window.location.href,
-    };
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(
-          `My Location at LASU: ${userLocation[0]}, ${userLocation[1]} - ${window.location.href}`,
-        );
-        alert("Location link copied to clipboard!");
-      }
-    } catch (err) {
-      console.error("Error sharing:", err);
-    }
-  };
-
-  const handleEnableSimulationFromBanner = () => {
-    const gateLoc: [number, number] = [6.4642, 3.1972];
-    setIsSimulated(true);
-    setUserLocation(gateLoc);
-    setLocationAccuracy(null);
-    setSelectedPoi({
-      id: "simulated-location",
-      name: "Simulated Location (Gate)",
-      latitude: gateLoc[0],
-      longitude: gateLoc[1],
-      category: "Other",
-      description: "Simulated position for testing navigation.",
-    });
-    location.setIsUserOffCampus(false);
-  };
-
-  const handlePoiSelect = useCallback((poi: POI) => {
-    setSelectedPoi(poi);
-    setRoutingTo(null);
-    if (window.innerWidth < 1024) {
-      setSheetSnap("half");
-    }
-  }, []);
-
-  const handleMapDrag = useCallback(() => {
-    setFollowMe(false);
-  }, []);
-
   if (isLoading) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-zinc-50">
@@ -376,80 +268,6 @@ function AppContent() {
         <p className="text-zinc-800 font-extrabold animate-pulse">
           Initializing LASU Navigator...
         </p>
-      </div>
-    );
-  }
-
-  // Welcome Screen Return Block
-  if (showWelcome) {
-    const matchedPoi = session?.lastDestination
-      ? pois.find(
-          (p) =>
-            p.name.toLowerCase() === session.lastDestination.toLowerCase() ||
-            p.name
-              .toLowerCase()
-              .includes(session.lastDestination.toLowerCase()),
-        )
-      : undefined;
-
-    return (
-      <div className="relative w-full min-h-screen overflow-y-auto bg-white">
-        <React.Suspense
-          fallback={
-            <div className="min-h-screen flex items-center justify-center text-zinc-500 font-bold bg-white">
-              Loading Welcome...
-            </div>
-          }
-        >
-          <WelcomeScreen
-            pois={pois}
-            onStart={() => {
-              setShowWelcome(false);
-              saveSession({ lastScreen: "map" });
-              const tourCompleted =
-                localStorage.getItem("lasu_navigator_tour_completed") ===
-                "true";
-              if (!tourCompleted) {
-                routing.setTourStep(1);
-              }
-            }}
-            onExplore={(category) => {
-              setShowWelcome(false);
-              saveSession({ lastScreen: "map" });
-              if (category) {
-                search.setFilterCategory(category);
-              } else {
-                search.setFilterCategory("All");
-              }
-              if (window.innerWidth < 1024) {
-                setSheetSnap("half");
-              }
-            }}
-            onAskAssistant={() => {
-              setShowWelcome(false);
-              saveSession({ lastScreen: "map" });
-              setIsAssistantOpen(true);
-            }}
-            onSelectPoi={(poi) => {
-              setShowWelcome(false);
-              saveSession({ lastScreen: "map" });
-              setSelectedPoi(poi);
-              setRoutingTo(null);
-              if (window.innerWidth < 1024) {
-                setSheetSnap("half");
-              }
-            }}
-            onOpenRoutePlanner={() => {
-              setShowWelcome(false);
-              saveSession({ lastScreen: "map" });
-              setIsRoutePlannerOpen(true);
-              setSelectedPoi(null);
-              if (window.innerWidth < 1024) {
-                setSheetSnap("half");
-              }
-            }}
-          />
-        </React.Suspense>
       </div>
     );
   }
@@ -540,9 +358,8 @@ function AppContent() {
             setFilterCategory={search.setFilterCategory}
             searchQuery={search.searchQuery}
             setSearchQuery={search.setSearchQuery}
-            setShowWelcome={setShowWelcome}
             setIsInfoOpen={setIsInfoOpen}
-            shareCurrentLocation={shareCurrentLocation}
+            shareCurrentLocation={() => shareCurrentLocation({ userLocation })}
             isOffline={isOffline}
             isUserOffCampus={location.isUserOffCampus}
             isSimulated={isSimulated}
