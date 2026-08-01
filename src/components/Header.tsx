@@ -3,8 +3,10 @@ import { Home, Share2, Info, Navigation } from "lucide-react";
 import { SearchBar } from "./SearchBar";
 import { POI } from "../types";
 import { StatusBadge } from "./StatusBadge";
+import { Logo } from "./shared//Logo";
 import { useNavigation } from "../context/NavigationContext";
 import { cn } from "../lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   pois: POI[];
@@ -13,7 +15,6 @@ interface HeaderProps {
   setFilterCategory: (cat: string) => void;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
-  setShowWelcome: (show: boolean) => void;
   setIsInfoOpen: (open: boolean) => void;
   shareCurrentLocation: () => void;
 
@@ -32,7 +33,6 @@ export const Header: React.FC<HeaderProps> = ({
   setFilterCategory,
   searchQuery,
   setSearchQuery,
-  setShowWelcome,
   setIsInfoOpen,
   shareCurrentLocation,
   isOffline,
@@ -47,30 +47,18 @@ export const Header: React.FC<HeaderProps> = ({
     setSelectedPoi,
     setSheetSnap,
   } = useNavigation();
+  const navigate = useNavigate();
 
   return (
     <header className="h-16 bg-white border-b border-zinc-200 flex items-center justify-between px-4 md:px-6 z-[2000] shrink-0 shadow-sm">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="w-1.5 h-10 rounded-full bg-lasu-primary shrink-0" />
-        <div
-          className="flex items-center gap-2.5 cursor-pointer select-none group"
-          onClick={() => setShowWelcome(true)}
-        >
-          <img
-            src="lasu-logo.png"
-            alt="LASU Logo"
-            className="w-10 h-10 object-contain shrink-0 drop-shadow-md transition-all duration-300 group-hover:scale-105"
-            referrerPolicy="no-referrer"
-          />
-          <div className="shrink-0">
-            <h1 className="font-black text-[16px] leading-tight tracking-tight text-zinc-900 transition-colors duration-300 group-hover:text-lasu-primary">
-              LASU Navigator
-            </h1>
-            <p className="text-[9px] text-lasu-primary font-black uppercase tracking-[0.18em] leading-none">
-              Campus Guide
-            </p>
-          </div>
-        </div>
+        <Logo
+          size="lg"
+          variant="stacked"
+          showBar
+          onClick={() => navigate("/")}
+        />
+
         <StatusBadge
           isOffline={isOffline}
           isUserOffCampus={isUserOffCampus}
@@ -83,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Header Actions */}
       <div className="flex md:hidden items-center gap-1.5">
         <button
-          onClick={() => setShowWelcome(true)}
+          onClick={() => navigate("/")}
           className="p-2 bg-zinc-100 hover:bg-lasu-primary/10 text-zinc-700 hover:text-lasu-primary rounded-xl transition-all border border-zinc-200 cursor-pointer active:scale-95 shadow-sm"
           title="Go to Home Dashboard"
         >
@@ -128,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="hidden md:flex items-center gap-3">
         <button
           onClick={() => {
-            setShowWelcome(false);
+            navigate("/");
             setIsRoutePlannerOpen(true);
             setSelectedPoi(null);
           }}

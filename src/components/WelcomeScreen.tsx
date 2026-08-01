@@ -88,10 +88,7 @@ export const WelcomeScreen: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full bg-white text-[rgb(49,30,2)] transition-colors duration-300 relative overflow-x-hidden flex flex-col justify-between">
-      <WelcomeHeader
-        onStart={handleStart}
-        onAskAssistant={handleAskAssistant}
-      />
+      <WelcomeHeader onAskAssistant={handleAskAssistant} />
 
       <main className="relative z-20 flex-1 max-w-4xl w-full mx-auto px-6 py-8 flex flex-col justify-center gap-8 md:gap-12">
         <HeroSection
