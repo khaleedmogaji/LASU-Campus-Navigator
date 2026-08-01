@@ -4,6 +4,7 @@ import { cn } from "../lib/utils";
 import type { MapStyle } from "./Map";
 import { NavigationProvider } from "../context/NavigationContext";
 import { useAppStore } from "@/store/useAppStore";
+import type { POI } from "../types";
 
 // Icons
 import { Layers, Navigation } from "lucide-react";
@@ -42,8 +43,6 @@ const CampusAssistant = React.lazy(() =>
 );
 
 import { motion, AnimatePresence } from "motion/react";
-import { INITIAL_POIS } from "../data/initialPois";
-import { overridePoiData } from "../utils/poi";
 
 const LAYER_PREVIEWS = [
   {
@@ -118,6 +117,25 @@ export default function MapPage() {
     routingTo,
     currentInstructionIndex,
   });
+
+  const onEnableSimulation = () =>
+    handleEnableSimulationFromBanner({
+      setIsSimulated,
+      setUserLocation,
+      setLocationAccuracy,
+      setSelectedPoi,
+      setIsUserOffCampus: location.setIsUserOffCampus,
+    });
+
+  const onPoiSelect = (poi: POI) =>
+    handlePoiSelect({
+      poi,
+      setSelectedPoi,
+      setRoutingTo,
+      setSheetSnap,
+    });
+
+  const onMapDrag = () => handleMapDrag({ setFollowMe });
 
   // 2. Geolocation & Simulation Location Hook
   const location = useLocation({
@@ -329,8 +347,8 @@ export default function MapPage() {
     isSearchOpen,
     setIsSearchOpen,
     isOffline,
-    handlePoiSelect,
-    handleMapDrag,
+    handlePoiSelect: onPoiSelect,
+    handleMapDrag: onMapDrag,
     isLocatingState: location.isLocating,
     filterCategory: search.filterCategory,
     setFilterCategory: search.setFilterCategory,
@@ -360,7 +378,7 @@ export default function MapPage() {
             isUserOffCampus={location.isUserOffCampus}
             isSimulated={isSimulated}
             showAccuracyWarning={showAccuracyWarning}
-            onEnableSimulation={handleEnableSimulationFromBanner}
+            onEnableSimulation={onEnableSimulation}
           />
 
           <main className="flex-1 flex relative overflow-hidden">

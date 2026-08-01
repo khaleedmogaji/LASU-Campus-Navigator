@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
+import {
+  Library,
+  GraduationCap,
+  Landmark,
+  Trophy,
+  Building2,
+  BedDouble,
+  MapPin,
+} from "lucide-react";
 import { POI } from "../types";
 import { useAppStore } from "@/store/useAppStore";
 import { WelcomeHeader } from "./welcome/Header";
@@ -48,41 +57,43 @@ export const WelcomeScreen: React.FC = () => {
     navigate("/map");
   };
 
+  const iconClass = "w-5 h-5";
+
   const categories = [
     {
       name: "Library",
       count: pois.filter((p) => p.category === "Library").length,
-      icon: "📚",
+      icon: <Library className={iconClass} />,
     },
     {
       name: "Lecture Theatre",
       count: pois.filter((p) => p.category === "Lecture Theatre").length,
-      icon: "🎓",
+      icon: <GraduationCap className={iconClass} />,
     },
     {
       name: "Administrative",
       count: pois.filter((p) => p.category === "Administrative").length,
-      icon: "🏛️",
+      icon: <Landmark className={iconClass} />,
     },
     {
       name: "Sports",
       count: pois.filter((p) => p.category === "Sports").length,
-      icon: "⚽",
+      icon: <Trophy className={iconClass} />,
     },
     {
       name: "Building",
       count: pois.filter((p) => p.category === "Building").length,
-      icon: "🏫",
+      icon: <Building2 className={iconClass} />,
     },
     {
       name: "Hostel",
       count: pois.filter((p) => p.category === "Hostel").length,
-      icon: "🏢",
+      icon: <BedDouble className={iconClass} />,
     },
     {
       name: "Other",
       count: pois.filter((p) => p.category === "Other").length,
-      icon: "📍",
+      icon: <MapPin className={iconClass} />,
     },
   ];
 

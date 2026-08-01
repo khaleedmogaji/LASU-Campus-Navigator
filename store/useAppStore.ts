@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { POI } from "../src/types";
+import { INITIAL_POIS } from "@/src/data/initialPois";
 
 interface AppState {
-  // Domain data — loaded once, read from both routes
   pois: POI[];
   setPois: (pois: POI[]) => void;
   selectedPoi: POI | null;
@@ -25,7 +25,7 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set) => ({
-  pois: [],
+  pois: INITIAL_POIS,
   setPois: (pois) => set({ pois }),
 
   selectedPoi: null,

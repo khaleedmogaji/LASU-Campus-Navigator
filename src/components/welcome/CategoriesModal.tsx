@@ -5,7 +5,7 @@ import { MapPin, X } from "lucide-react";
 interface Category {
   name: string;
   count: number;
-  icon: string;
+  icon: React.ReactNode;
 }
 
 interface CategoriesModalProps {
@@ -51,7 +51,9 @@ export const CategoriesModal: React.FC<CategoriesModalProps> = ({
               className="w-full text-left p-3.5 rounded-2xl border border-zinc-200 hover:bg-zinc-50 hover:border-lasu-green/20 hover:text-lasu-green transition-all duration-200 flex items-center justify-between group cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <span className="text-lg">{cat.icon}</span>
+                <span className="text-zinc-500 group-hover:text-lasu-green transition-colors">
+                  {cat.icon}
+                </span>
                 <span className="text-xs font-black text-zinc-800">
                   {cat.name}
                 </span>
