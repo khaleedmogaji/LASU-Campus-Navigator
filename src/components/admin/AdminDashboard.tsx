@@ -53,7 +53,7 @@ export default function AdminDashboard() {
               backgroundSize: "24px 24px",
             }}
           />
-          <div className="relative z-10">
+          <div className="relative z-10 p-4">
             <Outlet />
           </div>
         </main>

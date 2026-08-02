@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { cn } from "../../lib/utils";
+import { Logo } from "../shared/Logo";
 import {
   LayoutDashboard,
   Building2,
@@ -47,22 +48,7 @@ export function AdminSidebar({
       >
         {/* Logo / brand */}
         <div className="h-16 flex items-center justify-between gap-2.5 px-5 border-b border-border shrink-0">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0 shadow-sm">
-              <Compass
-                className="w-4.5 h-4.5 text-primary-foreground"
-                strokeWidth={2.5}
-              />
-            </span>
-            <div className="min-w-0">
-              <p className="text-sm font-black text-foreground leading-tight truncate">
-                LASU Navigator
-              </p>
-              <span className="inline-flex items-center gap-1 mt-0.5 px-1.5 py-0.5 rounded-full bg-secondary/15 text-secondary text-[9px] font-black uppercase tracking-wider">
-                Admin
-              </span>
-            </div>
-          </div>
+          <Logo />
           <button
             onClick={onMobileClose}
             className="lg:hidden p-1.5 text-muted-foreground hover:text-foreground shrink-0"
