@@ -6,6 +6,7 @@ import NotFound from "./components/NotFound";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./components/admin/AdminLoginPage";
+import Overview from "./components/admin/Overview";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminDashboardAnalytics from "./components/admin/AdminDashboardAnalytics";
 import AdminDashboardBuildings from "./components/admin/AdminDashboardBuildings";
@@ -22,21 +23,14 @@ export default function App() {
         <Route path="/map" element={<MapPage />} />
 
         <Route
-          path="/admin"
+          path="/admin/"
           element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <AdminDashboard />
+            // </ProtectedRoute>
           }
         >
-          <Route
-            index
-            element={
-              <div className="p-6 text-sm text-foreground-muted">
-                Overview coming soon
-              </div>
-            }
-          />
+          <Route index element={<Overview />} />
           <Route path="buildings" element={<AdminDashboardBuildings />} />
           <Route path="buildings/new" element={<AddNewBuilding />} />
           <Route path="buildings/:id/edit" element={<EditBuilding />} />
