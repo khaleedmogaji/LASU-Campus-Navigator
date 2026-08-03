@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* =========================
-   LIGHT THEME (DEFAULT)
-========================= */
 :root {
   /* ── Surfaces ── */
   --background: #ffffff;
@@ -54,9 +51,6 @@
   --highlight-foreground: rgb(49, 30, 2);
 }
 
-/* =========================
-   DARK THEME (OVERRIDES)
-========================= */
 .dark {
   --background: #0f0e0c;
   --background-subtle: #18120a;
@@ -101,9 +95,6 @@
   --highlight-foreground: #18120a;
 }
 
-/* =========================
-   THEME MAPPING (Tailwind v4 native tokens)
-========================= */
 @theme inline {
   --color-background: var(--background);
   --color-background-subtle: var(--background-subtle);
@@ -154,14 +145,8 @@
   --color-lasu-gold: var(--secondary);
 }
 
-/* =========================
-   DARK MODE VARIANT (required for `dark:` utilities in Tailwind v4)
-========================= */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* =========================
-   GLOBAL STYLES
-========================= */
 html {
   scroll-behavior: smooth;
 }
@@ -206,9 +191,6 @@ h6,
   color: var(--foreground);
 }
 
-/* =========================
-   COMPONENT UTILITIES
-========================= */
 .glass-panel {
   background: var(--card);
   border: 1px solid var(--border);
