@@ -1,11 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { cn } from "@/src/lib/utils";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
   variant?: "stacked" | "inline";
   showBar?: boolean;
-  onClick?: () => void;
   className?: string;
 }
 
@@ -23,17 +23,15 @@ export const Logo: React.FC<LogoProps> = ({
   size = "md",
   variant = "stacked",
   showBar = false,
-  onClick,
   className,
 }) => {
   const { img, title, subtitle } = SIZE_MAP[size];
 
   return (
-    <div
-      onClick={onClick}
+    <Link
+      to="/"
       className={cn(
-        "flex items-center gap-2.5 min-w-0",
-        onClick && "cursor-pointer select-none group",
+        "flex items-center gap-2.5 min-w-0 cursor-pointer select-none group",
         className,
       )}
     >
@@ -46,8 +44,7 @@ export const Logo: React.FC<LogoProps> = ({
         alt="LASU Logo"
         className={cn(
           img,
-          "object-contain shrink-0 drop-shadow-sm transition-all duration-300",
-          onClick && "group-hover:scale-105",
+          "object-contain shrink-0 drop-shadow-sm transition-all duration-300 group-hover:scale-105",
         )}
         referrerPolicy="no-referrer"
       />
@@ -56,8 +53,7 @@ export const Logo: React.FC<LogoProps> = ({
         <div className="shrink-0">
           <h1
             className={cn(
-              "font-black leading-tight tracking-tight text-zinc-900 transition-colors duration-300",
-              onClick && "group-hover:text-lasu-primary",
+              "font-black leading-tight tracking-tight text-zinc-900 transition-colors duration-300 group-hover:text-lasu-primary",
               title,
             )}
           >
@@ -82,6 +78,6 @@ export const Logo: React.FC<LogoProps> = ({
           LASU Campus Navigator
         </span>
       )}
-    </div>
+    </Link>
   );
 };
