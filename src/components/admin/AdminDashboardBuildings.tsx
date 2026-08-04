@@ -2,7 +2,14 @@ import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Plus, Pencil, Trash2 } from "lucide-react";
 import { usePoiData } from "../../hooks/usePoiData";
-import { CATEGORIES, CATEGORY_ICONS } from "../../lib/categoryConfig";
+import {
+  CATEGORIES,
+  CATEGORY_ICONS,
+  CATEGORY_COLORS,
+  resolveCategoryColor,
+  categoryTint,
+  Category,
+} from "../../lib/categoryConfig";
 import { DeleteConfirmModal } from "../../components/admin/DeleteConfirmModal";
 import { POI } from "../../types";
 import { cn } from "../../lib/utils";
@@ -42,11 +49,16 @@ export default function AdminDashboardBuildings() {
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-black text-zinc-900">Buildings</h1>
-          <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider mt-1">
-            {loading ? "Loading…" : `${pois.length} landmarks`}
-          </p>
+        <div className="flex items-center gap-3">
+          <span className="w-1 h-9 rounded-full bg-lasu-primary shrink-0" />
+          <div>
+            <h1 className="text-2xl font-black text-zinc-900 tracking-tight">
+              Buildings
+            </h1>
+            <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mt-1">
+              {loading ? "Loading…" : `${pois.length} landmarks`}
+            </p>
+          </div>
         </div>
         <button
           onClick={() => navigate("/admin/buildings/new")}
@@ -69,20 +81,43 @@ export default function AdminDashboardBuildings() {
         </div>
 
         <div className="flex gap-2 overflow-x-auto scrollbar-none">
-          {["All", ...CATEGORIES].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={cn(
-                "px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-colors cursor-pointer shrink-0",
-                activeCategory === cat
-                  ? "bg-lasu-primary text-white"
-                  : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100",
-              )}
-            >
-              {cat}
-            </button>
-          ))}
+          <button
+            onClick={() => setActiveCategory("All")}
+            className={cn(
+              "px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-colors cursor-pointer shrink-0",
+              activeCategory === "All"
+                ? "bg-lasu-primary text-white"
+                : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100",
+            )}
+          >
+            All
+          </button>
+          {CATEGORIES.map((cat) => {
+            const rawColor = CATEGORY_COLORS[cat];
+            const color = resolveCategoryColor(rawColor);
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={cn(
+                  "px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 flex items-center gap-1.5",
+                  isActive
+                    ? "text-white shadow-sm"
+                    : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100",
+                )}
+                style={isActive ? { backgroundColor: color } : undefined}
+              >
+                {!isActive && (
+                  <span
+                    className="w-1.5 h-1.5 rounded-full shrink-0"
+                    style={{ backgroundColor: color }}
+                  />
+                )}
+                {cat}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -117,21 +152,32 @@ export default function AdminDashboardBuildings() {
         ) : (
           <div className="divide-y divide-zinc-100">
             {filtered.map((poi) => {
-              const Icon =
-                CATEGORY_ICONS[poi.category as keyof typeof CATEGORY_ICONS];
+              const cat = poi.category as Category;
+              const Icon = CATEGORY_ICONS[cat];
+              const rawColor = CATEGORY_COLORS[cat] ?? "#a1a1aa";
+              const color = resolveCategoryColor(rawColor);
               return (
                 <div
                   key={poi.id}
                   className="flex items-center gap-3 px-5 py-3.5 hover:bg-zinc-50 transition-colors group"
                 >
-                  <span className="w-9 h-9 rounded-full bg-zinc-100 text-zinc-500 flex items-center justify-center shrink-0">
-                    {Icon ? <Icon className="w-4 h-4" /> : null}
+                  <span
+                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: categoryTint(rawColor) }}
+                  >
+                    {Icon ? (
+                      <Icon className="w-4 h-4" style={{ color }} />
+                    ) : null}
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-black text-zinc-800 truncate">
                       {poi.name}
                     </p>
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">
+                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5 flex items-center gap-1.5">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full shrink-0"
+                        style={{ backgroundColor: color }}
+                      />
                       {poi.category} · {poi.latitude.toFixed(4)},{" "}
                       {poi.longitude.toFixed(4)}
                     </p>

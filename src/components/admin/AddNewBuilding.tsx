@@ -1,28 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/src/firebase";
-import { useAdminStore } from "@/store/useAdminStore";
 import { BuildingForm, BuildingFormValues } from "../shared/BuiildingForm";
+import { usePoiData } from "../../hooks/usePoiData";
 
-export default function AddNewBuilding() {
+export default function AddBuildingPage() {
   const navigate = useNavigate();
-  const user = useAdminStore((s) => s.user);
+  const { addPoi } = usePoiData();
 
   const handleSubmit = async (values: BuildingFormValues) => {
-    await addDoc(collection(db, "pois"), {
-      ...values,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-      createdBy: user?.uid ?? null,
-    });
+    await addPoi(values);
     navigate("/admin/buildings");
   };
 
   return (
     <div>
-      <div className="px-3 pt-3">
-        <h2 className="text-lg font-black text-foreground">Add Building</h2>
-        <p className="text-sm text-foreground-muted mt-1">
+      <div className="mb-2">
+        <h1 className="text-xl font-black text-zinc-900">Add Building</h1>
+        <p className="text-xs text-zinc-500 font-semibold mt-1">
           This will appear on the student-facing map immediately after saving.
         </p>
       </div>

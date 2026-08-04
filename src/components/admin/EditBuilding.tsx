@@ -1,70 +1,53 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/src/firebase";
 import { BuildingForm, BuildingFormValues } from "../shared/BuiildingForm";
+import { usePoiData } from "../../hooks/usePoiData";
 
-export default function EditBuilding() {
-  const { id } = useParams<{ id: string }>();
+export default function EditBuildingPage() {
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const { pois, loading, updatePoi } = usePoiData();
 
-  const [initialValues, setInitialValues] =
-    useState<Partial<BuildingFormValues> | null>(null);
-  const [notFound, setNotFound] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchBuilding = async () => {
-      const snap = await getDoc(doc(db, "pois", id));
-      if (!snap.exists()) {
-        setNotFound(true);
-        setIsLoading(false);
-        return;
-      }
-      setInitialValues(snap.data() as Partial<BuildingFormValues>);
-      setIsLoading(false);
-    };
-
-    fetchBuilding();
-  }, [id]);
+  const poi = useMemo(() => pois.find((p) => p.id === id), [pois, id]);
 
   const handleSubmit = async (values: BuildingFormValues) => {
     if (!id) return;
-    await updateDoc(doc(db, "pois", id), {
-      ...values,
-      updatedAt: serverTimestamp(),
-    });
+    await updatePoi(id, values);
     navigate("/admin/buildings");
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
-      <div className="p-6 text-sm text-foreground-muted">
-        Loading building...
+      <div className="flex items-center justify-center py-20">
+        <div className="w-8 h-8 border-2 border-zinc-200 border-t-lasu-primary rounded-full animate-spin" />
       </div>
     );
   }
 
-  if (notFound) {
+  if (!poi) {
     return (
-      <div className="p-6 text-sm text-destructive-foreground">
-        No building found with that ID.
+      <div className="text-center py-20">
+        <p className="text-sm font-bold text-zinc-500">Building not found.</p>
+        <button
+          onClick={() => navigate("/admin/buildings")}
+          className="mt-3 text-xs font-black text-lasu-primary hover:underline cursor-pointer"
+        >
+          ← Back to Buildings
+        </button>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="px-6 pt-6">
-        <h2 className="text-lg font-black text-foreground">Edit Building</h2>
-        <p className="text-sm text-foreground-muted mt-1">
+      <div className="mb-2">
+        <h1 className="text-xl font-black text-zinc-900">Edit Building</h1>
+        <p className="text-xs text-zinc-500 font-semibold mt-1">
           Changes appear on the student-facing map immediately after saving.
         </p>
       </div>
       <BuildingForm
-        initialValues={initialValues ?? undefined}
+        initialValues={poi as Partial<BuildingFormValues>}
         onSubmit={handleSubmit}
         submitLabel="Save Changes"
       />
