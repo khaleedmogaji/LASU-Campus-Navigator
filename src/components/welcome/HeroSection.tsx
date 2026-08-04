@@ -166,7 +166,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white p-2 shadow-xl ring-4 ring-lasu-primary/10 border border-zinc-150 flex items-center justify-center shrink-0"
       >
         <img
-          src="https://lasu.edu.ng/home/img/logo1.png"
+          src="lasu-logo.png"
           alt="LASU Emblem"
           className="w-full h-full object-contain"
           referrerPolicy="no-referrer"
