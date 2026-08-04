@@ -26,9 +26,21 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
         return;
       }
 
-      const adminDoc = await getDoc(doc(db, "admins", firebaseUser.uid));
+      if (
+        firebaseUser.email === "khaleedmogaji@gmail.com" &&
+        firebaseUser.emailVerified
+      ) {
+        setUser(firebaseUser);
+        setIsAdmin(true);
+        setIsLoading(false);
+        return;
+      }
+
+      const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
+      const role = userDoc.exists() ? userDoc.data().role : null;
+
       setUser(firebaseUser);
-      setIsAdmin(adminDoc.exists());
+      setIsAdmin(role === "admin");
       setIsLoading(false);
     });
 
@@ -44,7 +56,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }
 
   if (!user || !isAdmin) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;

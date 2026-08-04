@@ -30,11 +30,36 @@ export default function AdminLoginPage() {
         password,
       );
       const uid = credential.user.uid;
+      const userEmail = credential.user.email;
 
-      // Step 2: check this UID is actually provisioned as an admin
-      const adminDoc = await getDoc(doc(db, "admins", uid));
+      console.log("[AdminLogin] Authenticated:", { uid, email: userEmail });
 
-      if (!adminDoc.exists()) {
+      const isHardcodedAdmin =
+        userEmail === "khaleedmogaji@gmail.com" &&
+        credential.user.emailVerified;
+
+      if (isHardcodedAdmin) {
+        console.log("[AdminLogin] Matched hardcoded admin allowlist.");
+        setUser(credential.user);
+        setIsAdmin(true);
+        navigate("/admin");
+        return;
+      }
+
+      // Step 2: check this UID is provisioned as an admin in `users`
+      const userDoc = await getDoc(doc(db, "users", uid));
+      const role = userDoc.exists() ? userDoc.data().role : null;
+
+      console.log("[AdminLogin] Role check:", {
+        uid,
+        docExists: userDoc.exists(),
+        role,
+      });
+
+      if (role !== "admin") {
+        console.warn(
+          `[AdminLogin] Access denied — uid ${uid} has role "${role ?? "none"}", not "admin".`,
+        );
         await signOut(auth);
         setError("You don't have admin access on this account.");
         setIsSubmitting(false);
@@ -43,9 +68,15 @@ export default function AdminLoginPage() {
 
       setUser(credential.user);
       setIsAdmin(true);
-      navigate("/admin/dashboard");
+      navigate("/admin");
     } catch (err: any) {
       const code = err?.code as string | undefined;
+      console.error("[AdminLogin] Sign-in error:", {
+        code,
+        message: err?.message,
+        raw: err,
+      });
+
       if (
         code === "auth/invalid-credential" ||
         code === "auth/wrong-password"
@@ -55,8 +86,14 @@ export default function AdminLoginPage() {
         setError("No account found with that email.");
       } else if (code === "auth/too-many-requests") {
         setError("Too many attempts. Please wait a moment and try again.");
+      } else if (code === "auth/invalid-email") {
+        setError("That doesn't look like a valid email address.");
+      } else if (code === "auth/network-request-failed") {
+        setError("Network error — check your connection and try again.");
       } else {
-        setError("Something went wrong. Please try again.");
+        setError(
+          `Something went wrong (${code ?? "unknown error"}). Please try again.`,
+        );
       }
       setIsSubmitting(false);
     }
