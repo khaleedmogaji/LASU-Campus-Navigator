@@ -29,55 +29,24 @@ export function useSearch({
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
-        const fetchedPois = snapshot.docs.map(
+        const fetched = snapshot.docs.map(
           (doc) => ({ id: doc.id, ...doc.data() }) as POI,
         );
-        if (fetchedPois.length > 0) {
-          const merged = [...fetchedPois];
-          INITIAL_POIS.forEach((initial) => {
-            const idx = merged.findIndex(
-              (p) => String(p.id).trim() === String(initial.id).trim(),
-            );
-            if (idx !== -1) {
-              merged[idx] = { ...merged[idx], ...initial };
-            } else {
-              merged.push(initial);
-            }
-          });
-          const updated = overridePoiData(merged);
-          setPois(updated);
-          localStorage.setItem("poi_data_v10", JSON.stringify(updated));
-        }
+        setPois(fetched);
+        localStorage.setItem("poi_data_v10", JSON.stringify(fetched));
       },
       (error) => {
         console.warn("Firestore onSnapshot error for POIs:", error);
         const cached = localStorage.getItem("poi_data_v10");
         if (cached) {
           try {
-            const parsed = JSON.parse(cached);
-            if (Array.isArray(parsed)) {
-              const merged = [...parsed];
-              INITIAL_POIS.forEach((initial) => {
-                const idx = merged.findIndex(
-                  (p) => String(p.id).trim() === String(initial.id).trim(),
-                );
-                if (idx !== -1) {
-                  merged[idx] = { ...merged[idx], ...initial };
-                } else {
-                  merged.push(initial);
-                }
-              });
-              setPois(overridePoiData(merged));
-              return;
-            }
+            setPois(JSON.parse(cached));
           } catch (e) {
             console.warn("Failed to parse cached fallback POIs:", e);
           }
         }
-        setPois(overridePoiData(INITIAL_POIS));
       },
     );
-
     return () => unsubscribe();
   }, [setPois]);
 
