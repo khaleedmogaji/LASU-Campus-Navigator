@@ -28,14 +28,14 @@ export default function OverviewPage() {
     .slice(0, 5);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       <div className="flex items-center gap-3">
         <span className="w-1 h-9 rounded-full bg-lasu-gold shrink-0" />
         <div>
-          <h1 className="text-2xl font-black text-zinc-900 tracking-tight">
+          <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">
             Overview
           </h1>
-          <p className="text-[10px] font-bold text-lasu-green uppercase tracking-widest flex items-center gap-1.5 mt-1">
+          <p className="text-[10px] font-semibold text-lasu-green uppercase tracking-widest flex items-center gap-1.5 mt-1">
             <span className="w-1.5 h-1.5 rounded-full bg-lasu-green animate-pulse" />
             Live Session
           </p>
@@ -69,9 +69,9 @@ export default function OverviewPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 bg-white rounded-2xl ring-1 ring-black/5 p-5">
-          <h2 className="text-[10px] font-black text-zinc-900 uppercase tracking-widest mb-4 flex items-center gap-1.5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="lg:col-span-2 bg-white border border-zinc-200 rounded-2xl p-5">
+          <h2 className="text-[10px] font-bold text-zinc-900 uppercase tracking-widest mb-4 flex items-center gap-1.5">
             <span className="w-1 h-1 rounded-full bg-lasu-primary" />
             By Category
           </h2>
@@ -91,7 +91,7 @@ export default function OverviewPage() {
                   >
                     <Icon className="w-3.5 h-3.5" style={{ color }} />
                   </span>
-                  <span className="text-xs font-bold text-zinc-700 w-32 shrink-0 truncate">
+                  <span className="text-xs font-semibold text-zinc-700 w-32 shrink-0 truncate">
                     {c.name}
                   </span>
                   <div className="flex-1 h-2 rounded-full bg-zinc-100 overflow-hidden">
@@ -100,7 +100,7 @@ export default function OverviewPage() {
                       style={{ width: `${pct}%`, backgroundColor: rawColor }}
                     />
                   </div>
-                  <span className="text-[11px] font-black text-zinc-500 w-8 text-right shrink-0">
+                  <span className="text-[11px] font-bold text-zinc-500 w-8 text-right shrink-0">
                     {c.count}
                   </span>
                 </div>
@@ -109,29 +109,29 @@ export default function OverviewPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl ring-1 ring-black/5 p-5 flex flex-col gap-2">
-          <h2 className="text-[10px] font-black text-zinc-900 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+        <div className="bg-white border border-zinc-200 rounded-2xl p-5 flex flex-col gap-2">
+          <h2 className="text-[10px] font-bold text-zinc-900 uppercase tracking-widest mb-2 flex items-center gap-1.5">
             <span className="w-1 h-1 rounded-full bg-lasu-gold" />
             Quick Actions
           </h2>
           <button
             onClick={() => navigate("/admin/buildings/new")}
-            className="text-left px-3.5 py-3 rounded-xl bg-lasu-primary hover:bg-lasu-primary-dark text-white text-xs font-black uppercase tracking-wide transition-colors cursor-pointer flex items-center gap-2"
+            className="text-left px-3.5 py-3 rounded-xl bg-lasu-primary hover:bg-lasu-primary-dark text-white text-xs font-bold uppercase tracking-wide transition-colors cursor-pointer flex items-center gap-2"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Building
           </button>
           <button
             onClick={() => navigate("/admin/buildings")}
-            className="text-left px-3.5 py-3 rounded-xl hover:bg-zinc-50 text-zinc-700 text-xs font-bold transition-colors cursor-pointer border border-zinc-100"
+            className="text-left px-3.5 py-3 rounded-xl hover:bg-zinc-50 hover:border-zinc-300 text-zinc-700 text-xs font-semibold transition-all cursor-pointer border border-zinc-200"
           >
             View all Buildings →
           </button>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl ring-1 ring-black/5 p-5">
-        <h2 className="text-[10px] font-black text-zinc-900 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+      <div className="bg-white border border-zinc-200 rounded-2xl p-5">
+        <h2 className="text-[10px] font-bold text-zinc-900 uppercase tracking-widest mb-3 flex items-center gap-1.5">
           <span className="w-1 h-1 rounded-full bg-lasu-green" />
           Recently Updated
         </h2>
@@ -158,10 +158,10 @@ export default function OverviewPage() {
                   >
                     <Icon className="w-3.5 h-3.5" style={{ color }} />
                   </span>
-                  <span className="text-xs font-bold text-zinc-800 truncate flex-1 group-hover:text-lasu-primary transition-colors">
+                  <span className="text-xs font-semibold text-zinc-800 truncate flex-1 group-hover:text-lasu-primary transition-colors">
                     {poi.name}
                   </span>
-                  <span className="text-[10px] font-black text-zinc-400 uppercase tracking-wide">
+                  <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wide">
                     {poi.category}
                   </span>
                 </button>

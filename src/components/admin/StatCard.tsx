@@ -25,7 +25,7 @@ export default function StatCard({
 }: StatCardProps) {
   const a = ACCENT_MAP[accent];
   return (
-    <div className="relative bg-white rounded-2xl p-5 ring-1 ring-black/5 overflow-hidden">
+    <div className="relative bg-white border border-zinc-200 rounded-2xl p-5 overflow-hidden hover:border-zinc-300 hover:shadow-sm transition-all duration-200">
       <span className={cn("absolute top-0 left-0 right-0 h-[3px]", a.bar)} />
       <div className="flex items-center gap-4">
         <div
@@ -37,10 +37,10 @@ export default function StatCard({
           {icon}
         </div>
         <div className="min-w-0">
-          <p className="text-2xl font-black text-zinc-900 leading-none tracking-tight">
+          <p className="text-2xl font-bold text-zinc-900 leading-none tracking-tight">
             {value}
           </p>
-          <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mt-1.5">
+          <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest mt-1.5">
             {label}
           </p>
         </div>

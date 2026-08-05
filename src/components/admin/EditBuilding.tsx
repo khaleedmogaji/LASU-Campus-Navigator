@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BuildingForm, BuildingFormValues } from "../shared/BuiildingForm";
 import { usePoiData } from "../../hooks/usePoiData";
+import { BackButton } from "../../components/admin/BackButton";
 
 export default function EditBuildingPage() {
   const navigate = useNavigate();
@@ -27,10 +28,12 @@ export default function EditBuildingPage() {
   if (!poi) {
     return (
       <div className="text-center py-20">
-        <p className="text-sm font-bold text-zinc-500">Building not found.</p>
+        <p className="text-sm font-semibold text-zinc-500">
+          Building not found.
+        </p>
         <button
           onClick={() => navigate("/admin/buildings")}
-          className="mt-3 text-xs font-black text-lasu-primary hover:underline cursor-pointer"
+          className="mt-3 text-xs font-bold text-lasu-primary hover:underline cursor-pointer"
         >
           ← Back to Buildings
         </button>
@@ -40,8 +43,9 @@ export default function EditBuildingPage() {
 
   return (
     <div>
+      <BackButton />
       <div className="mb-2">
-        <h1 className="text-xl font-black text-zinc-900">Edit Building</h1>
+        <h1 className="text-xl font-bold text-zinc-900">Edit Building</h1>
         <p className="text-xs text-zinc-500 font-semibold mt-1">
           Changes appear on the student-facing map immediately after saving.
         </p>
