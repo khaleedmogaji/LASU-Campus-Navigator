@@ -8,7 +8,6 @@ import {
   Settings,
   LogOut,
   X,
-  Compass,
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -51,7 +50,7 @@ export function AdminSidebar({
           <Logo />
           <button
             onClick={onMobileClose}
-            className="lg:hidden p-1.5 text-muted-foreground hover:text-foreground shrink-0"
+            className="lg:hidden p-1.5 rounded-lg border border-transparent hover:border-border text-muted-foreground hover:text-foreground transition-colors shrink-0"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
@@ -59,7 +58,10 @@ export function AdminSidebar({
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-3 py-4 flex flex-col gap-1 overflow-y-auto">
+        <nav className="flex-1 px-3 py-5 flex flex-col gap-1 overflow-y-auto">
+          <p className="px-3 mb-2 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+            Menu
+          </p>
           {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.to}
@@ -68,19 +70,26 @@ export function AdminSidebar({
               onClick={onMobileClose}
               className={({ isActive }) =>
                 cn(
-                  "relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors",
+                  "relative flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-xl text-sm font-medium transition-colors border",
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
-                    : "text-foreground-muted hover:bg-muted hover:text-foreground",
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm shadow-primary/20"
+                    : "text-foreground-muted border-transparent hover:bg-muted hover:border-border hover:text-foreground",
                 )
               }
             >
               {({ isActive }) => (
                 <>
                   {isActive && (
-                    <span className="absolute -left-3 top-1/2 -translate-y-1/2 w-1 h-5 rounded-full bg-accent" />
+                    <span className="absolute left-1 top-1/2 -translate-y-1/2 w-1 h-4 rounded-full bg-accent" />
                   )}
-                  <item.icon className="w-4 h-4 shrink-0" />
+                  <item.icon
+                    className={cn(
+                      "w-4 h-4 shrink-0",
+                      isActive
+                        ? "text-primary-foreground"
+                        : "text-muted-foreground",
+                    )}
+                  />
                   {item.label}
                 </>
               )}
@@ -88,11 +97,10 @@ export function AdminSidebar({
           ))}
         </nav>
 
-        {/* Sign out */}
         <div className="p-3 border-t border-border shrink-0">
           <button
             onClick={onSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-destructive hover:bg-destructive/10 transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-foreground-muted border border-border hover:bg-destructive/10 hover:border-destructive/30 hover:text-destructive transition-all cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
             Sign out
