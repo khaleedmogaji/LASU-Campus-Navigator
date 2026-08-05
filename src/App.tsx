@@ -25,9 +25,9 @@ export default function App() {
         <Route
           path="/admin/"
           element={
-            // <ProtectedRoute>
-            <AdminDashboard />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
           }
         >
           <Route index element={<Overview />} />
