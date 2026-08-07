@@ -120,7 +120,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           strokeWidth="3"
           strokeLinecap="round"
           strokeDasharray="2 14"
-          className="text-lasu-secondary"
+          className="text-secondary"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
           transition={{ duration: 1.6, ease: "easeInOut", delay: 0.2 }}
@@ -129,7 +129,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           cx="40"
           cy="150"
           r="7"
-          className="text-lasu-primary"
+          className="text-primary"
           fill="currentColor"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -139,7 +139,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           cx="660"
           cy="60"
           r="7"
-          className="text-lasu-accent"
+          className="text-accent"
           fill="currentColor"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -151,10 +151,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-lasu-primary/8 border border-lasu-primary/15"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/8 border border-primary/15"
       >
-        <MapPin className="w-3 h-3 text-lasu-primary" />
-        <span className="text-[10px] font-black uppercase tracking-widest text-lasu-primary">
+        <MapPin className="w-3 h-3 text-primary" />
+        <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
           Ojo Campus • Live Wayfinding
         </span>
       </motion.div>
@@ -163,10 +163,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white p-2 shadow-xl ring-4 ring-lasu-primary/10 border border-zinc-150 flex items-center justify-center shrink-0"
+        className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-card p-2 shadow-xl ring-4 ring-primary/10 border border-border-subtle flex items-center justify-center shrink-0"
       >
         <img
-          src="https://lasu.edu.ng/home/img/logo1.png"
+          src="lasu-logo.png"
           alt="LASU Emblem"
           className="w-full h-full object-contain"
           referrerPolicy="no-referrer"
@@ -174,12 +174,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </motion.div>
 
       <div className="space-y-3 max-w-xl">
-        <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.05] text-zinc-900">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] text-foreground">
           Find any building
           <br />
-          <span className="text-lasu-primary">in seconds.</span>
+          <span className="text-primary">in seconds.</span>
         </h1>
-        <p className="text-sm md:text-base text-zinc-600 font-medium leading-relaxed max-w-md mx-auto">
+        <p className="text-sm md:text-base text-foreground-muted font-medium leading-relaxed max-w-md mx-auto">
           Search departments, faculties, and landmarks, then get turn-by-turn
           walking directions across LASU Ojo.
         </p>
@@ -187,7 +187,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       <div className="relative w-full max-w-lg">
         <div className="relative flex items-center">
-          <Search className="absolute left-4.5 w-4.5 h-4.5 text-zinc-600" />
+          <Search className="absolute left-4.5 w-4.5 h-4.5 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search departments, faculties, libraries..."
@@ -195,14 +195,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
-            className="w-full pl-12 pr-4 py-4 bg-white border border-zinc-200 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-lasu-primary/15 focus:border-lasu-primary transition-all text-xs font-semibold"
+            className="w-full pl-12 pr-4 py-4 bg-card border border-border rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-primary/15 focus:border-primary transition-all text-xs font-medium"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-4 p-1 hover:bg-zinc-100 rounded-full"
+              className="absolute right-4 p-1 hover:bg-muted rounded-full"
             >
-              <X className="w-3.5 h-3.5 text-zinc-650" />
+              <X className="w-3.5 h-3.5 text-muted-foreground" />
             </button>
           )}
         </div>
@@ -213,28 +213,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="absolute top-full left-0 right-0 mt-2 bg-white border border-zinc-200 rounded-2xl shadow-2xl overflow-hidden z-40 text-left p-1.5 space-y-1"
+              className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-40 text-left p-1.5 space-y-1"
             >
               {searchResults.length > 0 ? (
                 searchResults.map((item, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleSelectResult(item)}
-                    className="w-full text-left px-4 py-3 hover:bg-zinc-50 rounded-xl transition-all duration-200 flex items-center justify-between group cursor-pointer"
+                    className="w-full text-left px-4 py-3 hover:bg-muted rounded-xl transition-all duration-200 flex items-center justify-between group cursor-pointer"
                   >
                     <div className="min-w-0">
-                      <p className="text-xs font-black text-zinc-850 truncate leading-snug">
+                      <p className="text-xs font-semibold text-foreground truncate leading-snug">
                         {item.name}
                       </p>
-                      <p className="text-[11px] text-zinc-600 font-bold uppercase tracking-wider mt-0.5">
+                      <p className="text-[11px] text-muted-foreground font-semibold uppercase tracking-wider mt-0.5">
                         {item.subText}
                       </p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-lasu-green transition-colors" />
+                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-success transition-colors" />
                   </button>
                 ))
               ) : (
-                <div className="p-4 text-center text-xs text-zinc-600 font-bold">
+                <div className="p-4 text-center text-xs text-muted-foreground font-semibold">
                   No matching landmarks or departments found
                 </div>
               )}
@@ -244,14 +244,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {!isSearchFocused && (
           <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
-            <span className="text-[10px] font-black uppercase tracking-wider text-zinc-500">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
               Popular:
             </span>
             {QUICK_CHIPS.map((chip) => (
               <button
                 key={chip}
                 onClick={() => onExplore(chip)}
-                className="px-3 py-1.5 rounded-full border border-zinc-200 bg-white hover:border-lasu-primary/30 hover:bg-lasu-primary/5 hover:text-lasu-primary text-[11px] font-bold text-zinc-650 transition-all cursor-pointer"
+                className="px-3 py-1.5 rounded-full border border-border bg-card hover:border-primary/30 hover:bg-primary/5 hover:text-primary text-[11px] font-semibold text-muted-foreground transition-all cursor-pointer"
               >
                 {chip}
               </button>
@@ -263,15 +263,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-2xl mt-1">
         <button
           onClick={onStart}
-          className="py-4 px-6 bg-lasu-primary hover:bg-lasu-primary-dark text-white rounded-2xl font-black shadow-lg shadow-lasu-primary/25 hover:shadow-xl hover:shadow-lasu-primary/30 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase border-none"
+          className="py-4 px-6 bg-primary hover:bg-primary-hover text-primary-foreground rounded-2xl font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase"
         >
-          <Navigation className="w-4 h-4 fill-current animate-pulse text-white" />
+          <Navigation className="w-4 h-4 fill-current animate-pulse" />
           Start Navigation
         </button>
 
         <button
           onClick={() => onExplore()}
-          className="py-4 px-6 bg-white border-2 border-lasu-secondary text-lasu-secondary hover:bg-lasu-secondary/5 rounded-2xl font-black active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase"
+          className="py-4 px-6 bg-card border-2 border-secondary text-secondary hover:bg-secondary/5 rounded-2xl font-bold active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase"
         >
           <Compass className="w-4 h-4" />
           Explore Campus
@@ -279,7 +279,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         <button
           onClick={onAskAssistant}
-          className="py-4 px-6 bg-transparent text-lasu-accent hover:bg-lasu-accent/5 rounded-2xl font-black active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase"
+          className="py-4 px-6 bg-transparent text-accent hover:bg-accent/5 rounded-2xl font-bold active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2.5 text-xs tracking-wider uppercase"
         >
           <MessageSquare className="w-4 h-4" />
           Ask Assistant
