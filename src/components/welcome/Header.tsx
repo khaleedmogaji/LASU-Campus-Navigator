@@ -53,7 +53,7 @@ export const WelcomeHeader: React.FC<WelcomeHeaderProps> = () => {
             className="py-2.5 px-5 bg-secondary hover:bg-secondary-hover text-secondary-foreground rounded-xl font-heading font-bold tracking-wider uppercase text-[11px] shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2"
           >
             <Navigation className="w-3.5 h-3.5 fill-current" />
-            <span>Open Map</span>
+            <span className="hidden md:flex">Open Map</span>
           </button>
         </div>
       </div>
